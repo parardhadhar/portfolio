@@ -15,7 +15,7 @@
             background-color: #0a0a0a;
             color: #e5e5e5;
             overflow-x: hidden;
-            cursor: none;
+            /* The cursor is now handled by media queries below */
         }
         #bg-canvas {
             position: fixed;
@@ -201,6 +201,19 @@
             50% { background-color: #2563eb; } /* blue-600 */
             100% { background-color: #374151; } /* gray-700 */
         }
+
+        /* Hides custom cursor on touch devices */
+        @media (hover: none) or (pointer: coarse) {
+            .cursor-dot, .cursor-outline {
+                display: none;
+            }
+        }
+        /* Shows custom cursor only on devices that can hover */
+        @media (hover: hover) and (pointer: fine) {
+            body {
+                cursor: none;
+            }
+        }
     </style>
 </head>
 <body class="w-full">
@@ -379,7 +392,7 @@
 
              <!-- AI Career Advisor Section -->
             <section id="ai-advisor" class="py-24">
-                <h2 class="text-4xl font-bold text-center mb-12 reveal">✨ Ask My Ai twiner.</h2>
+                <h2 class="text-4xl font-bold text-center mb-12 reveal">✨ AI Career Advisor</h2>
                 <div class="section-card p-8 rounded-2xl reveal">
                     <p class="text-center text-gray-300 mb-6">Have a question about my skills or potential career paths? Ask my AI assistant!</p>
                     <div class="flex flex-col md:flex-row gap-4">
