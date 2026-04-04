@@ -1,0 +1,33 @@
+# Video and large binary files
+*.avi
+*.mp4
+*.mov
+*.mkv
+*.dmg
+*.iso
+*.zip
+*.tar.gz
+
+# Unreal Engine
+BeachUnreal/
+CaveUnreal/
+
+# Old versions
+old_vanilla/
+
+# Node modules
+node_modules/
+react-app/node_modules/
+v2/node_modules/
+
+# Build outputs
+dist/
+v2/dist/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.local
