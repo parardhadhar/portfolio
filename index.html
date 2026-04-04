@@ -1,756 +1,610 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parardha Dhar | ML Developer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a0a0a;
-            color: #e5e5e5;
-            overflow-x: hidden;
-            /* The cursor is now handled by media queries below */
-        }
-        #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        .section-card {
-            background-color: rgba(26, 26, 26, 0.6);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .section-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-        .skill-tag {
-            background-color: rgba(63, 63, 70, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0a0a0a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #4a4a4a;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-        #loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0a0a0a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 1000;
-            transition: opacity 0.5s ease;
-        }
-        .spinner {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            border: 6px solid #4a4a4a;
-            border-top-color: #3b82f6;
-            animation: spin 1s linear infinite;
-        }
-        #loading-fact {
-            color: #a0a0a0;
-            max-width: 300px;
-            text-align: center;
-            font-style: italic;
-            transition: opacity 0.3s ease-in-out;
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        
-        /* Custom Cursor */
-        .cursor-dot, .cursor-outline {
-            pointer-events: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            z-index: 9999;
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-        }
-        .cursor-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #3b82f6;
-        }
-        .cursor-outline {
-            width: 40px;
-            height: 40px;
-            background-color: rgba(59, 130, 246, 0.2);
-            border: 1px solid #3b82f6;
-            transition: all 0.08s ease-out;
-        }
-        .cursor-hidden {
-            opacity: 0;
-        }
-        .cursor-outline.hovered {
-            transform: translate(-50%, -50%) scale(1.4);
-            background-color: rgba(59, 130, 246, 0.3);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parardha Dhar — Creative Technologist</title>
+  <meta name="description" content="Parardha Dhar — Creative Technologist. Unreal Engine, ML, Full-Stack Engineering." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400&family=Space+Mono&display=swap" rel="stylesheet" />
 
-        /* Click Wave Animation */
-        #click-wave {
-            position: fixed;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(59, 130, 246, 0) 60%);
-            transform: translate(-50%, -50%) scale(0);
-            pointer-events: none;
-            z-index: 9998;
-        }
-        #click-wave.animate {
-            animation: wave-expand 1.5s ease-out forwards;
-        }
-        @keyframes wave-expand {
-            from {
-                transform: translate(-50%, -50%) scale(0);
-                opacity: 1;
-            }
-            to {
-                transform: translate(-50%, -50%) scale(30);
-                opacity: 0;
-            }
-        }
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --lime:#c8ff00;--purple:#7c3aed;--pink:#FF9FFC;--cyan:#08f7fe;
+      --bg:#050008;--bg2:#0c001a;
+    }
+    ::selection{background:var(--lime);color:#000}
+    html{scroll-behavior:auto}
+    body{background:var(--bg);color:#a0a0b0;font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:none}
 
-        /* Scroll Animations */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* Gemini Modal */
-        #gemini-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1001;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        #gemini-modal.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .modal-content {
-            background-color: #1a1a1a;
-            padding: 2rem;
-            border-radius: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 90%;
-            width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
-        }
-        #gemini-modal.visible .modal-content {
-            transform: scale(1);
-        }
+    /* ─── CURSOR ─────────────────── */
+    #cur{position:fixed;width:8px;height:8px;background:var(--lime);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .3s,height .3s}
+    #cur-r{position:fixed;width:32px;height:32px;border:1px solid rgba(200,255,0,.3);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .35s,height .35s,border-color .35s}
+    body.h #cur{width:18px;height:18px}
+    body.h #cur-r{width:52px;height:52px;border-color:rgba(200,255,0,.6)}
 
-        /* Generating Button Animation */
-        .generating {
-            animation: pulse-bg 2s infinite;
-        }
-        @keyframes pulse-bg {
-            0% { background-color: #374151; } /* gray-700 */
-            50% { background-color: #2563eb; } /* blue-600 */
-            100% { background-color: #374151; } /* gray-700 */
-        }
+    /* ─── AURORA BG ──────────────── */
+    #aurora{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.45;mix-blend-mode:screen}
 
-        /* Hides custom cursor on touch devices */
-        @media (hover: none) or (pointer: coarse) {
-            .cursor-dot, .cursor-outline {
-                display: none;
-            }
-        }
-        /* Shows custom cursor only on devices that can hover */
-        @media (hover: hover) and (pointer: fine) {
-            body {
-                cursor: none;
-            }
-        }
-    </style>
+    /* ─── NAV ────────────────────── */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3rem;transition:all .5s}
+    nav.s{background:rgba(5,0,8,.75);backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,.05)}
+    .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:.22em;color:#fff;text-decoration:none}
+    .nav-links{display:flex;gap:2.5rem;list-style:none}
+    .nav-links a{font-size:.7rem;letter-spacing:.14em;color:rgba(255,255,255,.35);text-decoration:none;text-transform:uppercase;transition:color .25s}
+    .nav-links a:hover{color:#fff}
+    .nav-cv{display:flex;align-items:center;gap:.45rem;padding:.5rem 1.25rem;border:1px solid rgba(255,255,255,.15);border-radius:100px;font-size:.68rem;letter-spacing:.08em;color:rgba(255,255,255,.45);text-decoration:none;text-transform:uppercase;transition:all .3s}
+    .nav-cv:hover{border-color:var(--lime);color:var(--lime);box-shadow:0 0 16px rgba(200,255,0,.1)}
+    @media(max-width:768px){nav{padding:1.2rem 1.5rem}.nav-links{display:none}}
+
+    /* ══════════════════════════════════════
+       INTRO — SCROLL-DRIVEN HERO
+    ══════════════════════════════════════ */
+    #intro{
+      position:relative;height:200vh; /* tall enough to scroll through */
+      z-index:10;
+    }
+    /* Sticky container that pins during scroll */
+    .intro-sticky{
+      position:sticky;top:0;height:100vh;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      overflow:hidden;
+    }
+
+    /* Big center title */
+    .intro-title{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:clamp(3.5rem,10vw,11rem);
+      line-height:.9;letter-spacing:-.04em;
+      color:#fff;text-align:center;
+      position:relative;z-index:3;
+      will-change:transform,opacity;
+    }
+    .intro-title .line{display:block;overflow:hidden}
+    .intro-title .word{display:inline-block;will-change:transform}
+    .intro-title .gt{
+      background:linear-gradient(90deg,var(--lime),var(--cyan),var(--pink),var(--purple),var(--lime));
+      background-size:400% 100%;
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      animation:gs 6s linear infinite
+    }
+    @keyframes gs{to{background-position:400% 50%}}
+
+    /* Role label */
+    .intro-role{
+      font-family:'Space Mono',monospace;font-size:clamp(.65rem,.9vw,.85rem);
+      letter-spacing:.35em;color:rgba(200,255,0,.7);text-transform:uppercase;
+      margin-top:2.5rem;text-align:center;z-index:3;position:relative;
+      will-change:opacity;
+    }
+
+    /* 3D Blob — floats between title lines */
+    #blob-wrap{
+      position:absolute;
+      width:clamp(280px,28vw,420px);height:clamp(280px,28vw,420px);
+      left:50%;top:50%;
+      transform:translate(-50%,-50%);
+      z-index:2;
+      will-change:transform,opacity;
+    }
+    #blob-canvas{width:100%;height:100%;display:block}
+    .blob-halo{
+      position:absolute;inset:10%;border-radius:50%;
+      background:radial-gradient(circle,rgba(200,255,0,.14) 0%,transparent 70%);
+      animation:haloP 4s ease-in-out infinite;pointer-events:none
+    }
+    @keyframes haloP{0%,100%{opacity:.5;transform:scale(.94)}50%{opacity:1;transform:scale(1.06)}}
+
+    /* Scroll hint */
+    .scroll-hint{
+      position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+      display:flex;flex-direction:column;align-items:center;gap:.8rem;
+      z-index:4;will-change:opacity
+    }
+    .scroll-hint span{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.3em;color:rgba(255,255,255,.25);text-transform:uppercase}
+    .sh-line{width:1px;height:52px;background:linear-gradient(to bottom,rgba(200,255,0,.5),transparent);animation:shP 2.2s ease-in-out infinite}
+    @keyframes shP{0%,100%{opacity:.25;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.15)}}
+
+    /* Stats row at bottom of intro (revealed as you scroll) */
+    .intro-stats{
+      position:absolute;bottom:5rem;left:0;right:0;
+      display:flex;justify-content:center;gap:6rem;
+      z-index:3;opacity:0;pointer-events:none;
+    }
+    .ist-n{font-family:'Syne',sans-serif;font-weight:800;font-size:2.5rem;color:#fff;line-height:1}
+    .ist-l{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.18em;color:rgba(255,255,255,.28);text-transform:uppercase;margin-top:5px}
+
+    /* ══════════════════════════════════════
+       SECTION BASE
+    ══════════════════════════════════════ */
+    section.page{position:relative;z-index:10}
+    .contain{max-width:1200px;margin:0 auto;padding:0 3rem}
+    @media(max-width:768px){.contain{padding:0 1.5rem}}
+
+    .sec-eye{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.35em;color:var(--lime);text-transform:uppercase;margin-bottom:1.5rem}
+    .sec-h{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.2rem,5vw,4.5rem);line-height:1.03;letter-spacing:-.04em;color:#fff}
+
+    /* ─── ABOUT ──────────────────── */
+    #about{padding:10rem 0 8rem}
+    .about-g{display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:center;margin-top:4rem}
+    .atext p{font-size:1rem;line-height:1.85;color:rgba(255,255,255,.45);margin-bottom:1.2rem}
+    .atext p strong{color:#fff;font-weight:500}
+    .atext p em{color:var(--lime);font-style:normal}
+    .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:2.5rem}
+    .chip{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.06em;padding:.38rem .9rem;border:1px solid rgba(255,255,255,.1);border-radius:100px;color:rgba(255,255,255,.4);transition:all .25s}
+    .chip:hover{border-color:var(--lime);color:var(--lime)}
+    .aimg{position:relative;border-radius:20px;overflow:hidden;height:560px}
+    .aimg img{width:100%;height:100%;object-fit:cover;filter:contrast(1.1) saturate(.35);transition:filter .7s,transform .7s}
+    .aimg:hover img{filter:contrast(1.1) saturate(.9);transform:scale(1.04)}
+    .aimg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 0%,transparent 50%)}
+    .aimg-glow{position:absolute;inset:-2px;border-radius:22px;
+      background:conic-gradient(from 0deg at 50% 50%,transparent 0%,rgba(200,255,0,.45) 20%,transparent 40%);
+      opacity:0;transition:opacity .6s;animation:spinC 8s linear infinite;z-index:2;pointer-events:none}
+    @keyframes spinC{to{transform:rotate(360deg)}}
+    .aimg:hover .aimg-glow{opacity:1}
+    @media(max-width:900px){.about-g{grid-template-columns:1fr;gap:3rem}}
+
+    /* ─── WORK ────────────────────── */
+    #work{padding:8rem 0}
+    .work-hdr{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:5rem;flex-wrap:wrap;gap:2rem}
+    .pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem}
+    @media(max-width:768px){.pgrid{grid-template-columns:1fr}}
+
+    .pcard{
+      position:relative;border-radius:18px;overflow:hidden;
+      background:var(--bg2);border:1px solid rgba(255,255,255,.06);
+      transition:border-color .4s,transform .45s cubic-bezier(.16,1,.3,1);
+      cursor:pointer
+    }
+    .pcard:hover{border-color:var(--card-c,var(--lime));transform:translateY(-8px)}
+    .pcard-img{height:200px;overflow:hidden;position:relative}
+    .pcard-img img{width:100%;height:100%;object-fit:cover;filter:saturate(.25) brightness(.65);transition:filter .6s,transform .7s}
+    .pcard:hover .pcard-img img{filter:saturate(.7) brightness(.8);transform:scale(1.07)}
+    .pcard-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,var(--bg2))}
+    .pcard-body{padding:1.8rem 2rem 2.2rem}
+    .pn{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.2em;color:rgba(255,255,255,.18);margin-bottom:.9rem}
+    .pt{font-family:'Syne',sans-serif;font-weight:700;font-size:1.65rem;color:#fff;margin-bottom:.8rem;transition:color .3s}
+    .pcard:hover .pt{color:var(--card-c,var(--lime))}
+    .pd{font-size:.86rem;line-height:1.7;color:rgba(255,255,255,.35);margin-bottom:1.5rem}
+    .ptags{display:flex;flex-wrap:wrap;gap:.4rem}
+    .ptag{font-family:'Space Mono',monospace;font-size:.57rem;padding:.25rem .7rem;border:1px solid rgba(255,255,255,.08);border-radius:100px;color:rgba(255,255,255,.28)}
+
+    /* ─── MARQUEE ─────────────────── */
+    #xp{padding:5rem 0;border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);overflow:hidden;position:relative;z-index:10}
+    .mtrk{display:flex;gap:3.5rem;animation:mq 22s linear infinite;white-space:nowrap}
+    @keyframes mq{to{transform:translateX(-50%)}}
+    .mi{font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:800;letter-spacing:-.03em;color:rgba(255,255,255,.07);text-transform:uppercase}
+    .mi.a{color:rgba(200,255,0,.14)}
+    .md{font-size:1rem;color:rgba(200,255,0,.2);align-self:center}
+
+    /* ─── CONTACT ─────────────────── */
+    #contact{position:relative;z-index:10;background:#080011;border-top:1px solid rgba(255,255,255,.05);overflow:hidden}
+    #crings{position:absolute;inset:0;pointer-events:none;opacity:.18}
+    .cinn{max-width:1100px;margin:0 auto;padding:9rem 3rem 5rem;text-align:center;position:relative;z-index:2}
+    .ctitle{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.5rem,6vw,7rem);line-height:1;letter-spacing:-.04em;color:#fff;margin-bottom:3.5rem}
+    .ctas{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap}
+    .bp{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 2.2rem;background:var(--lime);color:#000;font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;border-radius:100px;text-decoration:none;transition:transform .3s,box-shadow .3s}
+    .bp:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(200,255,0,.28)}
+    .bs{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 2.2rem;border:1px solid rgba(255,255,255,.18);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;border-radius:100px;text-decoration:none;transition:all .3s}
+    .bs:hover{border-color:var(--lime);color:var(--lime)}
+    .fbar{border-top:1px solid rgba(255,255,255,.04);padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;flex-wrap:wrap;gap:1rem}
+    .fbar span{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.08em;color:rgba(255,255,255,.15)}
+    .flinks{display:flex;gap:2rem}
+    .flinks a{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.08em;color:rgba(255,255,255,.2);text-decoration:none;transition:color .25s}
+    .flinks a:hover{color:var(--lime)}
+
+    /* ─── REVEALS ─────────────────── */
+    .rv{opacity:0;transform:translateY(36px);transition:opacity .95s cubic-bezier(.16,1,.3,1),transform .95s cubic-bezier(.16,1,.3,1)}
+    .rv.on{opacity:1;transform:none}
+    [data-d="1"]{transition-delay:.1s}[data-d="2"]{transition-delay:.2s}
+    [data-d="3"]{transition-delay:.32s}[data-d="4"]{transition-delay:.45s}
+
+    /* ─── SMOOTH SCROLL HANDLE ───── */
+    .has-scroll-smooth{overflow:hidden;height:100vh}
+  </style>
 </head>
-<body class="w-full">
-    <!-- Custom Cursor -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
-    <div id="click-wave"></div>
+<body>
 
-    <!-- Loader -->
-    <div id="loader">
-        <div class="spinner"></div>
-        <p id="loading-fact"></p>
-        <div class="w-full max-w-xs bg-gray-800/50 rounded-full h-2.5 mt-4 border border-gray-700">
-            <div id="progress-bar" class="bg-gradient-to-r from-blue-500 to-purple-500 h-2.5 rounded-full" style="width: 0%; transition: width 7s ease-out;"></div>
+<div id="cur"></div>
+<div id="cur-r"></div>
+<canvas id="aurora"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo">P·D</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#xp">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="Parardha_Dhar_CV_0.pdf" target="_blank" class="nav-cv">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    Download CV
+  </a>
+</nav>
+
+<!-- ══ INTRO ══════════════════════════════════════════════ -->
+<section id="intro">
+  <div class="intro-sticky">
+    <!-- Floating blob -->
+    <div id="blob-wrap">
+      <div class="blob-halo"></div>
+      <canvas id="blob-canvas"></canvas>
+    </div>
+
+    <!-- Main title (split into words for parallax) -->
+    <h1 class="intro-title" id="intro-title">
+      <span class="line"><span class="word" id="w1">Parardha</span></span>
+      <span class="line"><span class="word gt" id="w2">Dhar</span></span>
+    </h1>
+
+    <p class="intro-role" id="intro-role">Creative Technologist &nbsp;·&nbsp; UE5 &nbsp;·&nbsp; ML &nbsp;·&nbsp; Full-Stack</p>
+
+    <!-- Stats (revealed as blob scrolls down) -->
+    <div class="intro-stats" id="intro-stats">
+      <div><div class="ist-n">3+</div><div class="ist-l">Years Exp</div></div>
+      <div style="width:1px;background:rgba(255,255,255,.08)"></div>
+      <div><div class="ist-n">UE5</div><div class="ist-l">Core Skill</div></div>
+      <div style="width:1px;background:rgba(255,255,255,.08)"></div>
+      <div><div class="ist-n">10+</div><div class="ist-l">Projects</div></div>
+    </div>
+
+    <div class="scroll-hint" id="scroll-hint">
+      <span>scroll</span>
+      <div class="sh-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══════════════════════════════════════════════ -->
+<section id="about" class="page">
+  <div class="contain">
+    <div class="about-g">
+      <div class="atext">
+        <p class="sec-eye rv">/ About</p>
+        <h2 class="sec-h rv" data-d="1">
+          I engineer<br/>immersive <span class="gt">experiences</span>.<br/>Not just interfaces.
+        </h2>
+        <p class="rv" data-d="2" style="margin-top:2rem">
+          I'm <strong>Parardha Dhar</strong> — a creative technologist blending
+          <em>Unreal Engine artistry</em> with <em>Machine Learning</em> and <em>Full-Stack Engineering</em>.
+        </p>
+        <p class="rv" data-d="3">
+          From photorealistic UE5 cave environments lit by Lumen's ray tracing to AI-powered safety dashboards
+          serving real communities — I don't build interfaces, I build worlds.
+        </p>
+        <div class="chips rv" data-d="4">
+          <span class="chip">Unreal Engine 5</span><span class="chip">Python / ML</span>
+          <span class="chip">React / Next.js</span><span class="chip">Three.js / WebGL</span>
+          <span class="chip">Blender</span><span class="chip">Node.js</span>
+          <span class="chip">Firebase</span><span class="chip">Nanite · Lumen · PCG</span>
         </div>
+      </div>
+      <div class="aimg rv" data-d="2">
+        <div class="aimg-glow"></div>
+        <img src="hero_bg.png" alt="Unreal Engine 5 environment" />
+      </div>
     </div>
+  </div>
+</section>
 
-    <!-- Gemini Modal -->
-    <div id="gemini-modal">
-        <div class="modal-content">
-            <h3 id="modal-title" class="text-2xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">AI Generated Details</h3>
-            <div id="modal-body" class="text-gray-300 space-y-4">
-                <!-- AI content will be injected here -->
-            </div>
-            <button id="close-modal" class="mt-6 w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition-colors">Close</button>
+<!-- ══ WORK ═══════════════════════════════════════════════ -->
+<section id="work" class="page">
+  <div class="contain">
+    <div class="work-hdr">
+      <div>
+        <p class="sec-eye rv">/ Selected Work</p>
+        <h2 class="sec-h rv" data-d="1">Featured Projects</h2>
+      </div>
+    </div>
+    <div class="pgrid">
+      <div class="pcard rv" data-d="1" style="--card-c:#08f7fe">
+        <div class="pcard-img"><img src="neural_bg.png" alt="SafeRoute"/><div></div></div>
+        <div class="pcard-body">
+          <div class="pn">01</div><h3 class="pt">SafeRoute India</h3>
+          <p class="pd">AI-powered women's safety intelligence dashboard with real-time NCRB crime data, interactive GIS mapping and a cinematic interface.</p>
+          <div class="ptags"><span class="ptag">Python</span><span class="ptag">Leaflet.js</span><span class="ptag">ML</span><span class="ptag">Firebase</span></div>
         </div>
+      </div>
+      <div class="pcard rv" data-d="2" style="--card-c:#c8ff00">
+        <div class="pcard-img"><img src="hero_bg.png" alt="UE5"/><div></div></div>
+        <div class="pcard-body">
+          <div class="pn">02</div><h3 class="pt">UE5 Cave &amp; Beach</h3>
+          <p class="pd">Photorealistic Unreal Engine 5 environments — ray-traced global illumination, dynamic ocean, bioluminescent cave flora.</p>
+          <div class="ptags"><span class="ptag">UE5</span><span class="ptag">Nanite</span><span class="ptag">Lumen</span><span class="ptag">PCG</span></div>
+        </div>
+      </div>
+      <div class="pcard rv" data-d="1" style="--card-c:#FF9FFC">
+        <div class="pcard-body" style="padding-top:2.5rem">
+          <div class="pn">03</div><h3 class="pt">AI Tutor Bot</h3>
+          <p class="pd">Multi-model AI assistant with vision capabilities on Telegram. Gemini + Groq with intelligent fallbacks and Firebase logging.</p>
+          <div class="ptags"><span class="ptag">Python</span><span class="ptag">Gemini API</span><span class="ptag">Groq</span><span class="ptag">Firebase</span></div>
+        </div>
+      </div>
+      <div class="pcard rv" data-d="2" style="--card-c:#ff6b35">
+        <div class="pcard-body" style="padding-top:2.5rem">
+          <div class="pn">04</div><h3 class="pt">Car Rig &amp; Animation</h3>
+          <p class="pd">Full mechanical vehicle rigging in Blender — physics-driven suspension, driver rig, and a cinematic keyframe sequence.</p>
+          <div class="ptags"><span class="ptag">Blender</span><span class="ptag">Rigging</span><span class="ptag">Physics</span><span class="ptag">Animation</span></div>
+        </div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <!-- 3D Background -->
-    <canvas id="bg-canvas"></canvas>
-    
-    <!-- Main Content -->
-    <div class="relative w-full z-10 px-6 md:px-12">
-        <main class="container mx-auto max-w-5xl">
-            
-            <!-- Hero Section -->
-            <section id="hero" class="min-h-screen flex flex-col md:flex-row items-center justify-center text-center md:text-left gap-12">
-                <div class="md:w-3/5">
-                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-tight">
-                        <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">Parardha Dhar</span>
-                    </h1>
-                    <p class="mt-4 text-xl md:text-2xl text-gray-300 max-w-3xl">
-                        Computer Science Undergrad & Machine Learning Developer crafting innovative solutions with a passion for technology and structured problem-solving.
-                    </p>
-                    <div class="mt-8 flex flex-wrap gap-4 justify-center md:justify-start">
-                        <a href="mailto:parardhadhar@gmail.com" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition-colors">Contact Me</a>
-                        <a href="https://drive.google.com/uc?export=download&id=1G-R_Yheax-pgwup9NtWWF0QIrH2OGVQb" target="_blank" class="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg font-semibold transition-colors">Download CV</a>
-                        <a href="#projects" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg font-semibold transition-colors">View My Work</a>
-                    </div>
-                </div>
-                <div class="md:w-2/5 flex justify-center">
-                    <img src="https://iili.io/KGrsJNp.jpg" alt="Parardha Dhar" class="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover border-4 border-blue-500 shadow-lg shadow-blue-500/20">
-                </div>
-            </section>
+<!-- ══ EXPERTISE MARQUEE ═══════════════════════════════════ -->
+<section id="xp">
+  <div class="mtrk" id="mtrk">
+    <span class="mi a">Unreal Engine</span><span class="md">✦</span>
+    <span class="mi">Machine Learning</span><span class="md">✦</span>
+    <span class="mi a">WebGL</span><span class="md">✦</span>
+    <span class="mi">Full-Stack Dev</span><span class="md">✦</span>
+    <span class="mi a">3D Animation</span><span class="md">✦</span>
+    <span class="mi">AI Integration</span><span class="md">✦</span>
+    <span class="mi a">Unreal Engine</span><span class="md">✦</span>
+    <span class="mi">Machine Learning</span><span class="md">✦</span>
+    <span class="mi a">WebGL</span><span class="md">✦</span>
+    <span class="mi">Full-Stack Dev</span><span class="md">✦</span>
+    <span class="mi a">3D Animation</span><span class="md">✦</span>
+    <span class="mi">AI Integration</span><span class="md">✦</span>
+  </div>
+</section>
 
-            <!-- About Section -->
-            <section id="about" class="py-24 reveal">
-                <div class="section-card p-8 rounded-2xl">
-                    <h2 class="text-3xl font-bold mb-4">About Me</h2>
-                    <p class="text-gray-300 leading-relaxed space-y-4">
-                        <span>As a Computer Science undergraduate at VIT Bhopal University, I am deeply immersed in the world of technology, with a strong focus on machine learning and software development. My academic journey is complemented by a hands-on approach to problem-solving, where I enjoy building robust applications and exploring complex algorithms.</span>
-                        <span>I am proficient in languages like Python, Java, and C++, which I regularly use for competitive coding challenges to sharpen my logical reasoning and efficiency. My expertise extends to leveraging powerful ML frameworks like TensorFlow and PyTorch to build intelligent systems. I am dedicated to not just writing code, but architecting elegant solutions that are both scalable and impactful, continuously seeking to push the boundaries of what's possible with technology.</span>
-                    </p>
-                </div>
-            </section>
-
-            <!-- Projects Section -->
-            <section id="projects" class="py-24">
-                <h2 class="text-4xl font-bold text-center mb-12 reveal">Projects</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Project 1 -->
-                    <div class="section-card p-6 rounded-2xl reveal flex flex-col h-full">
-                        <h3 class="text-xl font-bold mb-2">PhishGuard: Real-Time Phishing Link Detector</h3>
-                        <p class="text-gray-400 flex-grow">Engineered a real-time URL detection browser extension during a 48-hour hackathon, integrating a scikit-learn model and a phishing API to achieve 92% accuracy.</p>
-                        <button class="generate-details-btn mt-4 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg font-semibold transition-colors w-full">✨ Ask AI for Details</button>
-                    </div>
-                    <!-- Project 2 -->
-                    <div class="section-card p-6 rounded-2xl reveal flex flex-col h-full">
-                        <h3 class="text-xl font-bold mb-2">Sentinel Verse: WebGL and AI-Driven Cybersecurity Simulation</h3>
-                        <p class="text-gray-400 flex-grow">Constructed a browser-based simulation with 80+ cyber threat scenarios using Unity WebGL, featuring a decision-tree AI to evaluate threats and boost user engagement.</p>
-                         <button class="generate-details-btn mt-4 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg font-semibold transition-colors w-full">✨ Ask AI for Details</button>
-                    </div>
-                    <!-- Project 3 -->
-                    <div class="section-card p-6 rounded-2xl reveal flex flex-col h-full">
-                        <h3 class="text-xl font-bold mb-2">Music Mood Matcher: Emotion-Based Music Recommender</h3>
-                        <p class="text-gray-400 flex-grow">Designed a web app integrating face-api.js to analyze facial expressions and link with the Spotify API for dynamic, mood-based playlist generation.</p>
-                         <button class="generate-details-btn mt-4 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg font-semibold transition-colors w-full">✨ Ask AI for Details</button>
-                    </div>
-                    <!-- Project 4 -->
-                    <div class="section-card p-6 rounded-2xl reveal flex flex-col h-full">
-                        <h3 class="text-xl font-bold mb-2">AI Handwriting Generator: Flask-Based Web App</h3>
-                        <p class="text-gray-400 flex-grow">Developed a Python and Flask tool to transform text and PDF inputs into realistic, notebook-style handwritten PDFs with precise font rendering.</p>
-                         <button class="generate-details-btn mt-4 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg font-semibold transition-colors w-full">✨ Ask AI for Details</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Experience Section -->
-            <section id="experience" class="py-24">
-                <h2 class="text-4xl font-bold text-center mb-12 reveal">Experience</h2>
-                <div class="space-y-8 relative">
-                    <div class="absolute left-3 top-3 bottom-3 w-0.5 bg-gray-700"></div>
-                    <!-- Experience Item 1 -->
-                    <div class="pl-10 relative reveal">
-                        <div class="absolute -left-0.5 top-2 w-3 h-3 bg-blue-500 rounded-full"></div>
-                        <h3 class="text-xl font-bold">Electronic Arts - Software Engineering Virtual Experience</h3>
-                        <p class="text-gray-400 italic">Forage, May 2025</p>
-                        <p class="mt-2 text-gray-300">Formulated a feature proposal for EA Sports, designed a C++ class diagram for weather effects, and optimized code by implementing an advanced data structure, achieving a 15% performance increase.</p>
-                    </div>
-                    <!-- Experience Item 2 -->
-                    <div class="pl-10 relative reveal">
-                         <div class="absolute -left-0.5 top-2 w-3 h-3 bg-blue-500 rounded-full"></div>
-                        <h3 class="text-xl font-bold">Open-Source Contributor</h3>
-                        <p class="text-gray-400 italic">2024-Present</p>
-                        <p class="mt-2 text-gray-300">Collaborated with global developers, submitting pull requests and issues to enhance machine learning and game development repositories. Refined decision engines using Python and JSON.</p>
-                    </div>
-                    <!-- Experience Item 3 -->
-                    <div class="pl-10 relative reveal">
-                         <div class="absolute -left-0.5 top-2 w-3 h-3 bg-blue-500 rounded-full"></div>
-                        <h3 class="text-xl font-bold">AI and Web Development Research Lead</h3>
-                        <p class="text-gray-400 italic">2024-Present</p>
-                        <p class="mt-2 text-gray-300">Directed AI-based farmer application research using scikit-learn. Investigated fake news detection with an NLP-based model, achieving 90% preliminary accuracy.</p>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Education Section -->
-            <section id="education" class="py-24">
-                <h2 class="text-4xl font-bold text-center mb-12 reveal">Education</h2>
-                <div class="space-y-8">
-                    <div class="section-card p-6 rounded-2xl reveal">
-                        <h3 class="text-xl font-bold">VIT Bhopal University</h3>
-                        <p class="text-gray-400">Bachelor of Technology in Computer Science Engineering (2024-2028)</p>
-                    </div>
-                     <div class="section-card p-6 rounded-2xl reveal">
-                        <h3 class="text-xl font-bold">Darjeeling Public School Siliguri</h3>
-                        <p class="text-gray-400">12th Grade - CBSE (2022-2024)</p>
-                    </div>
-                    <div class="section-card p-6 rounded-2xl reveal">
-                        <h3 class="text-xl font-bold">Don Bosco School Siliguri</h3>
-                        <p class="text-gray-400">10th Grade - ICSE (2012-2022)</p>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Certifications Section -->
-            <section id="certifications" class="py-24">
-                <h2 class="text-4xl font-bold text-center mb-12 reveal">Certifications</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="section-card p-6 rounded-2xl reveal"><p>Supervised Machine Learning: Regression and Classification - DeepLearning.ai</p></div>
-                    <div class="section-card p-6 rounded-2xl reveal"><p>Introduction to Security Principles in Cloud Computing - Google Cloud</p></div>
-                    <div class="section-card p-6 rounded-2xl reveal"><p>AI/ML For Geo Data Analysis</p></div>
-                    <div class="section-card p-6 rounded-2xl reveal"><p>Electronic Arts - Software Engineering Job Simulation</p></div>
-                </div>
-            </section>
-
-            <!-- Skills Section -->
-            <section id="skills" class="py-24">
-                <h2 class="text-4xl font-bold text-center mb-12 reveal">Technical Skills</h2>
-                <div class="flex flex-wrap justify-center gap-4 reveal">
-                    <span class="skill-tag px-4 py-2 rounded-lg">Python</span>
-                    <span class="skill-tag px-4 py-2 rounded-lg">Java</span>
-                    <span class="skill-tag px-4 py-2 rounded-lg">C++</span>
-                    <span class="skill-tag px-4 py-2 rounded-lg">Competitive Coding</span>
-                    <span class="skill-tag px-4 py-2 rounded-lg">TensorFlow</span>
-                    <span class="skill-tag px-4 py-2 rounded-lg">PyTorch</span>
-                    <span class="skill-tag px-4 py-2 rounded-lg">Scikit-learn</span>
-                    <span class="skill-tag px-4 py-2 rounded-lg">HTML</span>
-                    <span class="skill-tag px-4 py-2 rounded-lg">CSS</span>
-                    <span class="skill-tag px-4 py-2 rounded-lg">JavaScript</span>
-                    <span class="skill-tag px-4 py-2 rounded-lg">Unreal Engine</span>
-                    <span class="skill-tag px-4 py-2 rounded-lg">Unity (WebGL)</span>
-                    <span class="skill-tag px-4 py-2 rounded-lg">GitHub</span>
-                </div>
-            </section>
-
-             <!-- AI Career Advisor Section -->
-            <section id="ai-advisor" class="py-24">
-                <h2 class="text-4xl font-bold text-center mb-12 reveal">✨ AI Career Advisor</h2>
-                <div class="section-card p-8 rounded-2xl reveal">
-                    <p class="text-center text-gray-300 mb-6">Have a question about my skills or potential career paths? Ask my AI assistant!</p>
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <input id="advisor-input" type="text" placeholder="e.g., 'What roles suit Parardha's profile?'" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <button id="advisor-submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition-colors">Ask AI</button>
-                    </div>
-                    <div id="advisor-response-container" class="mt-6 p-4 bg-gray-900/50 border border-gray-700 rounded-lg" style="display: none;">
-                        <p id="advisor-response" class="text-gray-300 whitespace-pre-wrap"></p>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Footer/Contact Section -->
-            <footer class="text-center py-12 reveal">
-                <p class="text-lg mb-4">Let's connect.</p>
-                <div class="flex justify-center gap-6 mb-8">
-                     <a href="mailto:parardhadhar@gmail.com" class="text-gray-400 hover:text-blue-500 transition-colors text-2xl">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    </a>
-                    <a href="https://www.linkedin.com/in/parardhadhar/" target="_blank" class="text-gray-400 hover:text-blue-500 transition-colors text-2xl" aria-label="LinkedIn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                    </a>
-                    <a href="https://github.com/parardhadhar" target="_blank" class="text-gray-400 hover:text-blue-500 transition-colors text-2xl" aria-label="GitHub">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                    </a>
-                </div>
-                <p class="text-gray-500">&copy; 2025 Parardha Dhar. All rights reserved.</p>
-            </footer>
-
-        </main>
+<!-- ══ CONTACT ═════════════════════════════════════════════ -->
+<footer id="contact">
+  <canvas id="crings"></canvas>
+  <div class="cinn">
+    <p class="sec-eye rv">/ Let's Collaborate</p>
+    <h2 class="ctitle rv" data-d="1">
+      Have something<br /><span class="gt">interesting</span><br />in mind?
+    </h2>
+    <div class="ctas rv" data-d="2">
+      <a href="mailto:parardhadhar@gmail.com" class="bp">Send a message <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <a href="Parardha_Dhar_CV_0.pdf" target="_blank" class="bs">Download CV <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></a>
     </div>
+  </div>
+  <div class="fbar">
+    <span>© 2026 Parardha Dhar</span>
+    <div class="flinks">
+      <a href="mailto:parardhadhar@gmail.com">Email</a>
+      <a href="Parardha_Dhar_CV_0.pdf" target="_blank">CV</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">GitHub</a>
+    </div>
+  </div>
+</footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- Loading Screen Logic ---
-            const facts = [
-                "Highlight: PhishGuard detects phishing links with 92% accuracy.",
-                "Highlight: Sentinel Verse is a cybersecurity game with over 80 unique scenarios.",
-                "Highlight: Music Mood Matcher uses facial recognition to create playlists.",
-                "Highlight: I built an AI that can generate realistic handwriting from text.",
-                "Credentialed: Certified in Supervised Machine Learning by DeepLearning.ai.",
-                "Multi-lingual: Fluent in Python, Java, C++, and human languages like Bengali!"
-            ];
-            const loadingFactEl = document.getElementById('loading-fact');
-            let factInterval;
+<!-- ══ THREE.JS BLOB ════════════════════════════════════════ -->
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.168.0/build/three.module.js"}}</script>
+<script type="module">
+import * as THREE from 'three';
 
-            function showRandomFact() {
-                const randomIndex = Math.floor(Math.random() * facts.length);
-                loadingFactEl.style.opacity = 0;
-                setTimeout(() => {
-                    loadingFactEl.textContent = facts[randomIndex];
-                    loadingFactEl.style.opacity = 1;
-                }, 300);
-            }
-            showRandomFact(); // Show first fact immediately
-            factInterval = setInterval(showRandomFact, 1800);
+const wrap = document.getElementById('blob-wrap');
+const canvas = document.getElementById('blob-canvas');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+camera.position.z = 3.5;
 
-            const progressBar = document.getElementById('progress-bar');
-            const pageLoader = document.getElementById('loader');
+function resize() {
+  const s = wrap.clientWidth;
+  renderer.setSize(s, s);
+}
+resize();
+window.addEventListener('resize', resize, { passive: true });
 
-            // Start the progress bar animation
-            setTimeout(() => {
-                progressBar.style.width = '100%';
-            }, 10);
+// Lights
+scene.add(new THREE.AmbientLight(0x111133, 2));
+const L1 = new THREE.PointLight(0xc8ff00, 8, 12); L1.position.set(2,2,2); scene.add(L1);
+const L2 = new THREE.PointLight(0x7c3aed, 7, 12); L2.position.set(-2,-1,1.5); scene.add(L2);
+const L3 = new THREE.PointLight(0x08f7fe, 5, 12); L3.position.set(0,-2.5,0.5); scene.add(L3);
 
-            // Initialize the 3D scene in the background
-            init();
+const mat = new THREE.ShaderMaterial({
+  uniforms: {
+    uTime: { value: 0 },
+    uMouse: { value: new THREE.Vector2() },
+    uCA: { value: new THREE.Color(0xc8ff00) },
+    uCB: { value: new THREE.Color(0x7c3aed) },
+    uCC: { value: new THREE.Color(0x08f7fe) },
+  },
+  vertexShader: `
+    uniform float uTime; uniform vec2 uMouse;
+    varying vec3 vN; varying vec3 vP;
+    vec3 p3(vec3 x){return mod(((x*34.)+1.)*x,289.);}
+    vec4 p4(vec4 x){return mod(((x*34.)+1.)*x,289.);}
+    vec4 tis(vec4 r){return 1.79284291400159-.85373472095314*r;}
+    float sn(vec3 v){
+      const vec2 C=vec2(1./6.,1./3.);const vec4 D=vec4(0.,.5,1.,2.);
+      vec3 i=floor(v+dot(v,C.yyy));vec3 x0=v-i+dot(i,C.xxx);
+      vec3 g=step(x0.yzx,x0.xyz);vec3 l=1.-g;
+      vec3 i1=min(g.xyz,l.zxy);vec3 i2=max(g.xyz,l.zxy);
+      vec3 x1=x0-i1+C.xxx;vec3 x2=x0-i2+C.yyy;vec3 x3=x0-D.yyy;
+      i=mod(p3(i),289.);
+      vec4 p=p4(p4(p4(i.z+vec4(0.,i1.z,i2.z,1.))+i.y+vec4(0.,i1.y,i2.y,1.))+i.x+vec4(0.,i1.x,i2.x,1.));
+      float n_=.142857142857;vec3 ns=n_*D.wyz-D.xzx;
+      vec4 j=p-49.*floor(p*ns.z*ns.z);vec4 x_=floor(j*ns.z);vec4 y_=floor(j-7.*x_);
+      vec4 x=x_*ns.x+ns.yyyy;vec4 y=y_*ns.x+ns.yyyy;vec4 h=1.-abs(x)-abs(y);
+      vec4 b0=vec4(x.xy,y.xy);vec4 b1=vec4(x.zw,y.zw);
+      vec4 s0=floor(b0)*2.+1.;vec4 s1=floor(b1)*2.+1.;vec4 sh=-step(h,vec4(0.));
+      vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy;vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;
+      vec3 p0=vec3(a0.xy,h.x);vec3 p1=vec3(a0.zw,h.y);vec3 p2=vec3(a1.xy,h.z);vec3 p3v=vec3(a1.zw,h.w);
+      vec4 norm=tis(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3v,p3v)));
+      p0*=norm.x;p1*=norm.y;p2*=norm.z;p3v*=norm.w;
+      vec4 m=max(.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.);m=m*m;
+      return 42.*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3v,x3)));
+    }
+    void main(){
+      vN=normal;float t=uTime*.25;
+      float n=sn(position*1.7+t)*.38+sn(position*3.4-t*.65)*.16+sn(position*6.+t*1.3+vec3(uMouse,.0))*.1;
+      vec3 d=position+normal*n;vP=d;
+      gl_Position=projectionMatrix*modelViewMatrix*vec4(d,1.);
+    }
+  `,
+  fragmentShader: `
+    uniform float uTime;uniform vec3 uCA,uCB,uCC;
+    varying vec3 vN;varying vec3 vP;
+    void main(){
+      float t=uTime*.18;vec3 n=normalize(vN);
+      float bAB=sin(vP.y*2.+t)*.5+.5;float bBC=cos(vP.x*1.8-t*.7)*.5+.5;
+      vec3 col=mix(uCA,uCB,bAB);col=mix(col,uCC,bBC*.55);
+      float fr=pow(1.-max(dot(n,normalize(cameraPosition-vP)),0.),3.5);
+      col+=fr*uCA*.9;float li=dot(n,normalize(vec3(1.,1.,.5)))*.5+.5;
+      col*=.55+li*.45;gl_FragColor=vec4(col,.9);
+    }
+  `,
+  transparent: true,
+});
 
-            // Set a minimum 7-second timer to hide the loader
-            setTimeout(() => {
-                clearInterval(factInterval);
-                pageLoader.style.opacity = '0';
-                setTimeout(() => { 
-                    pageLoader.style.display = 'none'; 
-                }, 500); // This should match the CSS transition duration
-            }, 7000);
-        });
+const blob = new THREE.Mesh(new THREE.IcosahedronGeometry(1, 80), mat);
+scene.add(blob);
 
+let mx = 0, my = 0;
+document.addEventListener('mousemove', e => {
+  mx = (e.clientX / innerWidth) * 2 - 1;
+  my = -(e.clientY / innerHeight) * 2 + 1;
+});
 
-        // --- Three.js Scene Setup ---
-        let scene, camera, renderer, laptopModel, particles;
-        let raycaster, mouse;
-        let isModelHovered = false;
-        let targetScale = 1;
+const clock = new THREE.Clock();
+(function anim() {
+  requestAnimationFrame(anim);
+  const t = clock.getElapsedTime();
+  mat.uniforms.uTime.value = t;
+  mat.uniforms.uMouse.value.set(mx * 0.3, my * 0.3);
+  blob.rotation.y = t * 0.07;
+  blob.rotation.x = Math.sin(t * 0.05) * 0.1;
+  renderer.render(scene, camera);
+})();
+</script>
 
-        function init() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 5;
+<script>
+// ══ AURORA ═══════════════════════════════════════════
+(function(){
+  const c=document.getElementById('aurora');
+  const gl=c.getContext('webgl2')||c.getContext('webgl');if(!gl)return;
+  function rsz(){c.width=innerWidth;c.height=innerHeight;gl.viewport(0,0,c.width,c.height);}
+  rsz();window.addEventListener('resize',rsz,{passive:true});
+  const vs=`attribute vec2 p;void main(){gl_Position=vec4(p,0,1);}`;
+  const fs=`precision highp float;uniform float uT;uniform vec2 uR;
+    vec3 prm(vec3 x){return mod(((x*34.)+1.)*x,289.);}
+    float sn(vec2 v){
+      const vec4 C=vec4(.211,.366,-.577,.024);
+      vec2 i=floor(v+dot(v,C.yy));vec2 x0=v-i+dot(i,C.xx);
+      vec2 i1=x0.x>x0.y?vec2(1,0):vec2(0,1);vec4 x12=x0.xyxy+C.xxzz;x12.xy-=i1;
+      i=mod(i,289.);
+      vec3 p=prm(prm(i.y+vec3(0,i1.y,1))+i.x+vec3(0,i1.x,1));
+      vec3 m=max(.5-vec3(dot(x0,x0),dot(x12.xy,x12.xy),dot(x12.zw,x12.zw)),0.);m=m*m;m=m*m;
+      vec3 x=2.*fract(p*.024390244)-1.;vec3 h=abs(x)-.5;vec3 a0=x-floor(x+.5);
+      m*=1.79284291-.85373472*(a0*a0+h*h);
+      vec3 g;g.x=a0.x*x0.x+h.x*x0.y;g.yz=a0.yz*x12.xz+h.yz*x12.yw;return 130.*dot(m,g);
+    }
+    void main(){
+      vec2 uv=gl_FragCoord.xy/uR;float t=uT*.065;
+      vec3 c0=vec3(.78,1.,0.),c1=vec3(.49,.23,.93),c2=vec3(.03,.97,1.);
+      vec3 col=uv.x<.5?mix(c0,c1,uv.x*2.):mix(c1,c2,(uv.x-.5)*2.);
+      float n=sn(vec2(uv.x*2.+t,t*.3))*.5+sn(vec2(uv.x-.4*t,t*.12+3.))*.3;
+      float band=uv.y*2.-exp(n*1.2)+.35;
+      float a=smoothstep(0.,.5,band)*(1.-smoothstep(.5,1.1,band))*.8;
+      gl_FragColor=vec4(col*band*.85*a,a);
+    }`;
+  function sh(t,s){const x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);return x;}
+  const pr=gl.createProgram();
+  gl.attachShader(pr,sh(gl.VERTEX_SHADER,vs));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,fs));
+  gl.linkProgram(pr);gl.useProgram(pr);
+  const bf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,bf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  const lo=gl.getAttribLocation(pr,'p');gl.enableVertexAttribArray(lo);gl.vertexAttribPointer(lo,2,gl.FLOAT,false,0,0);
+  const uT=gl.getUniformLocation(pr,'uT'),uR=gl.getUniformLocation(pr,'uR');
+  gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
+  let s0=null;(function f(ts){if(!s0)s0=ts;
+    gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.uniform1f(uT,(ts-s0)/1000);gl.uniform2f(uR,c.width,c.height);
+    gl.drawArrays(gl.TRIANGLES,0,3);requestAnimationFrame(f);})(performance.now());
+})();
 
-            const canvas = document.getElementById('bg-canvas');
-            renderer = new THREE.WebGLRenderer({ 
-                canvas: canvas, 
-                antialias: true, 
-                alpha: true,
-                powerPreference: 'high-performance' 
-            });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            renderer.toneMapping = THREE.ACESFilmicToneMapping;
-            renderer.outputEncoding = THREE.sRGBEncoding;
+// ══ SCROLL-DRIVEN INTRO PARALLAX ═════════════════════
+const blobWrap   = document.getElementById('blob-wrap');
+const introTitle = document.getElementById('intro-title');
+const introRole  = document.getElementById('intro-role');
+const introStats = document.getElementById('intro-stats');
+const scrollHint = document.getElementById('scroll-hint');
+const introSection = document.getElementById('intro');
 
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-            scene.add(ambientLight);
-            
-            const light1 = new THREE.DirectionalLight(0x0077ff, 2);
-            light1.position.set(-5, 5, 5);
-            scene.add(light1);
+function lerp(a, b, t) { return a + (b - a) * t; }
 
-            const light2 = new THREE.DirectionalLight(0x8e44ad, 2);
-            light2.position.set(5, -5, 5);
-            scene.add(light2);
+function onScroll() {
+  // Progress: 0 at top, 1 at bottom of intro section
+  const scrollH = introSection.offsetHeight - innerHeight;
+  const progress = Math.min(Math.max(scrollY / scrollH, 0), 1);
 
-            const geometry = new THREE.IcosahedronGeometry(1.5, 0);
-            const material = new THREE.MeshStandardMaterial({
-                color: 0xe5e5e5,
-                metalness: 0.7,
-                roughness: 0.1
-            });
-            laptopModel = new THREE.Mesh(geometry, material);
-            laptopModel.position.y = 0;
-            scene.add(laptopModel);
+  // Blob falls down and fades slightly
+  const blobY = progress * 160;
+  const blobS = 1 - progress * 0.25;
+  blobWrap.style.transform = `translate(-50%, calc(-50% + ${blobY}px)) scale(${blobS})`;
+  blobWrap.style.opacity = 1 - progress * 0.6;
 
-            const particlesGeometry = new THREE.BufferGeometry();
-            const particlesCount = 4000;
-            const posArray = new Float32Array(particlesCount * 3);
-            for(let i=0; i < particlesCount * 3; i++) {
-                posArray[i] = (Math.random() - 0.5) * 20;
-            }
-            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-            const particlesMaterial = new THREE.PointsMaterial({ size: 0.010, color: 0xffffff });
-            particles = new THREE.Points(particlesGeometry, particlesMaterial);
-            scene.add(particles);
+  // Title slides up and fades
+  const titleY = -progress * 80;
+  const titleO = 1 - progress * 1.3;
+  introTitle.style.transform = `translateY(${titleY}px)`;
+  introTitle.style.opacity = Math.max(0, titleO);
 
-            raycaster = new THREE.Raycaster();
-            mouse = new THREE.Vector2();
+  // Role fades faster
+  introRole.style.opacity = Math.max(0, 1 - progress * 2);
 
-            window.addEventListener('resize', onWindowResize, false);
-            window.addEventListener('scroll', onScroll, false);
-            window.addEventListener('pointermove', onPointerMove);
-            window.addEventListener('click', onClickModel);
-            
-            animate();
-        }
+  // Scroll hint fades immediately
+  scrollHint.style.opacity = Math.max(0, 1 - progress * 4);
 
-        function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        }
+  // Stats appear in the middle of scroll
+  const statP = Math.max(0, Math.min(1, (progress - 0.35) * 3));
+  introStats.style.opacity = statP;
+  introStats.style.transform = `translateY(${(1 - statP) * 24}px)`;
+  introStats.style.pointerEvents = progress > 0.4 ? 'auto' : 'none';
 
-        function onScroll() {
-            const t = document.body.getBoundingClientRect().top;
-            if (laptopModel) {
-                laptopModel.position.y = t * 0.002; 
-                laptopModel.rotation.x = t * 0.0005;
-                laptopModel.rotation.z = t * 0.00025;
-            }
-        }
-        
-        function onPointerMove(event) {
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-        }
+  // Nav appears
+  document.getElementById('nav').classList.toggle('s', scrollY > 50);
+}
 
-        function onClickModel(event) {
-            if (isModelHovered) {
-                const wave = document.getElementById('click-wave');
-                if (wave) {
-                    const size = Math.max(window.innerWidth, window.innerHeight) * 0.1;
-                    wave.style.width = `${size}px`;
-                    wave.style.height = `${size}px`;
-                    wave.style.top = `${event.clientY}px`;
-                    wave.style.left = `${event.clientX}px`;
-                    wave.classList.remove('animate');
-                    void wave.offsetWidth;
-                    wave.classList.add('animate');
-                }
-            }
-        }
+window.addEventListener('scroll', onScroll, { passive: true });
+// Initial call
+onScroll();
 
-        const clock = new THREE.Clock();
-        function animate() {
-            requestAnimationFrame(animate);
-            const elapsedTime = clock.getElapsedTime();
+// ══ CONTACT RINGS ════════════════════════════════════
+(function(){
+  const c=document.getElementById('crings');
+  const ctx=c.getContext('2d');if(!ctx)return;
+  function r(){c.width=c.offsetWidth;c.height=c.offsetHeight;}
+  r();window.addEventListener('resize',r,{passive:true});
+  let t=0;(function d(){
+    ctx.clearRect(0,0,c.width,c.height);
+    const cx=c.width/2,cy=c.height*.42;
+    for(let i=0;i<8;i++){
+      const ph=i*.85,cyc=5.5,tc=(t*.38+ph)%cyc;
+      const rad=40+i*65+(tc/cyc)*130;
+      const a=Math.max(0,1-tc/cyc)*.16;
+      ctx.beginPath();ctx.arc(cx,cy,rad,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(200,255,0,${a})`;ctx.lineWidth=.7;ctx.stroke();
+    }
+    t+=.016;requestAnimationFrame(d);
+  })();
+})();
 
-            raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObject(laptopModel);
+// ══ CURSOR ═══════════════════════════════════════════
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-r');
+let mx2=0,my2=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx2=e.clientX;my2=e.clientY;cur.style.left=mx2+'px';cur.style.top=my2+'px';});
+(function a(){rx+=(mx2-rx)*.1;ry+=(my2-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a);})();
+document.querySelectorAll('a,button,.pcard,.chip').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('h'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('h'));
+});
 
-            if (intersects.length > 0) {
-                if (!isModelHovered) {
-                     document.body.style.cursor = 'pointer';
-                     isModelHovered = true;
-                     targetScale = 1.1;
-                }
-            } else {
-                if (isModelHovered) {
-                     document.body.style.cursor = 'none';
-                     isModelHovered = false;
-                     targetScale = 1;
-                }
-            }
-            
-            if (laptopModel) {
-                laptopModel.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
-                laptopModel.rotation.y += 0.001;
-            }
-
-            particles.rotation.y = -0.01 * elapsedTime;
-            renderer.render(scene, camera);
-        }
-
-        const cursorDot = document.querySelector(".cursor-dot");
-        const cursorOutline = document.querySelector(".cursor-outline");
-
-        window.addEventListener("mousemove", function (e) {
-            const posX = e.clientX;
-            const posY = e.clientY;
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
-            cursorOutline.animate({
-                left: `${posX}px`,
-                top: `${posY}px`
-            }, { duration: 500, fill: "forwards" });
-        });
-
-        document.querySelectorAll('a, button').forEach(el => {
-            el.addEventListener('mouseover', () => cursorOutline.classList.add('hovered'));
-            el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hovered'));
-        });
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.reveal').forEach((el) => {
-            observer.observe(el);
-        });
-
-        // --- Gemini API Integration ---
-        const apiKey = "AIzaSyBwAyF5PPVxM7sZrwu4XxuKhSlfXv5IQaw";
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-        
-        const modal = document.getElementById('gemini-modal');
-        const modalBody = document.getElementById('modal-body');
-        const closeModalBtn = document.getElementById('close-modal');
-        const generateDetailsBtns = document.querySelectorAll('.generate-details-btn');
-        let activeButton = null;
-
-        const callGeminiAPI = async (payload, maxRetries = 3) => {
-            let attempt = 0;
-            while (attempt < maxRetries) {
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-
-                    const result = await response.json();
-                    const candidate = result.candidates?.[0];
-                    if (candidate && candidate.content?.parts?.[0]?.text) {
-                        return candidate.content.parts[0].text;
-                    } else {
-                        throw new Error('Invalid response structure from API');
-                    }
-                } catch (error) {
-                    attempt++;
-                    if (attempt >= maxRetries) {
-                        console.error('API call failed after multiple retries:', error);
-                        if (error.message.includes("503")) {
-                            return 'The AI service is temporarily unavailable. Please try again in a few moments.';
-                        }
-                        return 'Sorry, I was unable to get a response from the AI. Please try again later.';
-                    }
-                    const delay = Math.pow(2, attempt) * 1000;
-                    await new Promise(res => setTimeout(res, delay));
-                }
-            }
-        };
-
-        const showModalWithContent = (content) => {
-            modalBody.innerHTML = content.replace(/\n/g, '<br>');
-            modal.classList.add('visible');
-        };
-        
-        closeModalBtn.addEventListener('click', () => {
-            modal.classList.remove('visible');
-            if (activeButton) {
-                activeButton.disabled = false;
-                activeButton.innerText = '✨ Ask AI for Details';
-                activeButton.classList.remove('generating');
-                activeButton = null;
-            }
-            document.body.classList.remove('ai-loading');
-        });
-
-        generateDetailsBtns.forEach(btn => {
-            btn.addEventListener('click', async (e) => {
-                if (document.body.classList.contains('ai-loading')) return;
-
-                document.body.classList.add('ai-loading');
-                activeButton = e.target;
-                activeButton.disabled = true;
-                activeButton.innerText = '✨ Generating...';
-                activeButton.classList.add('generating');
-                
-                const card = activeButton.closest('.section-card');
-                const title = card.querySelector('h3').innerText;
-                const description = card.querySelector('p').innerText;
-
-                const prompt = `Based on the project title "${title}" and this short description: "${description}", please generate a more detailed and professional project summary. Elaborate on the potential technologies used, the problem it solves, and its potential impact. Use a professional and engaging tone. Structure the output in well-written paragraphs.`;
-                
-                const payload = { contents: [{ parts: [{ text: prompt }] }] };
-                const aiResponse = await callGeminiAPI(payload);
-                
-                showModalWithContent(aiResponse);
-            });
-        });
-
-        // --- AI Career Advisor Logic ---
-        const advisorInput = document.getElementById('advisor-input');
-        const advisorSubmitBtn = document.getElementById('advisor-submit');
-        const advisorResponseContainer = document.getElementById('advisor-response-container');
-        const advisorResponseEl = document.getElementById('advisor-response');
-        
-        advisorSubmitBtn.addEventListener('click', async () => {
-            const userQuery = advisorInput.value.trim();
-            if (!userQuery) return;
-
-            advisorResponseContainer.style.display = 'block';
-            advisorResponseEl.innerHTML = '<div class="flex justify-center items-center"><div class="spinner w-8 h-8"></div></div>';
-            advisorSubmitBtn.disabled = true;
-            advisorSubmitBtn.innerText = 'Thinking...';
-            
-            const systemPrompt = `You are a helpful and insightful AI career advisor. Your purpose is to provide guidance to visitors of Parardha Dhar's portfolio. Parardha is a Computer Science undergraduate specializing in Machine Learning. His skills include Python, TensorFlow, PyTorch, Scikit-learn, and web/game development. His projects are PhishGuard (a phishing detector), Sentinel Verse (a cybersecurity game), Music Mood Matcher (an emotion-based music recommender), and an AI Handwriting Generator.`;
-            
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] },
-            };
-
-            const aiResponse = await callGeminiAPI(payload);
-            advisorResponseEl.innerText = aiResponse;
-            advisorSubmitBtn.disabled = false;
-            advisorSubmitBtn.innerText = 'Ask AI';
-        });
-
-    </script>
+// ══ SCROLL REVEALS ═══════════════════════════════════
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('on');}),{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+</script>
 </body>
 </html>
-

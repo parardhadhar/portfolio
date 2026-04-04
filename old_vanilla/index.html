@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parardha Dhar — Creative Technologist</title>
+  <meta name="description" content="Parardha Dhar — Unreal Engine Artist, ML Developer & Full-Stack Engineer. Cinematic portfolio.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════
+       TOKENS
+    ═══════════════════════════════════════════ */
+    :root {
+      --bg:      #060008;
+      --s1:      #0d0015;
+      --border:  rgba(255,255,255,0.06);
+      --text:    #f2f2f2;
+      --muted:   rgba(242,242,242,0.4);
+      --accent:  #d4ff00;
+      --a2:      #b060ff;
+      --a3:      #ff6bff;
+      --ff-d: 'Syne', sans-serif;
+      --ff-b: 'DM Sans', sans-serif;
+      --ff-m: 'Space Mono', monospace;
+      --ease: cubic-bezier(0.16,1,0.3,1);
+    }
+
+    /* ═══════════════════════════════════════════
+       RESET
+    ═══════════════════════════════════════════ */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { font-size:16px; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--ff-b);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+      /* overflow-y starts auto — no locking */
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ═══════════════════════════════════════════
+       CUSTOM CURSOR
+    ═══════════════════════════════════════════ */
+    #cur, #cur-dot {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%,-50%);
+    }
+    #cur {
+      width: 44px; height: 44px;
+      border: 1.5px solid rgba(212,255,0,0.55);
+      transition: width .35s var(--ease), height .35s var(--ease), background .35s;
+      mix-blend-mode: difference;
+    }
+    #cur-dot {
+      width: 5px; height: 5px;
+      background: var(--accent);
+      transition: transform .06s;
+    }
+    body.hov #cur { width: 72px; height: 72px; background: rgba(212,255,0,0.06); }
+
+    /* ═══════════════════════════════════════════
+       GRADIENT TEXT (GradientText component — CSS)
+    ═══════════════════════════════════════════ */
+    .gt {
+      background: linear-gradient(to right, #5227FF, #FF9FFC, #B19EEF, #5227FF);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gtMove 8s linear infinite;
+      display: inline;
+    }
+    @keyframes gtMove {
+      0%   { background-position: 0%   50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0%   50%; }
+    }
+    /* Lime variant */
+    .gt-lime {
+      background: linear-gradient(to right, #d4ff00, #4dff91, #00f0ff, #d4ff00);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gtMove 6s linear infinite;
+      display: inline;
+    }
+
+    /* ═══════════════════════════════════════════
+       INTRO
+    ═══════════════════════════════════════════ */
+    #intro {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: opacity .9s var(--ease), transform .9s var(--ease);
+    }
+    #intro.exit {
+      opacity: 0;
+      transform: scale(1.04);
+      pointer-events: none;
+    }
+    #intro-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+    }
+    .intro-noise {
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+    }
+    .intro-body {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 30px;
+      text-align: center;
+    }
+    .intro-tag {
+      font-family: var(--ff-m);
+      font-size: 11px; letter-spacing: 4px;
+      color: var(--accent);
+      opacity: 0;
+      animation: fadeUp .7s var(--ease) .4s forwards;
+    }
+    .intro-name {
+      font-family: var(--ff-d);
+      font-weight: 800;
+      font-size: clamp(64px, 13vw, 170px);
+      line-height: .9;
+      letter-spacing: -3px;
+      overflow: hidden;
+    }
+    .n-line {
+      display: block;
+      opacity: 0; transform: translateY(110%);
+      animation: slideUp .9s var(--ease) forwards;
+    }
+    .n-line:nth-child(1) { animation-delay: .55s; color: #fff; }
+    .n-line:nth-child(2) {
+      animation-delay: .72s;
+      -webkit-text-stroke: 2px #fff;
+      color: transparent;
+    }
+    .intro-roles {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 13px; color: var(--muted);
+      opacity: 0;
+      animation: fadeUp .7s var(--ease) 1.15s forwards;
+    }
+    .rsep { color: var(--accent); opacity: .6; }
+    #enter-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 40px;
+      background: var(--accent);
+      color: #060008;
+      border: none; border-radius: 50px;
+      font-family: var(--ff-d); font-weight: 700;
+      font-size: 14px; letter-spacing: .5px;
+      cursor: pointer;
+      opacity: 0; transform: translateY(12px);
+      animation: fadeUp .7s var(--ease) 1.45s forwards;
+      transition: transform .3s var(--ease), box-shadow .3s;
+    }
+    #enter-btn:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 20px 60px rgba(212,255,0,.32);
+    }
+    .intro-hint {
+      position: absolute; bottom: 34px;
+      font-family: var(--ff-m); font-size: 10px;
+      letter-spacing: 3px; color: var(--muted);
+      z-index: 2;
+      opacity: 0;
+      animation: fadeUp .7s var(--ease) 2s forwards;
+    }
+    .intro-hint::after {
+      content:''; display:block;
+      width:1px; height:40px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+      margin: 10px auto 0;
+    }
+
+    @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+    @keyframes slideUp { to { opacity:1; transform:translateY(0); } }
+
+    /* ═══════════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════════ */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 26px 52px;
+      transition: background .4s, padding .4s, border-color .4s;
+      border-bottom: 1px solid transparent;
+    }
+    #nav.stuck {
+      background: rgba(6,0,8,.88);
+      backdrop-filter: blur(22px);
+      padding: 16px 52px;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--ff-d); font-weight: 800;
+      font-size: 19px; letter-spacing: 2px; color: #fff;
+    }
+    .nav-links { display:flex; gap:38px; }
+    .nl {
+      font-size: 13px; color: var(--muted);
+      letter-spacing: 1px; position: relative;
+      transition: color .3s;
+    }
+    .nl::after {
+      content:''; position:absolute;
+      bottom:-4px; left:0;
+      width:0; height:1px;
+      background: var(--accent);
+      transition: width .3s var(--ease);
+    }
+    .nl:hover { color:#fff; }
+    .nl:hover::after { width:100%; }
+    .nav-cv {
+      font-family: var(--ff-m); font-size: 11px;
+      letter-spacing: 2px; padding: 9px 24px;
+      border: 1px solid var(--border); border-radius: 40px;
+      color: var(--muted);
+      transition: all .3s var(--ease);
+    }
+    .nav-cv:hover { border-color:var(--accent); color:var(--accent); box-shadow:0 0 20px rgba(212,255,0,.12); }
+
+    /* ═══════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════ */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 130px 52px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg-word {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      font-family: var(--ff-d); font-weight: 800;
+      font-size: clamp(100px, 20vw, 300px);
+      letter-spacing: -8px; white-space: nowrap;
+      color: rgba(255,255,255,0.015);
+      user-select: none; pointer-events: none;
+      transition: transform .1s;
+    }
+    .hero-inner { position:relative; z-index:1; max-width:1100px; margin:0 auto; width:100%; }
+    .hero-eye {
+      font-family: var(--ff-m); font-size:11px;
+      letter-spacing:4px; color:var(--accent);
+      display:block; margin-bottom:30px;
+    }
+    .hero-h1 {
+      font-family: var(--ff-d); font-weight:800;
+      font-size: clamp(50px,9vw,118px);
+      line-height:1.0; letter-spacing:-2px;
+      color:#fff; margin-bottom:56px;
+    }
+    .hero-h1 em { font-style:italic; }
+    .hero-stats {
+      display:flex; align-items:center; gap:40px;
+    }
+    .hs { display:flex; flex-direction:column; gap:4px; }
+    .hs-n {
+      font-family:var(--ff-d); font-weight:800;
+      font-size:28px; letter-spacing:-1px; color:#fff;
+    }
+    .hs-l { font-size:11px; letter-spacing:2px; color:var(--muted); }
+    .hero-div { width:1px; height:38px; background:var(--border); }
+    .scroll-ind {
+      position:absolute; bottom:46px; right:52px;
+      display:flex; flex-direction:column; align-items:center; gap:8px;
+    }
+    .scroll-ind::before {
+      content:'SCROLL';
+      font-family:var(--ff-m); font-size:9px;
+      letter-spacing:3px; color:var(--muted);
+    }
+    .scroll-ind::after {
+      content:''; display:block;
+      width:1px; height:55px;
+      background:linear-gradient(to bottom, var(--muted), transparent);
+      animation: spulse 2s ease-in-out infinite;
+    }
+    @keyframes spulse { 0%,100%{opacity:.4} 50%{opacity:1} }
+
+    /* ═══════════════════════════════════════════
+       SECTION LABEL
+    ═══════════════════════════════════════════ */
+    .sec-label {
+      font-family:var(--ff-m); font-size:11px;
+      letter-spacing:4px; color:var(--accent);
+      display:block; margin-bottom:28px;
+    }
+
+    /* ═══════════════════════════════════════════
+       ABOUT
+    ═══════════════════════════════════════════ */
+    #about {
+      padding: 130px 52px;
+      max-width: 1200px; margin:0 auto;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start;
+    }
+    .about-h2 {
+      font-family:var(--ff-d); font-weight:800;
+      font-size:clamp(34px,5vw,62px);
+      line-height:1.1; letter-spacing:-1.5px; color:#fff;
+    }
+    .about-h2 em { font-style:italic; }
+    .about-p {
+      font-size:16px; line-height:1.85;
+      color:var(--muted); margin-bottom:20px;
+    }
+    .about-p strong { color:#fff; font-weight:500; }
+    .tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:30px; }
+    .tag {
+      font-family:var(--ff-m); font-size:10px;
+      letter-spacing:1px; padding:7px 18px;
+      border:1px solid var(--border); border-radius:40px;
+      color:var(--muted);
+      transition: all .3s;
+    }
+    .tag:hover { border-color:var(--accent); color:var(--accent); }
+
+    /* ═══════════════════════════════════════════
+       WORK
+    ═══════════════════════════════════════════ */
+    #work {
+      padding: 120px 52px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .work-h2 {
+      font-family:var(--ff-d); font-weight:800;
+      font-size:clamp(34px,5vw,58px);
+      letter-spacing:-1.5px; color:#fff;
+      margin-bottom:60px;
+    }
+    .proj-list { border-top:1px solid var(--border); }
+    .proj {
+      display:grid;
+      grid-template-columns: 60px 1fr auto;
+      gap:36px; align-items:center;
+      padding:36px 0;
+      border-bottom:1px solid var(--border);
+      cursor:pointer; position:relative; overflow:hidden;
+    }
+    .proj-glow {
+      position:absolute; inset:0;
+      background:transparent;
+      transition: background .5s;
+      pointer-events:none;
+    }
+    .proj:hover .proj-glow {
+      background: radial-gradient(circle at 50% 50%, rgba(212,255,0,.04) 0%, transparent 70%);
+    }
+    .proj:hover .proj-name { color:var(--accent); }
+    .proj:hover .proj-arr { transform:translate(5px,-5px); color:var(--accent); }
+    .proj-n {
+      font-family:var(--ff-m); font-size:12px;
+      color:var(--muted); letter-spacing:2px;
+    }
+    .proj-info { flex:1; }
+    .proj-name {
+      font-family:var(--ff-d); font-weight:700;
+      font-size:clamp(20px,3vw,34px);
+      letter-spacing:-.5px; color:#fff;
+      margin-bottom:10px; transition:color .3s;
+    }
+    .proj-desc {
+      font-size:14px; line-height:1.7;
+      color:var(--muted); max-width:520px; margin-bottom:14px;
+    }
+    .proj-tags { display:flex; gap:7px; flex-wrap:wrap; }
+    .proj-tags span {
+      font-family:var(--ff-m); font-size:9px;
+      letter-spacing:1px; padding:4px 12px;
+      border:1px solid var(--border); border-radius:40px;
+      color:var(--muted);
+    }
+    .proj-meta {
+      display:flex; flex-direction:column;
+      align-items:flex-end; gap:14px;
+    }
+    .proj-yr { font-family:var(--ff-m); font-size:11px; color:var(--muted); letter-spacing:2px; }
+    .proj-arr {
+      color:var(--muted);
+      transition:transform .3s var(--ease), color .3s;
+    }
+
+    /* ═══════════════════════════════════════════
+       MARQUEE
+    ═══════════════════════════════════════════ */
+    .marquee-wrap {
+      padding:56px 0;
+      border-top:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+      overflow:hidden;
+    }
+    .marquee-track {
+      display:flex; align-items:center; gap:44px;
+      white-space:nowrap;
+      animation: mq 30s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state:paused; }
+    .marquee-track span {
+      font-family:var(--ff-d); font-weight:700;
+      font-size:clamp(22px,4vw,46px);
+      letter-spacing:-.5px; color:#fff;
+      opacity:.78; flex-shrink:0;
+    }
+    .marquee-track .mdot { color:var(--accent); opacity:1 !important; font-size:18px; }
+    @keyframes mq { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ═══════════════════════════════════════════
+       SKILLS
+    ═══════════════════════════════════════════ */
+    #skills {
+      padding:140px 52px;
+      background:var(--s1);
+    }
+    .skills-inner { max-width:1200px; margin:0 auto; }
+    .skills-h2 {
+      font-family:var(--ff-d); font-weight:800;
+      font-size:clamp(34px,5vw,62px);
+      letter-spacing:-1.5px; color:#fff;
+      line-height:1.1; margin-bottom:80px;
+    }
+    .sg {
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:2px;
+    }
+    .sc {
+      padding:44px 32px;
+      background:var(--bg);
+      border:1px solid var(--border);
+      transition:border-color .3s, transform .4s var(--ease);
+      position:relative; overflow:hidden;
+    }
+    .sc::after {
+      content:''; position:absolute;
+      bottom:0; left:0;
+      width:100%; height:2px;
+      background:var(--accent);
+      transform:scaleX(0); transform-origin:left;
+      transition:transform .45s var(--ease);
+    }
+    .sc:hover { border-color:rgba(212,255,0,.2); transform:translateY(-7px); }
+    .sc:hover::after { transform:scaleX(1); }
+    .sc-ico { font-size:26px; color:var(--accent); margin-bottom:22px; display:block; }
+    .sc h3 {
+      font-family:var(--ff-d); font-weight:700;
+      font-size:19px; color:#fff; margin-bottom:14px;
+    }
+    .sc p { font-size:13px; line-height:1.8; color:var(--muted); }
+
+    /* ═══════════════════════════════════════════
+       CONTACT
+    ═══════════════════════════════════════════ */
+    #contact {
+      padding:160px 52px;
+      text-align:center; position:relative; overflow:hidden;
+    }
+    #contact::before {
+      content:''; position:absolute;
+      top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      width:700px; height:700px;
+      background:radial-gradient(circle, rgba(212,255,0,.035) 0%, transparent 70%);
+      pointer-events:none;
+    }
+    .contact-inner { position:relative;z-index:1; max-width:860px; margin:0 auto; }
+    .contact-eye { font-family:var(--ff-m); font-size:11px; letter-spacing:4px; color:var(--accent); display:block; margin-bottom:30px; }
+    .contact-h2 {
+      font-family:var(--ff-d); font-weight:800;
+      font-size:clamp(42px,7vw,90px);
+      letter-spacing:-2px; color:#fff;
+      line-height:1.0; margin-bottom:28px;
+    }
+    .contact-h2 em { font-style:italic; }
+    .contact-sub { font-size:16px; color:var(--muted); line-height:1.75; margin-bottom:54px; }
+    .contact-btns { display:flex; align-items:center; justify-content:center; gap:18px; }
+    .btn-p {
+      display:inline-flex; align-items:center; gap:10px;
+      padding:16px 44px; background:var(--accent);
+      color:#060008; border-radius:50px;
+      font-family:var(--ff-d); font-weight:700;
+      font-size:15px; letter-spacing:.5px;
+      transition:transform .3s var(--ease), box-shadow .3s;
+      border:none; cursor:pointer;
+    }
+    .btn-p:hover { transform:translateY(-5px); box-shadow:0 24px 60px rgba(212,255,0,.28); }
+    .btn-o {
+      display:inline-flex; align-items:center; gap:10px;
+      padding:16px 44px;
+      border:1px solid var(--border);
+      color:var(--muted); border-radius:50px;
+      font-family:var(--ff-d); font-weight:700;
+      font-size:15px; letter-spacing:.5px;
+      transition:all .3s var(--ease);
+    }
+    .btn-o:hover { border-color:var(--accent); color:var(--accent); }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    footer {
+      border-top:1px solid var(--border);
+      padding:34px 52px;
+    }
+    .fi {
+      max-width:1200px; margin:0 auto;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .f-logo { font-family:var(--ff-d); font-weight:800; font-size:17px; color:#fff; letter-spacing:2px; }
+    .f-sub { font-family:var(--ff-m); font-size:10px; color:var(--muted); letter-spacing:2px; margin-top:4px; }
+    .f-r { display:flex; align-items:center; gap:26px; font-size:12px; color:var(--muted); }
+    .f-r a:hover { color:var(--accent); }
+
+    /* ═══════════════════════════════════════════
+       REVEAL SYSTEM
+    ═══════════════════════════════════════════ */
+    .rv {
+      opacity:0; transform:translateY(44px);
+      transition: opacity .95s var(--ease), transform .95s var(--ease);
+    }
+    .rv.on { opacity:1; transform:translateY(0); }
+    .rv.d1 { transition-delay:.08s; }
+    .rv.d2 { transition-delay:.16s; }
+    .rv.d3 { transition-delay:.24s; }
+    .rv.d4 { transition-delay:.32s; }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media(max-width:1024px){
+      .sg { grid-template-columns:repeat(2,1fr); }
+      .about-grid { grid-template-columns:1fr; gap:48px; }
+    }
+    @media(max-width:768px){
+      #nav, #nav.stuck { padding:18px 24px; }
+      .nav-links { display:none; }
+      #hero, #about, #work, .marquee-wrap { padding-left:24px; padding-right:24px; }
+      #skills, #contact, footer { padding-left:24px; padding-right:24px; }
+      .hero-stats { flex-direction:column; align-items:flex-start; gap:18px; }
+      .hero-div { display:none; }
+      .sg { grid-template-columns:1fr; }
+      .proj { grid-template-columns:40px 1fr; }
+      .proj-meta { display:none; }
+      .contact-btns { flex-direction:column; }
+      .fi { flex-direction:column; gap:18px; text-align:center; }
+      .intro-roles { flex-direction:column; gap:6px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── CURSOR ── -->
+<div id="cur"></div>
+<div id="cur-dot"></div>
+
+<!-- ════════════════════════════════
+     INTRO
+════════════════════════════════ -->
+<div id="intro">
+  <canvas id="intro-canvas"></canvas>
+  <div class="intro-noise"></div>
+  <div class="intro-body">
+    <div class="intro-tag">REG — 24BCG10003</div>
+    <div class="intro-name">
+      <span class="n-line">PARARDHA</span>
+      <span class="n-line" style="-webkit-text-stroke:2px #fff;color:transparent">DHAR</span>
+    </div>
+    <div class="intro-roles">
+      <span>Unreal Engine Artist</span>
+      <span class="rsep">·</span>
+      <span>ML Developer</span>
+      <span class="rsep">·</span>
+      <span>Full-Stack Engineer</span>
+    </div>
+    <button id="enter-btn" onclick="enterSite()">
+      <span>View Work</span>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="intro-hint">Scroll to explore</div>
+</div>
+
+<!-- ════════════════════════════════
+     MAIN
+════════════════════════════════ -->
+<div id="site">
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-logo">P·D</div>
+    <div class="nav-links">
+      <a href="#about" class="nl">About</a>
+      <a href="#work"  class="nl">Work</a>
+      <a href="#skills" class="nl">Skills</a>
+      <a href="#contact" class="nl">Contact</a>
+    </div>
+    <a href="Parardha_Dhar_CV_0.pdf" class="nav-cv" target="_blank">CV ↗</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-word" id="hero-bg">PARARDHA</div>
+    <div class="hero-inner">
+      <span class="hero-eye rv">Creative Technologist — 2026</span>
+      <h1 class="hero-h1">
+        <span class="rv" style="display:block">Worlds built at</span>
+        <span class="rv d1" style="display:block"><em class="gt-lime">the intersection</em></span>
+        <span class="rv d2" style="display:block">of art &amp; code.</span>
+      </h1>
+      <div class="hero-stats rv d3">
+        <div class="hs">
+          <span class="hs-n" data-count="3" data-suffix="+">3+</span>
+          <span class="hs-l">Years Experience</span>
+        </div>
+        <div class="hero-div"></div>
+        <div class="hs">
+          <span class="hs-n" data-count="10" data-suffix="+">10+</span>
+          <span class="hs-l">Projects Shipped</span>
+        </div>
+        <div class="hero-div"></div>
+        <div class="hs">
+          <span class="hs-n">UE5</span>
+          <span class="hs-l">Core Skill</span>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-ind"></div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div>
+        <span class="sec-label rv">/ About</span>
+        <h2 class="about-h2 rv d1">
+          I build immersive<br>
+          <em class="gt">experiences</em> — not<br>
+          just interfaces.
+        </h2>
+      </div>
+      <div>
+        <p class="about-p rv">
+          I'm <strong>Parardha Dhar</strong> (Reg. 24BCG10003), a creative technologist
+          fusing Unreal Engine artistry with machine learning and full-stack engineering.
+          My work pushes the edge of what's technically possible and visually stunning.
+        </p>
+        <p class="about-p rv d1">
+          From ray-traced cinematic worlds to deployed AI systems — I build things
+          that are as engineered as they are beautiful.
+        </p>
+        <div class="tags rv d2">
+          <span class="tag">Unreal Engine 5</span>
+          <span class="tag">Python / ML</span>
+          <span class="tag">React / Next.js</span>
+          <span class="tag">Three.js</span>
+          <span class="tag">Blender</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">Firebase</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <span class="sec-label rv">/ Selected Work</span>
+    <h2 class="work-h2 rv d1">Featured Projects</h2>
+    <div class="proj-list">
+
+      <div class="proj rv">
+        <div class="proj-glow"></div>
+        <span class="proj-n">01</span>
+        <div class="proj-info">
+          <h3 class="proj-name">SafeRoute India</h3>
+          <p class="proj-desc">AI-powered women's safety intelligence dashboard. Live NCRB crime data, GIS mapping, cinematic UI.</p>
+          <div class="proj-tags"><span>Python</span><span>Leaflet.js</span><span>ML</span><span>GIS</span></div>
+        </div>
+        <div class="proj-meta">
+          <span class="proj-yr">2025</span>
+          <span class="proj-arr">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <div class="proj rv d1">
+        <div class="proj-glow"></div>
+        <span class="proj-n">02</span>
+        <div class="proj-info">
+          <h3 class="proj-name">UE5 Beach Environment</h3>
+          <p class="proj-desc">Photorealistic coastal scene — dynamic ocean, volumetric lighting, Lumen global illumination.</p>
+          <div class="proj-tags"><span>Unreal Engine 5</span><span>Nanite</span><span>Lumen</span></div>
+        </div>
+        <div class="proj-meta">
+          <span class="proj-yr">2025</span>
+          <span class="proj-arr">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <div class="proj rv d2">
+        <div class="proj-glow"></div>
+        <span class="proj-n">03</span>
+        <div class="proj-info">
+          <h3 class="proj-name">UE5 Cave System</h3>
+          <p class="proj-desc">Underground cave with bioluminescent flora, subsurface scattering crystals, atmospheric fog volumes.</p>
+          <div class="proj-tags"><span>Unreal Engine 5</span><span>PCG</span><span>Blueprints</span></div>
+        </div>
+        <div class="proj-meta">
+          <span class="proj-yr">2024</span>
+          <span class="proj-arr">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <div class="proj rv d3">
+        <div class="proj-glow"></div>
+        <span class="proj-n">04</span>
+        <div class="proj-info">
+          <h3 class="proj-name">AI Tutor Telegram Bot</h3>
+          <p class="proj-desc">Multi-model AI assistant with vision. Deployed to Telegram. Gemini + Groq with fallback chains.</p>
+          <div class="proj-tags"><span>Python</span><span>Gemini API</span><span>Firebase</span></div>
+        </div>
+        <div class="proj-meta">
+          <span class="proj-yr">2024</span>
+          <span class="proj-arr">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <div class="proj rv d4">
+        <div class="proj-glow"></div>
+        <span class="proj-n">05</span>
+        <div class="proj-info">
+          <h3 class="proj-name">Car Rigging & Animation</h3>
+          <p class="proj-desc">Full mechanical vehicle rig in Blender — physics suspension, cinematic keyframe animation sequence.</p>
+          <div class="proj-tags"><span>Blender</span><span>Rigging</span><span>Animation</span></div>
+        </div>
+        <div class="proj-meta">
+          <span class="proj-yr">2024</span>
+          <span class="proj-arr">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>Unreal Engine 5</span><span class="mdot">✦</span>
+      <span>Machine Learning</span><span class="mdot">✦</span>
+      <span>React / Next.js</span><span class="mdot">✦</span>
+      <span>Three.js / WebGL</span><span class="mdot">✦</span>
+      <span>Blender</span><span class="mdot">✦</span>
+      <span>Python</span><span class="mdot">✦</span>
+      <span>Firebase</span><span class="mdot">✦</span>
+      <span>Lumen &amp; Nanite</span><span class="mdot">✦</span>
+      <span>Unreal Engine 5</span><span class="mdot">✦</span>
+      <span>Machine Learning</span><span class="mdot">✦</span>
+      <span>React / Next.js</span><span class="mdot">✦</span>
+      <span>Three.js / WebGL</span><span class="mdot">✦</span>
+      <span>Blender</span><span class="mdot">✦</span>
+      <span>Python</span><span class="mdot">✦</span>
+      <span>Firebase</span><span class="mdot">✦</span>
+      <span>Lumen &amp; Nanite</span><span class="mdot">✦</span>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="skills-inner">
+      <span class="sec-label rv">/ Expertise</span>
+      <h2 class="skills-h2 rv d1">
+        What I bring<br>to the table.
+      </h2>
+      <div class="sg">
+        <div class="sc rv">
+          <span class="sc-ico">◈</span>
+          <h3>3D &amp; Real-Time</h3>
+          <p>UE5 with Nanite, Lumen, PCG. Ray-traced cinematics. Blender modelling &amp; rigging. Environment art workflows.</p>
+        </div>
+        <div class="sc rv d1">
+          <span class="sc-ico">⟁</span>
+          <h3>Machine Learning</h3>
+          <p>Python ML pipelines, NLP, computer vision. Multi-model systems with Gemini, Groq &amp; custom LLM integrations.</p>
+        </div>
+        <div class="sc rv d2">
+          <span class="sc-ico">⬡</span>
+          <h3>Full-Stack Web</h3>
+          <p>React, Next.js, Node.js, Firebase. Three.js for interactive 3D. REST APIs, real-time systems, GIS integrations.</p>
+        </div>
+        <div class="sc rv d3">
+          <span class="sc-ico">◎</span>
+          <h3>Visual Design</h3>
+          <p>Cinematic UI/UX, GLSL shaders, post-processing. Obsessive attention to motion, light &amp; typography.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <span class="contact-eye rv">/ Let's collaborate</span>
+      <h2 class="contact-h2 rv d1">
+        Have something<br><em class="gt">interesting</em> in mind?
+      </h2>
+      <p class="contact-sub rv d2">
+        Available for freelance, internships &amp; creative collaborations.<br>I reply fast — reach out.
+      </p>
+      <div class="contact-btns rv d3">
+        <a href="mailto:parardhadhar@gmail.com" class="btn-p">
+          <span>Send a message</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </a>
+        <a href="Parardha_Dhar_CV_0.pdf" class="btn-o" target="_blank">Download CV</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="fi">
+      <div>
+        <div class="f-logo">P·D</div>
+        <div class="f-sub">Parardha Dhar — 24BCG10003</div>
+      </div>
+      <div class="f-r">
+        <span>© 2026</span>
+        <a href="mailto:parardhadhar@gmail.com">Email</a>
+        <a href="Parardha_Dhar_CV_0.pdf" target="_blank">CV</a>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- /site -->
+
+<script>
+/* ════════════════════════════════════════
+   CURSOR
+════════════════════════════════════════ */
+const cur = document.getElementById('cur');
+const dot = document.getElementById('cur-dot');
+let mx=window.innerWidth/2, my=window.innerHeight/2;
+let cx=mx, cy=my;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  dot.style.left = mx+'px'; dot.style.top = my+'px';
+});
+(function animCur(){
+  cx += (mx-cx)*0.11; cy += (my-cy)*0.11;
+  cur.style.left = cx+'px'; cur.style.top = cy+'px';
+  requestAnimationFrame(animCur);
+})();
+document.addEventListener('mouseover', e => {
+  if(e.target.closest('a,button,.proj,.sc,.tag')) document.body.classList.add('hov');
+});
+document.addEventListener('mouseout', e => {
+  if(e.target.closest('a,button,.proj,.sc,.tag')) document.body.classList.remove('hov');
+});
+
+/* ════════════════════════════════════════
+   INTRO CANVAS — particles
+════════════════════════════════════════ */
+(function(){
+  const cv=document.getElementById('intro-canvas');
+  const ctx=cv.getContext('2d');
+  let W,H;
+  function resize(){ W=cv.width=window.innerWidth; H=cv.height=window.innerHeight; }
+  resize(); window.addEventListener('resize',resize);
+
+  const pts=[];
+  for(let i=0;i<80;i++){
+    pts.push({
+      x:Math.random()*1000, y:Math.random()*800,
+      vx:(Math.random()-.5)*.25, vy:-(Math.random()*.35+.05),
+      r:Math.random()*1.4+.2, a:Math.random()*.5+.1,
+      life:Math.random()*300,maxLife:Math.random()*250+150
+    });
+  }
+
+  function loop(){
+    ctx.clearRect(0,0,W,H);
+    // grid
+    ctx.strokeStyle='rgba(212,255,0,0.022)'; ctx.lineWidth=1;
+    for(let x=0;x<W;x+=90){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(let y=0;y<H;y+=90){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    // dots
+    pts.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy; p.life++;
+      if(p.life>p.maxLife||p.y<-20){
+        p.x=Math.random()*W; p.y=H+10; p.life=0;
+        p.maxLife=Math.random()*250+150;
+      }
+      const t=p.life/p.maxLife;
+      const alpha=p.a*(t<.2?t/.2:t>.8?(1-t)/.2:1);
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(212,255,0,${alpha})`; ctx.fill();
+    });
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ════════════════════════════════════════
+   GLITCH TEXT on intro name
+════════════════════════════════════════ */
+(function(){
+  const lines=document.querySelectorAll('.n-line');
+  const abc='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  function glitch(el){
+    const orig=el.textContent;
+    let i=0;
+    const iv=setInterval(()=>{
+      el.textContent=orig.split('').map((c,j)=>{
+        if(j<i||c===' ') return c;
+        return abc[Math.floor(Math.random()*abc.length)];
+      }).join('');
+      i+=0.35;
+      if(i>=orig.length){ clearInterval(iv); el.textContent=orig; }
+    },28);
+  }
+  setTimeout(()=>lines.forEach(glitch), 2200);
+  document.querySelector('.intro-name').addEventListener('mouseenter',()=>lines.forEach(glitch));
+})();
+
+/* ════════════════════════════════════════
+   ENTER SITE
+════════════════════════════════════════ */
+function enterSite(){
+  const intro=document.getElementById('intro');
+  intro.classList.add('exit');
+  // After CSS transition(.9s) completes, hide intro and show site
+  setTimeout(()=>{
+    intro.style.display='none';
+    document.getElementById('site').style.visibility='visible';
+    // Start reveal + nav observers
+    startObservers();
+    initNav();
+    initSmoothLinks();
+    initParallax();
+    initCounters();
+  }, 920);
+}
+
+// Also enter on scroll
+window.addEventListener('wheel', function onW(){
+  window.removeEventListener('wheel',onW);
+  enterSite();
+},{passive:true,once:true});
+
+/* ════════════════════════════════════════
+   NAV SCROLL EFFECT
+════════════════════════════════════════ */
+function initNav(){
+  const nav=document.getElementById('nav');
+  window.addEventListener('scroll',()=>{
+    nav.classList.toggle('stuck', window.scrollY>60);
+  },{passive:true});
+}
+
+/* ════════════════════════════════════════
+   REVEAL ON SCROLL
+════════════════════════════════════════ */
+function startObservers(){
+  const els=document.querySelectorAll('.rv');
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
+    });
+  },{threshold:0.1, rootMargin:'0px 0px -50px 0px'});
+  els.forEach(el=>io.observe(el));
+}
+
+/* ════════════════════════════════════════
+   SMOOTH ANCHOR LINKS
+════════════════════════════════════════ */
+function initSmoothLinks(){
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const t=document.querySelector(a.getAttribute('href'));
+      if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
+    });
+  });
+}
+
+/* ════════════════════════════════════════
+   PARALLAX HERO BG TEXT
+════════════════════════════════════════ */
+function initParallax(){
+  const bg=document.getElementById('hero-bg');
+  if(!bg) return;
+  window.addEventListener('scroll',()=>{
+    bg.style.transform=`translate(-50%, calc(-50% + ${window.scrollY*.22}px))`;
+  },{passive:true});
+}
+
+/* ════════════════════════════════════════
+   PROJECT ROW RADIAL GLOW
+════════════════════════════════════════ */
+document.querySelectorAll('.proj').forEach(p=>{
+  p.addEventListener('mousemove',e=>{
+    const r=p.getBoundingClientRect();
+    const x=((e.clientX-r.left)/r.width*100).toFixed(1);
+    const y=((e.clientY-r.top)/r.height*100).toFixed(1);
+    p.querySelector('.proj-glow').style.background=
+      `radial-gradient(circle at ${x}% ${y}%, rgba(212,255,0,0.05) 0%, transparent 60%)`;
+  });
+  p.addEventListener('mouseleave',()=>{
+    p.querySelector('.proj-glow').style.background='transparent';
+  });
+});
+
+/* ════════════════════════════════════════
+   NUMBER COUNTER ANIMATION
+════════════════════════════════════════ */
+function initCounters(){
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    const end=parseInt(el.dataset.count);
+    const suf=el.dataset.suffix||'';
+    el.textContent='0'+suf;
+    const io=new IntersectionObserver(en=>{
+      if(!en[0].isIntersecting) return;
+      io.unobserve(el);
+      let n=0;
+      const step=Math.max(30, 1200/end);
+      const iv=setInterval(()=>{
+        n++; el.textContent=n+suf;
+        if(n>=end) clearInterval(iv);
+      },step);
+    },{threshold:.6});
+    io.observe(el);
+  });
+}
+</script>
+</body>
+</html>
