@@ -133,8 +133,8 @@ export default function Hero() {
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 2,
-            width: 'clamp(300px, 45vw, 750px)', // Slimmed down so it definitely doesn't touch the text
-            height: '85%', // Safely sized
+            height: '100vh', // Maximize height completely
+            width: '100vw', // Let container span horizontally
             display: 'flex',
             alignItems: 'flex-end',
             justifyContent: 'center',
@@ -146,8 +146,9 @@ export default function Hero() {
             src="/photo.png"
             alt="Parardha Dhar"
             style={{
-              width: '100%',
-              height: '100%',
+              height: '100%', // Fills exactly 100vh
+              width: 'auto', // Scales naturally
+              maxWidth: '100vw', // Prevent accidental overflow
               objectFit: 'contain',
               objectPosition: 'center bottom',
               filter: 'grayscale(100%) contrast(1.15) brightness(1.05)',
