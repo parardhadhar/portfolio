@@ -34,6 +34,7 @@ export default function WorkExperience() {
   return (
     <section
       id="experience"
+      className="mobile-padding"
       style={{
         position: 'relative',
         padding: '140px 40px',

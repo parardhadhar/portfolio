@@ -111,6 +111,7 @@ export default function TechStack() {
   return (
     <section
       id="tech"
+      className="mobile-padding"
       style={{
         padding: '140px 40px',
         maxWidth: '1200px',
@@ -151,6 +152,7 @@ export default function TechStack() {
 
       {/* Skill bars grid */}
       <div
+        className="tech-grid"
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',

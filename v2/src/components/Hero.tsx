@@ -166,6 +166,7 @@ export default function Hero() {
         {/* TEXT BEHIND IMAGE */}
         <h1
           ref={textBehind}
+          className="hero-name"
           style={{ ...textStyle, color: 'var(--text-main)', zIndex: 1 }}
         >
           Parardha Dhar
@@ -209,6 +210,7 @@ export default function Hero() {
         {/* TEXT IN FRONT OF IMAGE (STROKED) */}
         <h1
           ref={textFront}
+          className="hero-name"
           style={{
             ...textStyle,
             color: 'transparent',
@@ -224,11 +226,11 @@ export default function Hero() {
           ref={socialRef}
           style={{
             position: 'absolute',
-            bottom: '40px',
-            left: '40px',
+            bottom: 'clamp(20px, 4vh, 40px)',
+            left: 'clamp(20px, 4vw, 40px)',
             display: 'flex',
             flexDirection: 'column',
-            gap: '16px',
+            gap: '12px',
             zIndex: 4,
           }}
         >
@@ -242,12 +244,12 @@ export default function Hero() {
               href="#"
               style={{
                 fontFamily: "'Inter', sans-serif",
-                fontSize: '1rem',
+                fontSize: '0.9rem',
                 fontWeight: 700,
                 color: 'var(--text-main)',
                 textDecoration: 'none',
-                width: '36px',
-                height: '36px',
+                width: '32px',
+                height: '32px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -272,50 +274,58 @@ export default function Hero() {
           ))}
         </div>
 
-        {/* Centered Intentional Info & Role (Replaces detached right element) */}
+        {/* Editorial Role Info - Bottom Right (Optimized for Visibility) */}
         <div
           ref={infoRef}
           style={{
             position: 'absolute',
-            bottom: '60px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            textAlign: 'center',
+            bottom: 'clamp(30px, 6vh, 60px)',
+            right: 'clamp(30px, 6vw, 60px)',
+            textAlign: 'right',
             zIndex: 4,
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-            gap: '12px'
+            alignItems: 'flex-end',
+            gap: '4px',
+            maxWidth: '280px'
           }}
         >
-          <h2 style={{
-            fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
-            fontWeight: 500,
-            fontSize: 'clamp(0.9rem, 1.2vw, 1.5rem)',
-            color: 'var(--text-main)',
-            margin: 0,
-            textTransform: 'uppercase',
-            letterSpacing: '0.15em',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px'
-          }}>
-            Creative Explorer <span style={{ color: 'var(--text-muted)' }}>|</span> 
-            <span ref={roleRef} style={{ display: 'inline-block', minWidth: '200px', textAlign: 'left', fontWeight: 600 }}>
+          <div style={{ overflow: 'hidden' }}>
+            <p style={{
+              fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
+              fontWeight: 700,
+              fontSize: 'clamp(1rem, 2.5vw, 1.8rem)',
+              color: 'var(--text-main)',
+              margin: 0,
+              textTransform: 'uppercase',
+              letterSpacing: '-0.02em',
+              lineHeight: 1,
+            }}>
+              Creative Explorer
+            </p>
+          </div>
+          <div style={{ overflow: 'hidden', minHeight: '1.5em', display: 'flex', alignItems: 'center' }}>
+            <span 
+              ref={roleRef} 
+              style={{ 
+                fontFamily: "'Inter', sans-serif", 
+                fontSize: 'clamp(0.8rem, 1.5vw, 1rem)', 
+                fontWeight: 500, 
+                color: 'var(--text-muted)',
+                letterSpacing: '0.05em',
+                textTransform: 'uppercase'
+              }}
+            >
               {roles[roleIndex]}
             </span>
-          </h2>
-          <p style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: '0.9rem',
-            color: 'var(--text-muted)',
-            margin: 0,
-            letterSpacing: '0.05em',
-            fontStyle: 'italic'
-          }}>
-            Building where 3D meets the web.
-          </p>
+          </div>
+          <div style={{ 
+            marginTop: '12px', 
+            width: '40px', 
+            height: '1px', 
+            background: 'var(--text-main)',
+            opacity: 0.5 
+          }} />
         </div>
 
         {/* Scroll Cue Indicator */}

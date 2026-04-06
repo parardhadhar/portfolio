@@ -187,6 +187,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
 
   return (
     <div
+      className="timeline-grid"
       style={{
         display: 'grid',
         gridTemplateColumns: '1fr 40px 1fr',
@@ -197,8 +198,9 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
     >
       {/* Left side content or spacer */}
       {isLeft ? (
-        <div ref={cardRef} style={{ paddingRight: 40 }}>
+        <div ref={cardRef} className="timeline-card-wrapper" style={{ paddingRight: 40 }}>
           <div
+            className="timeline-card"
             style={{
               background: 'transparent',
               border: `1px solid rgba(0,0,0,0.15)`,
@@ -318,6 +320,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
           {/* Horizontal connector line */}
           <div
             ref={lineRef}
+            className="timeline-horizontal-line"
             style={{
               position: 'absolute',
               top: 36,
@@ -334,6 +337,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
 
       {/* Center — dot */}
       <div
+        className="timeline-dot-wrapper"
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -357,8 +361,9 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
 
       {/* Right side content or spacer */}
       {!isLeft ? (
-        <div ref={cardRef} style={{ paddingLeft: 40 }}>
+        <div ref={cardRef} className="timeline-card-wrapper" style={{ paddingLeft: 40 }}>
           <div
+            className="timeline-card"
             style={{
               background: 'transparent',
               border: `1px solid rgba(0,0,0,0.15)`,
@@ -476,6 +481,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
           {/* Horizontal connector line */}
           <div
             ref={lineRef}
+            className="timeline-horizontal-line"
             style={{
               position: 'absolute',
               top: 36,
@@ -519,6 +525,7 @@ export default function EducationTimeline() {
   return (
     <section
       id="education"
+      className="mobile-padding"
       style={{
         padding: '140px 40px',
         maxWidth: '1100px',
@@ -580,6 +587,7 @@ export default function EducationTimeline() {
         {/* Center vertical line */}
         <div
           ref={lineRef}
+          className="timeline-center-line"
           style={{
             position: 'absolute',
             left: '50%',

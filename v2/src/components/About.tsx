@@ -9,6 +9,7 @@ export default function About() {
   return (
     <section
       id="about"
+      className="mobile-padding"
       style={{
         position: 'relative',
         maxWidth: '1200px',
@@ -16,7 +17,7 @@ export default function About() {
         padding: '140px 40px',
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-        gap: '80px',
+        gap: '60px',
         alignItems: 'center',
       }}
     >

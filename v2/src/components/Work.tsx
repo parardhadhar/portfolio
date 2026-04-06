@@ -29,7 +29,7 @@ const projects: Project[] = [
     tags: ['Python', 'Leaflet.js', 'Machine Learning', 'GIS', 'Firebase'],
     size: 'large',
     href: '#',
-    imageBg: '#EEEEEE',
+    imageBg: '/saferoute_dashboard_1775487209732.png',
   },
   {
     num: '02',
@@ -42,7 +42,7 @@ const projects: Project[] = [
     tags: ['UE5', 'Nanite', 'Lumen', 'Niagara VFX', 'PCG'],
     size: 'normal',
     href: '#',
-    imageBg: '#E9E9E9',
+    imageBg: '/ue5_cave_env_1775487159917.png',
   },
   {
     num: '03',
@@ -55,7 +55,7 @@ const projects: Project[] = [
     tags: ['UE5', 'Dynamic Ocean', 'Lumen', 'Sky Atmosphere'],
     size: 'normal',
     href: '#',
-    imageBg: '#E4E4E4',
+    imageBg: '/ue5_beach_env_1775487183762.png',
   },
   {
     num: '04',
@@ -68,7 +68,7 @@ const projects: Project[] = [
     tags: ['Python', 'Gemini API', 'Groq', 'Vision AI'],
     size: 'large',
     href: '#',
-    imageBg: '#DFDFDF',
+    imageBg: '/ai_tutor_bot_1775487233680.png',
   },
   {
     num: '05',
@@ -81,7 +81,7 @@ const projects: Project[] = [
     tags: ['Blender', 'Rigging', 'Physics', 'Animation'],
     size: 'normal',
     href: '#',
-    imageBg: '#E9E9E9',
+    imageBg: '/car_rig_blender_1775487256422.png',
   },
   {
     num: '06',
@@ -94,7 +94,7 @@ const projects: Project[] = [
     tags: ['Python', 'OpenEnv', 'Docker', 'AI Agents'],
     size: 'normal',
     href: '#',
-    imageBg: '#EEEEEE',
+    imageBg: '/openenv_ai_agents_1775487281391.png',
   },
   {
     num: '07',
@@ -107,7 +107,7 @@ const projects: Project[] = [
     tags: ['React', 'WebSocket', 'AI Templates', 'Multiplayer'],
     size: 'normal',
     href: '#',
-    imageBg: '#E4E4E4',
+    imageBg: '/blueprint_editor_collaborative_1775487305057.png',
   },
 ];
 
@@ -136,6 +136,7 @@ function ProjectCard({ p }: { p: Project }) {
   return (
     <div
       ref={cardRef}
+      className={p.size === 'large' ? 'project-card-large' : ''}
       style={{
         gridColumn: p.size === 'large' ? 'span 2' : 'span 1',
       }}
@@ -170,27 +171,49 @@ function ProjectCard({ p }: { p: Project }) {
           el.style.boxShadow = 'none';
         }}
       >
-        {/* Abstract solid area (placeholder for image) */}
+        {/* Project Image Asset */}
         <div
           style={{
-            background: p.imageBg,
-            minHeight: p.size === 'large' ? 300 : 220,
-            flexBasis: p.size === 'large' ? '45%' : 'auto',
+            background: '#000',
+            minHeight: p.size === 'large' ? 400 : 300,
+            flexBasis: p.size === 'large' ? '50%' : 'auto',
             flexShrink: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
             position: 'relative',
             overflow: 'hidden',
           }}
         >
+          <img 
+            src={p.imageBg} 
+            alt={p.title}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              filter: 'grayscale(100%)',
+              transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+              opacity: 0.8,
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLImageElement).style.filter = 'grayscale(0%)';
+              (e.currentTarget as HTMLImageElement).style.opacity = '1';
+              (e.currentTarget as HTMLImageElement).style.transform = 'scale(1.05)';
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLImageElement).style.filter = 'grayscale(100%)';
+              (e.currentTarget as HTMLImageElement).style.opacity = '0.8';
+              (e.currentTarget as HTMLImageElement).style.transform = 'scale(1)';
+            }}
+          />
           {/* Project number — large typographic */}
           <span
             style={{
+              position: 'absolute',
+              bottom: -10,
+              right: -10,
               fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
               fontWeight: 700,
-              fontSize: p.size === 'large' ? '8rem' : '6rem',
-              color: 'rgba(0,0,0,0.03)',
+              fontSize: p.size === 'large' ? '12rem' : '8rem',
+              color: 'rgba(255,255,255,0.05)',
               letterSpacing: '-0.06em',
               lineHeight: 1,
               userSelect: 'none',
@@ -208,6 +231,7 @@ function ProjectCard({ p }: { p: Project }) {
               display: 'flex',
               gap: 8,
               alignItems: 'center',
+              zIndex: 5
             }}
           >
             <span
@@ -224,17 +248,6 @@ function ProjectCard({ p }: { p: Project }) {
               }}
             >
               {p.status}
-            </span>
-            <span
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: '0.65rem',
-                fontWeight: 600,
-                letterSpacing: '0.1em',
-                color: 'var(--text-muted)',
-              }}
-            >
-              {p.year}
             </span>
           </div>
         </div>
@@ -445,6 +458,7 @@ export default function Work() {
 
         {/* Project grid — 2 columns with large cards spanning both */}
         <div
+          className="stack-on-mobile"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(2, 1fr)',
