@@ -3,16 +3,46 @@ import gsap from 'gsap';
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const text1Ref = useRef<HTMLHeadingElement>(null);
-  const text2Ref = useRef<HTMLHeadingElement>(null);
+  const textLeftBehind = useRef<HTMLHeadingElement>(null);
+  const textRightBehind = useRef<HTMLHeadingElement>(null);
+  const textLeftFront = useRef<HTMLHeadingElement>(null);
+  const textRightFront = useRef<HTMLHeadingElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
   const socialRef = useRef<HTMLDivElement>(null);
-  const topTextRef = useRef<HTMLDivElement>(null);
+  const introOverlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const tl = gsap.timeline({ delay: 0.2 });
+    const tl = gsap.timeline();
     
+    // Initial cinematic loading reveal
+    tl.to(introOverlayRef.current, {
+      yPercent: -100,
+      duration: 1.5,
+      ease: 'power4.inOut',
+      delay: 0.5,
+    })
+    .from([textLeftBehind.current, textRightBehind.current, textLeftFront.current, textRightFront.current], {
+      y: 150,
+      opacity: 0,
+      duration: 1.5,
+      stagger: 0.1,
+      ease: 'expo.out',
+    }, '-=0.5')
+    .from(imageRef.current, {
+      scale: 0.95,
+      y: 100,
+      opacity: 0,
+      duration: 1.8,
+      ease: 'expo.out',
+    }, '-=1.2')
+    .from([socialRef.current, infoRef.current], {
+      opacity: 0,
+      y: 20,
+      duration: 1,
+      ease: 'power2.out',
+    }, '-=1');
+
     // Parallax effect on mouse move
     const handleMouseMove = (e: MouseEvent) => {
       if (!containerRef.current) return;
@@ -20,117 +50,88 @@ export default function Hero() {
       const xPos = (clientX / window.innerWidth - 0.5) * 10;
       const yPos = (clientY / window.innerHeight - 0.5) * 10;
 
-      gsap.to(imageRef.current, {
-        x: xPos * 1.5,
-        y: yPos * 1.5,
-        duration: 1,
-        ease: 'power2.out',
-      });
-      
-      gsap.to(text1Ref.current, {
-        x: xPos * -1,
-        duration: 1,
-        ease: 'power2.out',
-      });
-      
-      gsap.to(text2Ref.current, {
-        x: xPos * -1.5,
-        duration: 1,
-        ease: 'power2.out',
-      });
+      gsap.to(imageRef.current, { x: xPos * 1.5, y: yPos * 1.5, duration: 1, ease: 'power2.out' });
+      gsap.to([textLeftBehind.current, textLeftFront.current], { x: xPos * -1.5, duration: 1, ease: 'power2.out' });
+      gsap.to([textRightBehind.current, textRightFront.current], { x: xPos * -2, duration: 1, ease: 'power2.out' });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-
-    // Initial cinematic reveal
-    tl.from([text1Ref.current, text2Ref.current], {
-      y: 100,
-      opacity: 0,
-      duration: 1.5,
-      stagger: 0.2,
-      ease: 'expo.out',
-    })
-    .from(imageRef.current, {
-      scale: 0.95,
-      opacity: 0,
-      duration: 1.5,
-      ease: 'expo.out',
-    }, '-=1.2')
-    .from([topTextRef.current, socialRef.current, infoRef.current], {
-      opacity: 0,
-      y: 20,
-      duration: 1,
-      stagger: 0.1,
-      ease: 'power2.out',
-    }, '-=1');
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  return (
-    <section
-      id="hero"
-      ref={containerRef}
-      style={{
-        position: 'relative',
-        height: '100vh',
-        width: '100%',
-        padding: '20px',
-        background: '#fff', // Base outer background
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        overflow: 'hidden',
-      }}
-    >
-      {/* Inner Rounded Brutalist Border Matching Reference */}
-      <div style={{
-        position: 'relative',
-        width: '100%',
-        height: '100%',
-        background: '#f4f4f4',
-        borderRadius: '24px',
-        border: '1px solid #111',
-        overflow: 'hidden',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        boxShadow: '0 10px 40px rgba(0,0,0,0.05)',
-      }}>
-        
-        {/* Top Minimal Nav Inside the Hero Container */}
-        <div ref={topTextRef} style={{
-          position: 'absolute',
-          top: '30px',
-          left: '30px',
-          right: '30px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
-          fontSize: '0.85rem',
-          fontWeight: 500,
-          color: '#111',
-          zIndex: 5,
-        }}>
-          <div>© Parardha Dhar & Strategy</div>
-          <div style={{ display: 'flex', gap: '40px' }}>
-            <a href="#about" style={{ textDecoration: 'none', color: '#111' }}>About</a>
-            <a href="#work" style={{ textDecoration: 'none', color: '#111' }}>Projects</a>
-          </div>
-          <div><a href="#contact" style={{ textDecoration: 'none', color: '#111' }}>Contact</a></div>
-        </div>
+  const textStyle: React.CSSProperties = {
+    position: 'absolute',
+    fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
+    fontWeight: 500,
+    fontSize: 'clamp(100px, 20vw, 30rem)',
+    lineHeight: 0.8,
+    letterSpacing: '-0.06em',
+    top: '45%',
+    margin: 0,
+    whiteSpace: 'nowrap',
+    pointerEvents: 'none',
+  };
 
-        {/* Central Portrait Layer */}
+  return (
+    <>
+      {/* Intro Black Overlay */}
+      <div 
+        ref={introOverlayRef}
+        style={{
+          position: 'fixed',
+          inset: 0,
+          background: '#050505',
+          zIndex: 9999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontFamily: "'Inter', sans-serif",
+          color: '#fff',
+          fontSize: '1rem',
+          letterSpacing: '0.2em',
+          textTransform: 'uppercase',
+        }}
+      >
+        <div className="animate-pulse">Loading Cinematic Experience</div>
+      </div>
+
+      <section
+        id="hero"
+        ref={containerRef}
+        style={{
+          position: 'relative',
+          height: '100vh',
+          width: '100%',
+          background: '#f4f4f4',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden',
+        }}
+      >
+        {/* TEXT BEHIND IMAGE */}
+        <h1
+          ref={textLeftBehind}
+          style={{ ...textStyle, color: '#111', left: '20%', transform: 'translate(-50%, -50%)', zIndex: 1 }}
+        >
+          Parardha
+        </h1>
+        <h1
+          ref={textRightBehind}
+          style={{ ...textStyle, color: '#111', left: '80%', transform: 'translate(-50%, -50%)', zIndex: 1 }}
+        >
+          Dhar
+        </h1>
+
+        {/* CENTRAL IMAGE WITH TRANSPARENT BG */}
         <div
           ref={imageRef}
           style={{
             position: 'absolute',
-            bottom: '0',
+            bottom: '0px', // Anchor to exact bottom
             left: '50%',
             transform: 'translateX(-50%)',
-            zIndex: 1,
+            zIndex: 2,
             width: 'clamp(300px, 45vw, 600px)',
             height: '85%',
             display: 'flex',
@@ -139,12 +140,12 @@ export default function Hero() {
           }}
         >
           <img 
-            src="/photo.jpg" 
+            src="/photo.png" 
             alt="Parardha Dhar" 
             style={{
               width: '100%',
               height: '100%',
-              objectFit: 'cover',
+              objectFit: 'contain',
               objectPosition: 'center bottom',
               filter: 'grayscale(100%) contrast(1.15) brightness(1.05)',
             }}
@@ -155,49 +156,29 @@ export default function Hero() {
           />
         </div>
 
-        {/* Floating Typography - Left Side 'Parardha' */}
+        {/* TEXT IN FRONT OF IMAGE (STROKED) */}
         <h1
-          ref={text1Ref}
-          style={{
-            position: 'absolute',
-            fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
-            fontWeight: 500,
-            fontSize: 'clamp(100px, 20vw, 30rem)',
-            lineHeight: 0.8,
-            letterSpacing: '-0.06em',
-            color: '#fff',
-            mixBlendMode: 'difference',
-            top: '50%',
-            left: '20%',
-            transform: 'translate(-50%, -50%)',
-            margin: 0,
-            whiteSpace: 'nowrap',
-            zIndex: 3,
-            pointerEvents: 'none',
+          ref={textLeftFront}
+          style={{ 
+            ...textStyle, 
+            color: 'transparent', 
+            WebkitTextStroke: '2px #111',
+            left: '20%', 
+            transform: 'translate(-50%, -50%)', 
+            zIndex: 3 
           }}
         >
           Parardha
         </h1>
-
-        {/* Floating Typography - Right Side 'Dhar' */}
         <h1
-          ref={text2Ref}
-          style={{
-            position: 'absolute',
-            fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
-            fontWeight: 500,
-            fontSize: 'clamp(100px, 20vw, 30rem)',
-            lineHeight: 0.8,
-            letterSpacing: '-0.06em',
-            color: '#fff',
-            mixBlendMode: 'difference',
-            top: '50%',
-            left: '80%',
-            transform: 'translate(-50%, -50%)',
-            margin: 0,
-            whiteSpace: 'nowrap',
-            zIndex: 3,
-            pointerEvents: 'none',
+          ref={textRightFront}
+          style={{ 
+            ...textStyle, 
+            color: 'transparent', 
+            WebkitTextStroke: '2px #111',
+            left: '80%', 
+            transform: 'translate(-50%, -50%)', 
+            zIndex: 3 
           }}
         >
           Dhar
@@ -253,7 +234,7 @@ export default function Hero() {
           ))}
         </div>
 
-        {/* Role / Description - Bottom Right, huge typography matching reference */}
+        {/* Role / Description - Bottom Right */}
         <div
           ref={infoRef}
           style={{
@@ -267,7 +248,7 @@ export default function Hero() {
           <h2 style={{
             fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
             fontWeight: 500,
-            fontSize: 'clamp(1.5rem, 3.5vw, 4rem)',
+            fontSize: 'clamp(1.5rem, 3.5vw, 3.5rem)',
             lineHeight: 1.05,
             letterSpacing: '-0.04em',
             color: '#111',
@@ -277,8 +258,7 @@ export default function Hero() {
             Full Stack Dev
           </h2>
         </div>
-
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
