@@ -147,10 +147,11 @@ function ProjectCard({ p }: { p: Project }) {
           flexDirection: p.size === 'large' ? 'row' : 'column',
           gap: p.size === 'large' ? 0 : 0,
           background: 'transparent',
-          border: '1px solid rgba(0,0,0,0.1)',
+          border: '1px solid var(--border-color)',
           borderRadius: 0,
           overflow: 'hidden',
           textDecoration: 'none',
+          color: 'var(--text-main)', // explicitly prevent default browser blue links
           transition: 'all 0.5s cubic-bezier(0.16,1,0.3,1)',
           position: 'relative',
         }}

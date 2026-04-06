@@ -62,11 +62,11 @@ export default function Hero() {
   const textStyle: React.CSSProperties = {
     position: 'absolute',
     fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
-    fontWeight: 500,
-    fontSize: 'clamp(100px, 20vw, 30rem)',
+    fontWeight: 600,
+    fontSize: 'clamp(3rem, 14vw, 18rem)', // Adjusted so it fits beautifully
     lineHeight: 0.8,
-    letterSpacing: '-0.06em',
-    top: '45%',
+    letterSpacing: '-0.04em',
+    top: '40%',
     margin: 0,
     whiteSpace: 'nowrap',
     pointerEvents: 'none',
@@ -112,13 +112,13 @@ export default function Hero() {
         {/* TEXT BEHIND IMAGE */}
         <h1
           ref={textLeftBehind}
-          style={{ ...textStyle, color: 'var(--text-main)', left: '20%', transform: 'translate(-50%, -50%)', zIndex: 1 }}
+          style={{ ...textStyle, color: 'var(--text-main)', left: '25%', transform: 'translate(-50%, -50%)', zIndex: 1 }}
         >
           Parardha
         </h1>
         <h1
           ref={textRightBehind}
-          style={{ ...textStyle, color: 'var(--text-main)', left: '80%', transform: 'translate(-50%, -50%)', zIndex: 1 }}
+          style={{ ...textStyle, color: 'var(--text-main)', left: '75%', transform: 'translate(-50%, -50%)', zIndex: 1 }}
         >
           Dhar
         </h1>
@@ -132,8 +132,8 @@ export default function Hero() {
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 2,
-            width: 'clamp(300px, 45vw, 600px)',
-            height: '85%',
+            width: 'clamp(300px, 60vw, 850px)',
+            height: '90%', // Let the image take up 90% of the screen height securely
             display: 'flex',
             alignItems: 'flex-end',
             justifyContent: 'center',
@@ -162,8 +162,8 @@ export default function Hero() {
           style={{
             ...textStyle,
             color: 'transparent',
-            WebkitTextStroke: '2px #111',
-            left: '20%',
+            WebkitTextStroke: '2px var(--text-main)',
+            left: '25%',
             transform: 'translate(-50%, -50%)',
             zIndex: 3
           }}
@@ -175,8 +175,8 @@ export default function Hero() {
           style={{
             ...textStyle,
             color: 'transparent',
-            WebkitTextStroke: '2px #111',
-            left: '80%',
+            WebkitTextStroke: '2px var(--text-main)',
+            left: '75%',
             transform: 'translate(-50%, -50%)',
             zIndex: 3
           }}

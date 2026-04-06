@@ -41,6 +41,15 @@ function App() {
       });
     });
 
+    // Cinematic Dark Mode Scroll Transition
+    ScrollTrigger.create({
+      trigger: '#hero',
+      start: 'bottom 50%',
+      onEnter: () => document.body.classList.add('dark-theme'),
+      onLeaveBack: () => document.body.classList.remove('dark-theme'),
+      markers: false
+    });
+
     return () => {
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
