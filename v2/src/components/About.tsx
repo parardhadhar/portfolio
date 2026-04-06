@@ -1,8 +1,9 @@
 import ScrollReveal from './ScrollReveal';
 
 const skills = [
-  'Unreal Engine 5', 'Python / ML', 'React / Next.js',
-  'Three.js', 'Blender', 'Node.js', 'TypeScript', 'GSAP',
+  'Python', 'Machine Learning', 'AI (RAG / LLM)', 'Next.js', 'React', 'Unreal Engine 5', 
+  'Computer Vision', 'Deep Learning', 'C++', 'JavaScript', 'TypeScript', 'SQL', 
+  'Docker', 'Supabase', 'Node.js', 'Vercel', 'Git'
 ];
 
 export default function About() {
@@ -36,7 +37,7 @@ export default function About() {
               textTransform: 'uppercase',
             }}
           >
-            / About
+            / Background
           </span>
           <h2
             style={{
@@ -49,17 +50,17 @@ export default function About() {
               letterSpacing: '-0.03em',
             }}
           >
-            I engineer immersive{' '}
+            Engineering resilient,{' '}
             <span
               style={{
                 fontStyle: 'italic',
                 color: 'var(--text-muted)',
               }}
             >
-              experiences.
+              intelligent
             </span>
             <br />
-            Not just interfaces.
+            software solutions.
           </h2>
           <p
             style={{
@@ -70,24 +71,18 @@ export default function About() {
               margin: '0 0 1.5rem',
             }}
           >
-            I'm{' '}
-            <strong style={{ color: 'var(--text-main)', fontWeight: 600 }}>Parardha Dhar</strong>, a creative
-            technologist blending{' '}
-            <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>Unreal Engine artistry</span> with{' '}
-            <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>Machine Learning</span> and{' '}
-            <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>Full-Stack Engineering</span>. I build things that
-            sit at the intersection of computation and creativity — from real-time 3D worlds to
-            intelligent web systems.
+            I'm <strong style={{ color: 'var(--text-main)', fontWeight: 600 }}>Parardha Dhar</strong>, a software engineer and AI enthusiast currently pursuing a <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>B.Tech in Computer Science and Engineering</span> at <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>VIT Bhopal University (CGPA: 8.68)</span>.
           </p>
           <p
             style={{
               fontFamily: "'Inter', sans-serif",
               fontSize: '1.05rem',
               lineHeight: 1.7,
-              color: '#777',
+              color: 'var(--text-muted)',
+              margin: '0 0 1.5rem',
             }}
           >
-            Currently pursuing B.Tech (24BCG10003) while building projects that matter.
+            My work focuses on bridging the gap between <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>Unreal Engine high-fidelity environments</span> and <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>scalable AI systems</span>. From architecting high-traffic web platforms to developing real-time AI pipelines for social good, I prioritize application resiliency and technical sophistication.
           </p>
         </ScrollReveal>
 
@@ -97,7 +92,7 @@ export default function About() {
               display: 'flex',
               flexWrap: 'wrap',
               gap: '0.6rem',
-              marginTop: '2.5rem',
+              marginTop: '2rem',
             }}
           >
             {skills.map(skill => (
@@ -108,24 +103,26 @@ export default function About() {
                   fontSize: '0.75rem',
                   letterSpacing: '0.02em',
                   padding: '10px 18px',
-                  border: '1px solid rgba(0,0,0,0.1)',
-                  borderRadius: '100px',
-                  color: 'var(--text-muted)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: 0,
+                  color: 'var(--text-main)',
                   background: 'transparent',
                   transition: 'all 0.3s',
                   cursor: 'default',
+                  textTransform: 'uppercase',
+                  fontWeight: 600,
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget as HTMLElement;
                   el.style.borderColor = 'var(--text-main)';
-                  el.style.color = 'var(--text-main)';
-                  el.style.background = 'rgba(0,0,0,0.02)';
+                  el.style.background = 'var(--text-main)';
+                  el.style.color = 'var(--bg-color)';
                 }}
                 onMouseLeave={e => {
                   const el = e.currentTarget as HTMLElement;
                   el.style.borderColor = 'var(--border-color)';
-                  el.style.color = 'var(--text-muted)';
                   el.style.background = 'transparent';
+                  el.style.color = 'var(--text-main)';
                 }}
               >
                 {skill}

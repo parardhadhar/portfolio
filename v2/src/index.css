@@ -128,58 +128,58 @@ body::before {
 }
 
 /* ─── Mobile Responsiveness ──────────────────────────── */
+@media (max-width: 1024px) {
+  .hero-name {
+    font-size: clamp(4rem, 15vw, 10rem) !important;
+  }
+}
+
 @media (max-width: 768px) {
   .hero-name {
-    font-size: clamp(3rem, 12vw, 8rem) !important;
+    font-size: clamp(3.5rem, 20vw, 7rem) !important;
+    line-height: 0.9 !important;
   }
   .stack-on-mobile {
     grid-template-columns: 1fr !important;
-    gap: 40px !important;
+    gap: 32px !important;
   }
   .hide-on-mobile {
     display: none !important;
   }
-  .mobile-only {
-    display: block !important;
-  }
-  .desktop-only {
-    display: none !important;
+  .mobile-padding {
+    padding: 60px 20px !important;
   }
   .timeline-grid {
     grid-template-columns: 1fr !important;
-    margin-bottom: 40px !important;
-  }
-  .timeline-dot-wrapper {
-    display: none !important;
-  }
-  .timeline-horizontal-line {
-    display: none !important;
+    margin-bottom: 30px !important;
   }
   .timeline-center-line {
-    left: 20px !important;
-    transform: none !important;
+    left: 15px !important;
   }
   .timeline-card-wrapper {
-    padding-left: 48px !important;
-    padding-right: 0 !important;
-  }
-  .timeline-card {
-    padding: 24px 20px !important;
-  }
-  .mobile-padding {
-    padding: 80px 24px !important;
+    padding-left: 35px !important;
   }
   .project-card-large {
     grid-column: span 1 !important;
   }
   .tech-grid {
     grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
   }
 }
 
 @media (max-width: 480px) {
+  .hero-name {
+    font-size: 3.5rem !important; /* Fixed fallback for very small screens */
+  }
+  .mobile-padding {
+    padding: 50px 16px !important;
+  }
   .tech-grid {
     grid-template-columns: 1fr !important;
+  }
+  .mobile-link {
+    font-size: 2rem !important;
   }
 }
 

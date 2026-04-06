@@ -172,7 +172,7 @@ export default function Hero() {
           Parardha Dhar
         </h1>
 
-        {/* CENTRAL IMAGE WITH TRANSPARENT BG */}
+        {/* CENTRAL IMAGE */}
         <div
           style={{
             position: 'absolute',
@@ -180,7 +180,7 @@ export default function Hero() {
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 2,
-            height: '105vh', // Hard-anchor scaling so it completely stretches high
+            height: '100vh',
             width: '100vw', 
             display: 'flex',
             alignItems: 'flex-end',
@@ -193,16 +193,10 @@ export default function Hero() {
             src="/photo.png"
             alt="Parardha Dhar"
             style={{
-              height: '100%', 
+              height: '90%', 
               width: 'auto', 
-              maxWidth: 'none', // Disallow any horizontal choking
               objectFit: 'contain',
-              objectPosition: 'center bottom',
               filter: 'grayscale(100%) contrast(1.15) brightness(1.05)',
-            }}
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.src = "https://images.unsplash.com/photo-1542044896530-05d85be9b11a?q=80&w=1000&auto=format&fit=crop";
             }}
           />
         </div>
@@ -235,13 +229,15 @@ export default function Hero() {
           }}
         >
           {[
-            { icon: 'x', label: '𝕏' },
-            { icon: 'in', label: 'in' },
-            { icon: 'ig', label: 'ig' }
+            { icon: 'ig', label: 'IG', href: 'https://www.instagram.com/parardha.er/' },
+            { icon: 'gh', label: 'GH', href: 'https://github.com/parardhadhar' },
+            { icon: 'ln', label: 'IN', href: 'https://linkedin.com/in/parardhadhar' }
           ].map((social) => (
             <a
               key={social.icon}
-              href="#"
+              href={social.href}
+              target="_blank"
+              rel="noreferrer"
               style={{
                 fontFamily: "'Inter', sans-serif",
                 fontSize: '0.9rem',
@@ -256,17 +252,14 @@ export default function Hero() {
                 border: '1px solid var(--border-color)',
                 borderRadius: '50%',
                 transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-                background: 'transparent',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = 'var(--text-main)';
                 e.currentTarget.style.color = 'var(--bg-color)';
-                e.currentTarget.style.transform = 'scale(1.1)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'transparent';
                 e.currentTarget.style.color = 'var(--text-main)';
-                e.currentTarget.style.transform = 'scale(1)';
               }}
             >
               {social.label}
@@ -274,7 +267,7 @@ export default function Hero() {
           ))}
         </div>
 
-        {/* Editorial Role Info - Bottom Right (Optimized for Visibility) */}
+        {/* Editorial Role Info - Bottom Right */}
         <div
           ref={infoRef}
           style={{

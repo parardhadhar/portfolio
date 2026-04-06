@@ -7,39 +7,39 @@ gsap.registerPlugin(ScrollTrigger);
 
 const techCategories = [
   {
-    label: 'Real-Time 3D',
-    color: 'var(--text-main)',
-    items: [
-      { name: 'Unreal Engine 5', level: 92 },
-      { name: 'Three.js / WebGL', level: 85 },
-      { name: 'Blender', level: 80 },
-      { name: 'Lumen + Nanite', level: 88 },
-    ],
-  },
-  {
-    label: 'Web & Frontend',
-    color: 'var(--text-main)',
-    items: [
-      { name: 'React / Next.js', level: 90 },
-      { name: 'TypeScript', level: 85 },
-      { name: 'GSAP / Animation', level: 88 },
-      { name: 'Node.js', level: 78 },
-    ],
-  },
-  {
     label: 'AI & Machine Learning',
     color: 'var(--text-main)',
     items: [
-      { name: 'Python', level: 88 },
-      { name: 'TensorFlow / PyTorch', level: 75 },
-      { name: 'Gemini / LLM APIs', level: 82 },
-      { name: 'Data Analysis', level: 78 },
+      { name: 'Python', level: 95 },
+      { name: 'TensorFlow / Keras', level: 88 },
+      { name: 'MediaPipe / OpenCV', level: 90 },
+      { name: 'scikit-learn', level: 85 },
+    ],
+  },
+  {
+    label: 'Full-Stack Engineering',
+    color: 'var(--text-main)',
+    items: [
+      { name: 'Next.js / React', level: 92 },
+      { name: 'Node.js / Express', level: 85 },
+      { name: 'TypeScript / JS', level: 88 },
+      { name: 'Supabase / Firebase', level: 90 },
+    ],
+  },
+  {
+    label: 'Immersive Real-Time',
+    color: 'var(--text-main)',
+    items: [
+      { name: 'Unreal Engine 5', level: 85 },
+      { name: 'C++ / Blueprints', level: 80 },
+      { name: 'Lumen / Nanite', level: 88 },
+      { name: 'Niagara VFX', level: 75 },
     ],
   },
 ];
 
 const tools = [
-  'VS Code', 'Git / GitHub', 'Figma', 'GIMP', 'Postman', 'Firebase', 'Vercel', 'Docker (basics)',
+  'Docker', 'Git / GitHub', 'Vercel', 'Postman', 'Figma', 'Linux / Unix Tools', 'CI/CD Pipelines'
 ];
 
 function SkillBar({ name, level, color, delay }: { name: string; level: number; color: string; delay: number }) {

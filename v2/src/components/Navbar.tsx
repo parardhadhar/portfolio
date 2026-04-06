@@ -99,16 +99,16 @@ export default function Navbar() {
           <a
             href="#hero"
             style={{
-              fontFamily: "'Inter', sans-serif",
-              fontWeight: 700,
-              fontSize: '0.9rem',
-              letterSpacing: '-0.02em',
+              fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
+              fontWeight: 800,
+              fontSize: '1rem',
+              letterSpacing: '-0.03em',
               color: 'var(--text-main)',
               textDecoration: 'none',
               textTransform: 'uppercase'
             }}
           >
-            © PD.
+            Parardha Dhar
           </a>
         </div>
 
@@ -152,7 +152,7 @@ export default function Navbar() {
           </button>
 
           <a
-            href="/resume.pdf"
+            href="https://linkedin.com/in/parardhadhar"
             target="_blank"
             rel="noreferrer"
             className="desktop-only"
@@ -204,8 +204,10 @@ export default function Navbar() {
           </a>
         ))}
         <a 
-          href="/resume.pdf" 
+          href="https://linkedin.com/in/parardhadhar" 
           className="mobile-link" 
+          target="_blank"
+          rel="noreferrer"
           style={{ fontSize: '1.5rem', color: 'var(--text-muted)', transitionDelay: '0.5s' }}
         >
           Resume
