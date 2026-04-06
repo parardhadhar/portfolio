@@ -42,7 +42,7 @@ const tools = [
   'Docker', 'Git / GitHub', 'Vercel', 'Postman', 'Figma', 'Linux / Unix Tools', 'CI/CD Pipelines'
 ];
 
-function SkillBar({ name, level, color, delay }: { name: string; level: number; color: string; delay: number }) {
+function SkillBar({ name, level, delay }: { name: string; level: number; delay: number }) {
   const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -80,25 +80,25 @@ function SkillBar({ name, level, color, delay }: { name: string; level: number; 
           fontWeight: 500,
         }}
       >
-        <span style={{ color: 'var(--text-main)' }}>{name}</span>
-        <span style={{ color: 'var(--text-muted)', fontFamily: "'Inter', sans-serif", fontSize: '0.75rem', fontWeight: 600 }}>
+        <span style={{ color: 'inherit' }}>{name}</span>
+        <span style={{ color: 'inherit', fontFamily: "'Inter', sans-serif", fontSize: '0.75rem', fontWeight: 600, opacity: 0.7 }}>
           {level}%
         </span>
       </div>
       <div
         style={{
           height: 2,
-          background: 'var(--border-color)',
+          background: 'rgba(0,0,0,0.1)',
           borderRadius: 0,
           overflow: 'hidden',
         }}
       >
         <div
           ref={barRef}
+          className="skill-bar-inner"
           style={{
             height: '100%',
             width: 0,
-            background: color,
             borderRadius: 0,
           }}
         />
@@ -162,53 +162,13 @@ export default function TechStack() {
       >
         {techCategories.map((cat, ci) => (
           <ScrollReveal key={cat.label} delay={ci * 0.1} from="bottom">
-            <div
-              style={{
-                background: 'transparent',
-                border: '1px solid var(--border-light)',
-                borderRadius: 0,
-                padding: '32px 32px',
-                transition: 'all 0.5s cubic-bezier(0.16,1,0.3,1)',
-              }}
-              onMouseEnter={e => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.background = 'var(--text-main)';
-                el.style.borderColor = 'var(--text-main)';
-                el.style.transform = 'translateY(-8px) scale(1.02)';
-                
-                // Inverse text colors on hover magically
-                const headers = el.querySelectorAll('h3, span');
-                headers.forEach(h => (h as HTMLElement).style.setProperty('color', 'var(--bg-color)', 'important'));
-                const bars = el.querySelectorAll('div > div > div');
-                bars.forEach(b => {
-                  if((b as HTMLElement).style.background !== 'transparent') {
-                    (b as HTMLElement).style.background = 'var(--bg-color)';
-                  }
-                });
-              }}
-              onMouseLeave={e => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.background = 'transparent';
-                el.style.borderColor = 'var(--border-light)';
-                el.style.transform = 'none';
-                
-                // Return text colors back
-                const headers = el.querySelectorAll('h3, span');
-                headers.forEach(h => (h as HTMLElement).style.removeProperty('color'));
-                const bars = el.querySelectorAll('div > div > div');
-                bars.forEach(b => {
-                  if((b as HTMLElement).style.background !== 'transparent') {
-                     (b as HTMLElement).style.background = 'var(--text-main)';
-                  }
-                });
-              }}
-            >
+            <div className="tech-card">
               <h3
                 style={{
                   fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
                   fontWeight: 700,
                   fontSize: '1.25rem',
-                  color: 'var(--text-main)',
+                  color: 'inherit',
                   marginBottom: 24,
                   letterSpacing: '-0.02em',
                 }}
@@ -220,7 +180,6 @@ export default function TechStack() {
                   key={item.name}
                   name={item.name}
                   level={item.level}
-                  color={cat.color}
                   delay={ci * 0.1 + ii * 0.05}
                 />
               ))}
@@ -254,7 +213,7 @@ export default function TechStack() {
                 fontWeight: 500,
                 padding: '8px 18px',
                 borderRadius: 0,
-                border: '1px solid rgba(0,0,0,0.15)',
+                border: '1px solid var(--border-color)',
                 color: 'var(--text-muted)',
                 transition: 'all 0.3s',
                 cursor: 'default',

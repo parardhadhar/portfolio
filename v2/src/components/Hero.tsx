@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
+import { Instagram, Github, Linkedin, ChevronDown } from 'lucide-react';
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -15,7 +16,6 @@ export default function Hero() {
   const roles = ["Full Stack Dev", "Unreal Engine Dev", "ML Engineer"];
   const [roleIndex, setRoleIndex] = useState(0);
 
-  // Role cycling typewriter effect
   useEffect(() => {
     const interval = setInterval(() => {
       gsap.to(roleRef.current, {
@@ -35,7 +35,6 @@ export default function Hero() {
   useEffect(() => {
     const tl = gsap.timeline();
 
-    // Initial cinematic loading reveal
     tl.to(introOverlayRef.current, {
       yPercent: -100,
       duration: 1.5,
@@ -43,15 +42,14 @@ export default function Hero() {
       delay: 0.2,
     })
       .from([textBehind.current, textFront.current], {
-        scale: 1.1,
-        filter: 'blur(10px)',
+        scale: 1.05,
         opacity: 0,
         duration: 1.5,
         ease: 'power3.out',
       }, '-=0.5')
       .from(imageRef.current, {
-        scale: 0.95,
-        y: 100,
+        scale: 0.98,
+        y: 60,
         opacity: 0,
         duration: 1.8,
         ease: 'power4.out',
@@ -64,34 +62,30 @@ export default function Hero() {
         stagger: 0.1
       }, '-=1');
 
-    // Subtle floating breathing effect on the image
     gsap.to(imageRef.current, {
-      y: '+=15',
-      duration: 3,
+      y: '+=10',
+      duration: 4,
       ease: 'sine.inOut',
       yoyo: true,
       repeat: -1
     });
     
-    // Scroll Indicator bounce
     gsap.to(scrollCueRef.current, {
-      y: '+=8',
+      y: '+=5',
       duration: 1.5,
       ease: 'sine.inOut',
       yoyo: true,
       repeat: -1
     });
 
-    // Advanced Parallax effect on mouse move with quick tilt
     const handleMouseMove = (e: MouseEvent) => {
       if (!containerRef.current) return;
       const { clientX, clientY } = e;
-      const xPos = (clientX / window.innerWidth - 0.5) * 10;
+      const xPos = (clientX / window.innerWidth - 0.5) * 20;
       const yPos = (clientY / window.innerHeight - 0.5) * 10;
 
-      // Mouse parallax overlays with breathing animation safely
-      gsap.to(imageRef.current, { x: xPos * 2, y: yPos * 1, rotate: xPos * 0.1, duration: 1, ease: 'power2.out' });
-      gsap.to([textBehind.current, textFront.current], { x: xPos * -3, y: yPos * -1.5, duration: 1, ease: 'power2.out' });
+      gsap.to(imageRef.current, { x: xPos * 1, y: yPos * 0.5, rotate: xPos * 0.05, duration: 1.2, ease: 'power2.out' });
+      gsap.to([textBehind.current, textFront.current], { x: xPos * -2, y: yPos * -1.2, duration: 1.2, ease: 'power2.out' });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -100,12 +94,12 @@ export default function Hero() {
 
   const textStyle: React.CSSProperties = {
     position: 'absolute',
-    fontFamily: "'Inter', sans-serif",
-    fontWeight: 400, // Slightly bolder for impact
-    fontSize: 'clamp(3rem, 16vw, 25rem)', // Scaled to full horizontal space
-    lineHeight: 0.85,
-    letterSpacing: '-0.06em',
-    top: '50%', // Anchored exactly to the middle horizontally
+    fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
+    fontWeight: 900,
+    fontSize: 'clamp(4.5rem, 18vw, 24rem)', 
+    lineHeight: 0.8,
+    letterSpacing: '-0.07em',
+    top: '52%', // Adjusted slightly lower for optimal visual balance with portrait
     left: '50%',
     width: '100%',
     textAlign: 'center',
@@ -113,29 +107,29 @@ export default function Hero() {
     margin: 0,
     whiteSpace: 'nowrap',
     pointerEvents: 'none',
+    textTransform: 'uppercase',
   };
 
   return (
     <>
-      {/* Intro Black Overlay */}
       <div
         ref={introOverlayRef}
         style={{
           position: 'fixed',
           inset: 0,
-          background: '#050505',
+          background: '#0a0a0a',
           zIndex: 9999,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           fontFamily: "'Inter', sans-serif",
-          color: 'var(--bg-color)',
-          fontSize: '1rem',
-          letterSpacing: '0.2em',
+          color: '#fff',
+          fontSize: '0.7rem',
+          letterSpacing: '0.4em',
           textTransform: 'uppercase',
         }}
       >
-        <div className="animate-pulse">Loading Cinematic Experience</div>
+        <div className="animate-pulse">PARARDHA DHAR // CORE v2.0</div>
       </div>
 
       <section
@@ -150,33 +144,22 @@ export default function Hero() {
           alignItems: 'center',
           justifyContent: 'center',
           overflow: 'hidden',
-          transition: 'background 1.5s ease',
         }}
       >
-        {/* Subtle CSS Noise Grain for premium photography feel */}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          opacity: 0.03,
-          pointerEvents: 'none',
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          zIndex: 0
-        }} />
-
         {/* TEXT BEHIND IMAGE */}
         <h1
           ref={textBehind}
-          className="hero-name"
+          className="hero-name theme-trans"
           style={{ ...textStyle, color: 'var(--text-main)', zIndex: 1 }}
         >
           Parardha Dhar
         </h1>
 
-        {/* CENTRAL IMAGE */}
+        {/* CENTRAL IMAGE - Reframed and Perfectly Centered */}
         <div
           style={{
             position: 'absolute',
-            bottom: '0px', 
+            bottom: '0', 
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 2,
@@ -193,10 +176,10 @@ export default function Hero() {
             src="/photo.png"
             alt="Parardha Dhar"
             style={{
-              height: '90%', 
+              height: '92vh', 
               width: 'auto', 
               objectFit: 'contain',
-              filter: 'grayscale(100%) contrast(1.15) brightness(1.05)',
+              filter: 'grayscale(100%) contrast(1.1) brightness(1.05)',
             }}
           />
         </div>
@@ -204,24 +187,24 @@ export default function Hero() {
         {/* TEXT IN FRONT OF IMAGE (STROKED) */}
         <h1
           ref={textFront}
-          className="hero-name"
+          className="hero-name theme-trans"
           style={{
             ...textStyle,
             color: 'transparent',
-            WebkitTextStroke: '2px var(--text-main)',
+            WebkitTextStroke: '1px var(--text-main)',
             zIndex: 3
           }}
         >
           Parardha Dhar
         </h1>
 
-        {/* Social Links - Bottom Left */}
+        {/* Social Links - Bottom Left - Visual Icons */}
         <div
           ref={socialRef}
           style={{
             position: 'absolute',
-            bottom: 'clamp(20px, 4vh, 40px)',
-            left: 'clamp(20px, 4vw, 40px)',
+            bottom: '40px',
+            left: '40px',
             display: 'flex',
             flexDirection: 'column',
             gap: '12px',
@@ -229,40 +212,40 @@ export default function Hero() {
           }}
         >
           {[
-            { icon: 'ig', label: 'IG', href: 'https://www.instagram.com/parardha.er/' },
-            { icon: 'gh', label: 'GH', href: 'https://github.com/parardhadhar' },
-            { icon: 'ln', label: 'IN', href: 'https://linkedin.com/in/parardhadhar' }
-          ].map((social) => (
+            { icon: <Instagram size={20} />, label: 'Instagram', href: 'https://www.instagram.com/parardha.er/' },
+            { icon: <Github size={20} />, label: 'Github', href: 'https://github.com/parardhadhar' },
+            { icon: <Linkedin size={20} />, label: 'Linkedin', href: 'https://linkedin.com/in/parardhadhar' }
+          ].map((social, i) => (
             <a
-              key={social.icon}
+              key={i}
               href={social.href}
               target="_blank"
               rel="noreferrer"
+              aria-label={social.label}
               style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: '0.9rem',
-                fontWeight: 700,
                 color: 'var(--text-main)',
-                textDecoration: 'none',
-                width: '32px',
-                height: '32px',
+                width: '44px',
+                height: '44px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 border: '1px solid var(--border-color)',
                 borderRadius: '50%',
                 transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                background: 'transparent'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = 'var(--text-main)';
                 e.currentTarget.style.color = 'var(--bg-color)';
+                e.currentTarget.style.transform = 'scale(1.1)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'transparent';
                 e.currentTarget.style.color = 'var(--text-main)';
+                e.currentTarget.style.transform = 'scale(1)';
               }}
             >
-              {social.label}
+              {social.icon}
             </a>
           ))}
         </div>
@@ -272,27 +255,26 @@ export default function Hero() {
           ref={infoRef}
           style={{
             position: 'absolute',
-            bottom: 'clamp(30px, 6vh, 60px)',
-            right: 'clamp(30px, 6vw, 60px)',
+            bottom: '50px',
+            right: '50px',
             textAlign: 'right',
             zIndex: 4,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-end',
-            gap: '4px',
-            maxWidth: '280px'
+            gap: '8px',
           }}
         >
           <div style={{ overflow: 'hidden' }}>
             <p style={{
               fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
-              fontWeight: 700,
-              fontSize: 'clamp(1rem, 2.5vw, 1.8rem)',
+              fontWeight: 900,
+              fontSize: 'clamp(1rem, 2.5vw, 2.2rem)',
               color: 'var(--text-main)',
               margin: 0,
               textTransform: 'uppercase',
               letterSpacing: '-0.02em',
-              lineHeight: 1,
+              lineHeight: 0.9,
             }}>
               Creative Explorer
             </p>
@@ -302,22 +284,22 @@ export default function Hero() {
               ref={roleRef} 
               style={{ 
                 fontFamily: "'Inter', sans-serif", 
-                fontSize: 'clamp(0.8rem, 1.5vw, 1rem)', 
-                fontWeight: 500, 
+                fontSize: '0.8rem', 
+                fontWeight: 600, 
                 color: 'var(--text-muted)',
-                letterSpacing: '0.05em',
+                letterSpacing: '0.15em',
                 textTransform: 'uppercase'
               }}
             >
-              {roles[roleIndex]}
+              / {roles[roleIndex]}
             </span>
           </div>
           <div style={{ 
             marginTop: '12px', 
-            width: '40px', 
+            width: '60px', 
             height: '1px', 
             background: 'var(--text-main)',
-            opacity: 0.5 
+            opacity: 0.3 
           }} />
         </div>
 
@@ -326,17 +308,18 @@ export default function Hero() {
           ref={scrollCueRef}
           style={{
             position: 'absolute',
-            bottom: '15px',
+            bottom: '30px',
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 4,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            opacity: 0.6
+            gap: '12px',
           }}
         >
-          <div style={{ width: '1px', height: '24px', background: 'var(--text-muted)' }} />
+          <span style={{ fontFamily: "Inter", fontSize: '0.6rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.3em', color: 'var(--text-muted)' }}>Explore</span>
+          <ChevronDown size={20} color="var(--text-muted)" strokeWidth={1.5} />
         </div>
 
       </section>

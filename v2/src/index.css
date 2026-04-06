@@ -183,7 +183,7 @@ body::before {
   }
 }
 
-/* Burger Menu Styles */
+/* ─── Burger Menu Styles ─────────────────────────── */
 .burger {
   display: none;
   flex-direction: column;
@@ -215,6 +215,41 @@ body::before {
   transform: translateY(-6px) rotate(-45deg);
 }
 
+/* ─── Tech Cards (Toolkit) ───────────────────────── */
+.tech-card {
+  background: transparent;
+  border: 1px solid var(--border-light);
+  padding: 32px;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.tech-card:hover {
+  background: var(--text-main) !important;
+  border-color: var(--text-main) !important;
+  transform: translateY(-8px) scale(1.01);
+}
+
+.tech-card * {
+  transition: color 0.4s ease, background 0.4s ease;
+}
+
+.tech-card:hover h3,
+.tech-card:hover span,
+.tech-card:hover p {
+  color: var(--bg-color) !important;
+}
+
+.tech-card:hover .skill-bar-inner {
+  background: var(--bg-color) !important;
+}
+
+.skill-bar-inner {
+  background: var(--text-main);
+}
+
+/* ─── Mobile Overlay Fixes ────────────────────────── */
 .mobile-nav-overlay {
   position: fixed;
   inset: 0;
@@ -247,13 +282,18 @@ body::before {
 
 .theme-toggle {
   cursor: pointer;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-main);
+  font-size: 1rem;
+  padding: 0;
+  line-height: 1;
   transition: all 0.3s ease;
 }
 

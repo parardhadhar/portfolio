@@ -72,10 +72,10 @@ export default function Navbar() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: scrolled ? '16px 40px' : '24px 40px',
-          transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+          padding: scrolled ? '12px 40px' : '20px 40px', // Slightly more compact when scrolled
+          transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
           background: scrolled ? 'var(--nav-bg)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(10px)' : 'none',
+          backdropFilter: scrolled ? 'blur(20px)' : 'none',
           borderBottom: scrolled ? '1px solid var(--border-light)' : '1px solid transparent',
           color: 'var(--text-main)',
         }}
@@ -84,13 +84,14 @@ export default function Navbar() {
         <div 
           style={{
             position: 'absolute',
-            top: 0,
+            bottom: 0,
             left: 0,
-            height: '2px',
+            height: '1px',
             width: `${progress}%`,
             background: 'var(--text-main)',
-            transition: 'width 0.1s ease',
+            transition: 'width 0.1s linear',
             zIndex: 101,
+            opacity: scrolled ? 1 : 0, // Show only when scrolling
           }}
         />
 
@@ -100,9 +101,9 @@ export default function Navbar() {
             href="#hero"
             style={{
               fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
-              fontWeight: 800,
+              fontWeight: 900,
               fontSize: '1rem',
-              letterSpacing: '-0.03em',
+              letterSpacing: '-0.04em',
               color: 'var(--text-main)',
               textDecoration: 'none',
               textTransform: 'uppercase'
