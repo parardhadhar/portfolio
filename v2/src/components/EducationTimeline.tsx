@@ -12,7 +12,6 @@ interface TimelineItem {
   type: 'education' | 'achievement' | 'milestone';
   description: string;
   details?: string[];
-  color: string;
 }
 
 const timelineData: TimelineItem[] = [
@@ -22,7 +21,6 @@ const timelineData: TimelineItem[] = [
     institution: 'Symbiosis University of Applied Sciences',
     location: 'Indore, India',
     type: 'education',
-    color: '#d4ff00',
     description:
       'Pursuing Bachelor of Technology in CSE (Reg. 24BCG10003). Specializing in machine learning, computer graphics, operating systems, and full-stack development.',
     details: [
@@ -41,7 +39,6 @@ const timelineData: TimelineItem[] = [
     institution: 'Independent Study & Projects',
     location: 'Self-directed',
     type: 'milestone',
-    color: '#08f7fe',
     description:
       "Deep dived into Unreal Engine 5's cutting-edge tech stack: Nanite virtualized geometry, Lumen global illumination, and Procedural Content Generation framework. Built full cave and beach environments from scratch.",
     details: [
@@ -59,7 +56,6 @@ const timelineData: TimelineItem[] = [
     institution: 'Blender — Independent Projects',
     location: 'Self-directed',
     type: 'milestone',
-    color: '#FF9FFC',
     description:
       'Mastered mechanical rigging workflows in Blender — from IK/FK chain setups to physics-driven vehicle suspensions and cinematic animation sequences.',
     details: [
@@ -76,7 +72,6 @@ const timelineData: TimelineItem[] = [
     institution: 'Various Platforms & Projects',
     location: 'Online / Remote',
     type: 'education',
-    color: '#5227FF',
     description:
       'Systematically learned modern web development — from fundamentals to React, Node.js, databases, and deployment. Built and shipped complete applications.',
     details: [
@@ -94,7 +89,6 @@ const timelineData: TimelineItem[] = [
     institution: 'Independent Study',
     location: 'Self-directed',
     type: 'education',
-    color: '#ff7b54',
     description:
       'Built a strong Python foundation and applied it toward ML — from NumPy/Pandas data wrangling to TensorFlow model training and deploying AI APIs.',
     details: [
@@ -176,13 +170,13 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
     return (
       <span
         style={{
-          fontFamily: "'Space Mono', monospace",
-          fontSize: '0.5rem',
-          letterSpacing: '0.15em',
-          padding: '3px 10px',
-          borderRadius: 100,
-          border: `1px solid ${item.color}50`,
-          color: item.color,
+          fontFamily: "'Inter', sans-serif",
+          fontSize: '0.60rem',
+          letterSpacing: '0.1em',
+          padding: '4px 10px',
+          fontWeight: 600,
+          background: '#111',
+          color: '#fff',
           textTransform: 'uppercase' as const,
         }}
       >
@@ -197,7 +191,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
         display: 'grid',
         gridTemplateColumns: '1fr 40px 1fr',
         alignItems: 'start',
-        marginBottom: 60,
+        marginBottom: 80,
         position: 'relative',
       }}
     >
@@ -206,46 +200,50 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
         <div ref={cardRef} style={{ paddingRight: 40 }}>
           <div
             style={{
-              background: 'rgba(255,255,255,0.03)',
-              border: `1px solid rgba(255,255,255,0.08)`,
-              borderRadius: 20,
-              padding: '32px 28px',
+              background: 'transparent',
+              border: `1px solid rgba(0,0,0,0.15)`,
+              borderRadius: 0,
+              padding: '32px 32px',
               transition: 'all 0.4s ease',
               position: 'relative',
               overflow: 'hidden',
             }}
             onMouseEnter={e => {
               const el = e.currentTarget as HTMLElement;
-              el.style.background = 'rgba(255,255,255,0.06)';
-              el.style.borderColor = `${item.color}35`;
+              el.style.background = '#fff';
+              el.style.borderColor = 'rgba(0,0,0,0.3)';
               el.style.transform = 'translateX(-6px)';
+              el.style.boxShadow = `0 20px 40px rgba(0,0,0,0.05)`;
             }}
             onMouseLeave={e => {
               const el = e.currentTarget as HTMLElement;
-              el.style.background = 'rgba(255,255,255,0.03)';
-              el.style.borderColor = 'rgba(255,255,255,0.08)';
+              el.style.background = 'transparent';
+              el.style.borderColor = 'rgba(0,0,0,0.15)';
               el.style.transform = 'none';
+              el.style.boxShadow = 'none';
             }}
           >
-            {/* Top accent */}
+            {/* Top accent solid fill on hover, initially just thin border mapping later */}
             <div
+              className="accent-top"
               style={{
                 position: 'absolute',
                 top: 0,
                 left: 0,
                 right: 0,
                 height: 2,
-                background: `linear-gradient(90deg, ${item.color}, transparent)`,
+                background: '#111',
               }}
             />
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
               <TypeBadge />
               <span
                 style={{
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: '0.6rem',
-                  color: 'rgba(200,220,255,0.35)',
-                  letterSpacing: '0.08em',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: '0.70rem',
+                  fontWeight: 600,
+                  color: '#666',
+                  letterSpacing: '0.05em',
                 }}
               >
                 {item.year}
@@ -253,12 +251,13 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
             </div>
             <h3
               style={{
-                fontFamily: "'Syne', sans-serif",
+                fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
                 fontWeight: 700,
-                fontSize: '1.1rem',
-                color: '#fff',
-                margin: '8px 0 4px',
-                lineHeight: 1.3,
+                fontSize: '1.25rem',
+                color: '#111',
+                margin: '12px 0 4px',
+                lineHeight: 1.2,
+                letterSpacing: '-0.02em',
               }}
             >
               {item.title}
@@ -266,9 +265,11 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
             <div
               style={{
                 fontFamily: "'Inter', sans-serif",
-                fontSize: '0.75rem',
-                color: item.color,
+                fontSize: '0.85rem',
+                fontWeight: 500,
+                color: '#444',
                 marginBottom: 12,
+                fontStyle: 'italic',
               }}
             >
               {item.institution}
@@ -276,10 +277,10 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
             <p
               style={{
                 fontFamily: "'Inter', sans-serif",
-                fontSize: '0.82rem',
-                lineHeight: 1.75,
-                color: 'rgba(200,210,230,0.6)',
-                marginBottom: item.details ? 16 : 0,
+                fontSize: '0.9rem',
+                lineHeight: 1.7,
+                color: '#555',
+                marginBottom: item.details ? 20 : 0,
               }}
             >
               {item.description}
@@ -290,20 +291,22 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
                   listStyle: 'none',
                   display: 'flex',
                   flexWrap: 'wrap',
-                  gap: '6px',
+                  gap: '8px',
                 }}
               >
                 {item.details.map(d => (
                   <li
                     key={d}
                     style={{
-                      fontFamily: "'Space Mono', monospace",
-                      fontSize: '0.52rem',
-                      padding: '4px 10px',
-                      borderRadius: 6,
-                      background: `${item.color}10`,
-                      color: `${item.color}cc`,
-                      letterSpacing: '0.06em',
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: '0.65rem',
+                      padding: '6px 12px',
+                      borderRadius: 0,
+                      background: '#f9f9f9',
+                      color: '#333',
+                      border: '1px solid rgba(0,0,0,0.1)',
+                      fontWeight: 500,
+                      letterSpacing: '0.05em',
                     }}
                   >
                     {d}
@@ -317,11 +320,11 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
             ref={lineRef}
             style={{
               position: 'absolute',
-              top: 28,
+              top: 36,
               right: 40,
               width: 40,
               height: 1,
-              background: `linear-gradient(to right, rgba(255,255,255,0.1), ${item.color}60)`,
+              background: 'rgba(0,0,0,0.2)',
             }}
           />
         </div>
@@ -335,7 +338,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          paddingTop: 24,
+          paddingTop: 30,
         }}
       >
         <div
@@ -343,9 +346,10 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
           style={{
             width: 14,
             height: 14,
-            borderRadius: '50%',
-            background: item.color,
-            boxShadow: `0 0 0 4px rgba(4,0,10,1), 0 0 0 6px ${item.color}40, 0 0 20px ${item.color}80`,
+            borderRadius: 0,
+            background: '#111',
+            border: '2px solid #fff',
+            boxShadow: '0 0 0 1px #111',
             flexShrink: 0,
           }}
         />
@@ -356,25 +360,27 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
         <div ref={cardRef} style={{ paddingLeft: 40 }}>
           <div
             style={{
-              background: 'rgba(255,255,255,0.03)',
-              border: `1px solid rgba(255,255,255,0.08)`,
-              borderRadius: 20,
-              padding: '32px 28px',
+              background: 'transparent',
+              border: `1px solid rgba(0,0,0,0.15)`,
+              borderRadius: 0,
+              padding: '32px 32px',
               transition: 'all 0.4s ease',
               position: 'relative',
               overflow: 'hidden',
             }}
             onMouseEnter={e => {
               const el = e.currentTarget as HTMLElement;
-              el.style.background = 'rgba(255,255,255,0.06)';
-              el.style.borderColor = `${item.color}35`;
+              el.style.background = '#fff';
+              el.style.borderColor = 'rgba(0,0,0,0.3)';
               el.style.transform = 'translateX(6px)';
+              el.style.boxShadow = `0 20px 40px rgba(0,0,0,0.05)`;
             }}
             onMouseLeave={e => {
               const el = e.currentTarget as HTMLElement;
-              el.style.background = 'rgba(255,255,255,0.03)';
-              el.style.borderColor = 'rgba(255,255,255,0.08)';
+              el.style.background = 'transparent';
+              el.style.borderColor = 'rgba(0,0,0,0.15)';
               el.style.transform = 'none';
+              el.style.boxShadow = 'none';
             }}
           >
             <div
@@ -384,17 +390,18 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
                 right: 0,
                 left: 0,
                 height: 2,
-                background: `linear-gradient(90deg, transparent, ${item.color})`,
+                background: '#111',
               }}
             />
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
               <TypeBadge />
               <span
                 style={{
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: '0.6rem',
-                  color: 'rgba(200,220,255,0.35)',
-                  letterSpacing: '0.08em',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: '0.70rem',
+                  fontWeight: 600,
+                  color: '#666',
+                  letterSpacing: '0.05em',
                 }}
               >
                 {item.year}
@@ -402,12 +409,13 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
             </div>
             <h3
               style={{
-                fontFamily: "'Syne', sans-serif",
+                fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
                 fontWeight: 700,
-                fontSize: '1.1rem',
-                color: '#fff',
-                margin: '8px 0 4px',
-                lineHeight: 1.3,
+                fontSize: '1.25rem',
+                color: '#111',
+                margin: '12px 0 4px',
+                lineHeight: 1.2,
+                letterSpacing: '-0.02em',
               }}
             >
               {item.title}
@@ -415,9 +423,11 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
             <div
               style={{
                 fontFamily: "'Inter', sans-serif",
-                fontSize: '0.75rem',
-                color: item.color,
+                fontSize: '0.85rem',
+                fontWeight: 500,
+                color: '#444',
                 marginBottom: 12,
+                fontStyle: 'italic',
               }}
             >
               {item.institution}
@@ -425,10 +435,10 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
             <p
               style={{
                 fontFamily: "'Inter', sans-serif",
-                fontSize: '0.82rem',
-                lineHeight: 1.75,
-                color: 'rgba(200,210,230,0.6)',
-                marginBottom: item.details ? 16 : 0,
+                fontSize: '0.9rem',
+                lineHeight: 1.7,
+                color: '#555',
+                marginBottom: item.details ? 20 : 0,
               }}
             >
               {item.description}
@@ -439,20 +449,22 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
                   listStyle: 'none',
                   display: 'flex',
                   flexWrap: 'wrap',
-                  gap: '6px',
+                  gap: '8px',
                 }}
               >
                 {item.details.map(d => (
                   <li
                     key={d}
                     style={{
-                      fontFamily: "'Space Mono', monospace",
-                      fontSize: '0.52rem',
-                      padding: '4px 10px',
-                      borderRadius: 6,
-                      background: `${item.color}10`,
-                      color: `${item.color}cc`,
-                      letterSpacing: '0.06em',
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: '0.65rem',
+                      padding: '6px 12px',
+                      borderRadius: 0,
+                      background: '#f9f9f9',
+                      color: '#333',
+                      border: '1px solid rgba(0,0,0,0.1)',
+                      fontWeight: 500,
+                      letterSpacing: '0.05em',
                     }}
                   >
                     {d}
@@ -466,11 +478,11 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
             ref={lineRef}
             style={{
               position: 'absolute',
-              top: 28,
+              top: 36,
               left: 40,
               width: 40,
               height: 1,
-              background: `linear-gradient(to left, rgba(255,255,255,0.1), ${item.color}60)`,
+              background: 'rgba(0,0,0,0.2)',
             }}
           />
         </div>
@@ -517,10 +529,11 @@ export default function EducationTimeline() {
       <div style={{ textAlign: 'center', marginBottom: 100 }}>
         <span
           style={{
-            fontFamily: "'Space Mono', monospace",
-            fontSize: '0.6rem',
-            letterSpacing: '0.3em',
-            color: '#d4ff00',
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '0.75rem',
+            letterSpacing: '0.1em',
+            fontWeight: 500,
+            color: '#666',
             display: 'block',
             marginBottom: '1.5rem',
             textTransform: 'uppercase',
@@ -530,11 +543,11 @@ export default function EducationTimeline() {
         </span>
         <h2
           style={{
-            fontFamily: "'Syne', sans-serif",
-            fontWeight: 800,
-            fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
-            letterSpacing: '-0.03em',
-            color: '#fff',
+            fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
+            fontWeight: 700,
+            fontSize: 'clamp(3rem, 6vw, 5.5rem)',
+            letterSpacing: '-0.04em',
+            color: '#111',
             margin: '0 0 1rem',
             lineHeight: 1,
           }}
@@ -543,9 +556,7 @@ export default function EducationTimeline() {
           <span
             style={{
               fontStyle: 'italic',
-              background: 'linear-gradient(135deg, #d4ff00, #08f7fe)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
+              color: '#666',
             }}
           >
             Milestones
@@ -554,8 +565,8 @@ export default function EducationTimeline() {
         <p
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: '1rem',
-            color: 'rgba(200,210,230,0.45)',
+            fontSize: '1.05rem',
+            color: '#444',
             maxWidth: 460,
             margin: '0 auto',
           }}
@@ -575,7 +586,7 @@ export default function EducationTimeline() {
             top: 0,
             bottom: 0,
             width: 1,
-            background: 'linear-gradient(to bottom, #d4ff00, rgba(82,39,255,0.4), transparent)',
+            background: 'rgba(0,0,0,0.1)',
             transform: 'translateX(-50%)',
           }}
         />

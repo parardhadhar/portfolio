@@ -37,10 +37,11 @@ export default function Contact() {
         <div style={{ textAlign: 'center', marginBottom: 80 }}>
           <span
             style={{
-              fontFamily: "'Space Mono', monospace",
-              fontSize: '0.6rem',
-              letterSpacing: '0.3em',
-              color: '#d4ff00',
+              fontFamily: "'Inter', sans-serif",
+              fontSize: '0.75rem',
+              letterSpacing: '0.1em',
+              fontWeight: 500,
+              color: '#666',
               display: 'block',
               marginBottom: '1.5rem',
               textTransform: 'uppercase',
@@ -50,11 +51,11 @@ export default function Contact() {
           </span>
           <h2
             style={{
-              fontFamily: "'Syne', sans-serif",
-              fontWeight: 800,
+              fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
+              fontWeight: 700,
               fontSize: 'clamp(2.5rem, 6vw, 5rem)',
-              letterSpacing: '-0.03em',
-              color: '#fff',
+              letterSpacing: '-0.04em',
+              color: '#111',
               margin: '0 0 1rem',
               lineHeight: 1,
             }}
@@ -63,9 +64,7 @@ export default function Contact() {
             <span
               style={{
                 fontStyle: 'italic',
-                background: 'linear-gradient(135deg, #08f7fe, #d4ff00, #FF9FFC)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
+                color: '#666',
               }}
             >
               interesting
@@ -75,8 +74,8 @@ export default function Contact() {
           <p
             style={{
               fontFamily: "'Inter', sans-serif",
-              fontSize: '1rem',
-              color: 'rgba(200,210,230,0.55)',
+              fontSize: '1.05rem',
+              color: '#444',
               maxWidth: 500,
               margin: '0 auto',
               lineHeight: 1.7,
@@ -110,13 +109,14 @@ export default function Contact() {
                 <label
                   htmlFor={field.id}
                   style={{
-                    fontFamily: "'Space Mono', monospace",
-                    fontSize: '0.6rem',
-                    letterSpacing: '0.15em',
-                    color: 'rgba(200,220,255,0.45)',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: '0.70rem',
+                    letterSpacing: '0.05em',
+                    color: '#666',
                     display: 'block',
                     marginBottom: 8,
                     textTransform: 'uppercase',
+                    fontWeight: 500,
                   }}
                 >
                   {field.label}
@@ -128,19 +128,19 @@ export default function Contact() {
                   required
                   style={{
                     width: '100%',
-                    background: 'rgba(255,255,255,0.04)',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: 12,
+                    background: 'transparent',
+                    border: '1px solid rgba(0,0,0,0.1)',
+                    borderRadius: 0,
                     padding: '14px 16px',
-                    color: '#fff',
+                    color: '#111',
                     fontFamily: "'Inter', sans-serif",
                     fontSize: '0.85rem',
                     outline: 'none',
                     transition: 'border-color 0.3s',
                     boxSizing: 'border-box',
                   }}
-                  onFocus={e => ((e.target as HTMLInputElement).style.borderColor = '#d4ff00')}
-                  onBlur={e => ((e.target as HTMLInputElement).style.borderColor = 'rgba(255,255,255,0.1)')}
+                  onFocus={e => ((e.target as HTMLInputElement).style.borderColor = '#111')}
+                  onBlur={e => ((e.target as HTMLInputElement).style.borderColor = 'rgba(0,0,0,0.1)')}
                 />
               </div>
             ))}
@@ -148,13 +148,14 @@ export default function Contact() {
               <label
                 htmlFor="message"
                 style={{
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: '0.6rem',
-                  letterSpacing: '0.15em',
-                  color: 'rgba(200,220,255,0.45)',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: '0.70rem',
+                  letterSpacing: '0.05em',
+                  color: '#666',
                   display: 'block',
                   marginBottom: 8,
                   textTransform: 'uppercase',
+                  fontWeight: 500,
                 }}
               >
                 Message
@@ -166,11 +167,11 @@ export default function Contact() {
                 rows={5}
                 style={{
                   width: '100%',
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  borderRadius: 12,
+                  background: 'transparent',
+                  border: '1px solid rgba(0,0,0,0.1)',
+                  borderRadius: 0,
                   padding: '14px 16px',
-                  color: '#fff',
+                  color: '#111',
                   fontFamily: "'Inter', sans-serif",
                   fontSize: '0.85rem',
                   outline: 'none',
@@ -178,8 +179,8 @@ export default function Contact() {
                   resize: 'vertical',
                   boxSizing: 'border-box',
                 }}
-                onFocus={e => ((e.target as HTMLTextAreaElement).style.borderColor = '#d4ff00')}
-                onBlur={e => ((e.target as HTMLTextAreaElement).style.borderColor = 'rgba(255,255,255,0.1)')}
+                onFocus={e => ((e.target as HTMLTextAreaElement).style.borderColor = '#111')}
+                onBlur={e => ((e.target as HTMLTextAreaElement).style.borderColor = 'rgba(0,0,0,0.1)')}
               />
             </div>
             <button
@@ -190,27 +191,30 @@ export default function Contact() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: 8,
-                background: sent ? 'rgba(212,255,0,0.15)' : '#d4ff00',
-                color: sent ? '#d4ff00' : '#000',
-                border: sent ? '1px solid #d4ff00' : 'none',
-                borderRadius: 100,
+                background: sent ? '#EFEFEF' : '#111',
+                color: sent ? '#111' : '#fff',
+                border: sent ? '1px solid #CCC' : '1px solid #111',
+                borderRadius: 0,
                 padding: '16px 32px',
-                fontFamily: "'Syne', sans-serif",
-                fontWeight: 700,
+                fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
+                fontWeight: 600,
                 fontSize: '0.85rem',
                 cursor: sending ? 'wait' : 'pointer',
                 transition: 'all 0.3s',
-                letterSpacing: '0.05em',
+                letterSpacing: '0.02em',
+                marginTop: '8px',
               }}
               onMouseEnter={e => {
                 if (!sent) {
-                  (e.currentTarget as HTMLElement).style.transform = 'translateY(-3px)';
-                  (e.currentTarget as HTMLElement).style.boxShadow = '0 16px 40px rgba(212,255,0,0.3)';
+                  (e.currentTarget as HTMLElement).style.background = '#333';
+                  (e.currentTarget as HTMLElement).style.borderColor = '#333';
                 }
               }}
               onMouseLeave={e => {
-                (e.currentTarget as HTMLElement).style.transform = 'none';
-                (e.currentTarget as HTMLElement).style.boxShadow = 'none';
+                if (!sent) {
+                  (e.currentTarget as HTMLElement).style.background = '#111';
+                  (e.currentTarget as HTMLElement).style.borderColor = '#111';
+                }
               }}
             >
               {sent ? '✓ Message Sent!' : sending ? 'Sending...' : <><Send size={15} /> Send Message</>}
@@ -225,10 +229,11 @@ export default function Contact() {
             <div>
               <p
                 style={{
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: '0.6rem',
-                  letterSpacing: '0.2em',
-                  color: 'rgba(200,220,255,0.35)',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: '0.70rem',
+                  letterSpacing: '0.05em',
+                  fontWeight: 500,
+                  color: '#666',
                   textTransform: 'uppercase',
                   marginBottom: 12,
                 }}
@@ -238,14 +243,15 @@ export default function Contact() {
               <a
                 href="mailto:parardhadhar@gmail.com"
                 style={{
-                  fontFamily: "'Syne', sans-serif",
+                  fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
                   fontWeight: 600,
-                  fontSize: '1.1rem',
-                  color: '#d4ff00',
+                  fontSize: '1.2rem',
+                  color: '#111',
                   textDecoration: 'none',
+                  borderBottom: '1px solid rgba(0,0,0,0.2)',
                   transition: 'opacity 0.3s',
                 }}
-                onMouseEnter={e => ((e.currentTarget as HTMLElement).style.opacity = '0.7')}
+                onMouseEnter={e => ((e.currentTarget as HTMLElement).style.opacity = '0.6')}
                 onMouseLeave={e => ((e.currentTarget as HTMLElement).style.opacity = '1')}
               >
                 parardhadhar@gmail.com
@@ -256,10 +262,11 @@ export default function Contact() {
             <div>
               <p
                 style={{
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: '0.6rem',
-                  letterSpacing: '0.2em',
-                  color: 'rgba(200,220,255,0.35)',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: '0.70rem',
+                  letterSpacing: '0.05em',
+                  fontWeight: 500,
+                  color: '#666',
                   textTransform: 'uppercase',
                   marginBottom: 16,
                 }}
@@ -275,23 +282,22 @@ export default function Contact() {
                       display: 'flex',
                       alignItems: 'center',
                       gap: 12,
-                      color: 'rgba(200,220,255,0.6)',
+                      color: '#444',
                       textDecoration: 'none',
                       fontFamily: "'Inter', sans-serif",
-                      fontSize: '0.9rem',
+                      fontSize: '0.95rem',
+                      fontWeight: 500,
                       transition: 'all 0.3s',
-                      padding: '12px 16px',
-                      borderRadius: 12,
                     }}
                     onMouseEnter={e => {
                       const el = e.currentTarget as HTMLElement;
-                      el.style.color = '#d4ff00';
-                      el.style.background = 'rgba(212,255,0,0.06)';
+                      el.style.color = '#111';
+                      el.style.transform = 'translateX(4px)';
                     }}
                     onMouseLeave={e => {
                       const el = e.currentTarget as HTMLElement;
-                      el.style.color = 'rgba(200,220,255,0.6)';
-                      el.style.background = 'transparent';
+                      el.style.color = '#444';
+                      el.style.transform = 'translateX(0)';
                     }}
                   >
                     {s.icon}
@@ -302,38 +308,43 @@ export default function Contact() {
             </div>
 
             {/* CV download */}
-            <a
-              href="/Parardha_Dhar_CV_0.pdf"
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-                border: '1px solid rgba(255,255,255,0.15)',
-                padding: '14px 28px',
-                borderRadius: 100,
-                fontFamily: "'Syne', sans-serif",
-                fontWeight: 600,
-                fontSize: '0.8rem',
-                color: '#fff',
-                textDecoration: 'none',
-                transition: 'all 0.3s',
-                letterSpacing: '0.05em',
-              }}
-              onMouseEnter={e => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.borderColor = '#d4ff00';
-                el.style.color = '#d4ff00';
-              }}
-              onMouseLeave={e => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.borderColor = 'rgba(255,255,255,0.15)';
-                el.style.color = '#fff';
-              }}
-            >
-              ↓ Download CV
-            </a>
+            <div style={{ marginTop: '20px' }}>
+              <a
+                href="/Parardha_Dhar_CV_0.pdf"
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  border: '1px solid rgba(0,0,0,0.1)',
+                  padding: '14px 28px',
+                  borderRadius: 0,
+                  fontFamily: "'Inter', sans-serif",
+                  fontWeight: 500,
+                  fontSize: '0.85rem',
+                  color: '#111',
+                  background: 'transparent',
+                  textDecoration: 'none',
+                  transition: 'all 0.3s',
+                  letterSpacing: '0.02em',
+                }}
+                onMouseEnter={e => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.background = '#111';
+                  el.style.color = '#fff';
+                  el.style.borderColor = '#111';
+                }}
+                onMouseLeave={e => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.background = 'transparent';
+                  el.style.color = '#111';
+                  el.style.borderColor = 'rgba(0,0,0,0.1)';
+                }}
+              >
+                ↓ Download CV
+              </a>
+            </div>
           </div>
         </ScrollReveal>
       </div>

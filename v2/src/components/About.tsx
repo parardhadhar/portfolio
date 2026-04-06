@@ -25,10 +25,11 @@ export default function About() {
         <ScrollReveal delay={0} from="left">
           <span
             style={{
-              fontFamily: "'Space Mono', monospace",
-              fontSize: '0.6rem',
-              letterSpacing: '0.3em',
-              color: '#d4ff00',
+              fontFamily: "'Inter', sans-serif",
+              fontWeight: 500,
+              fontSize: '0.75rem',
+              letterSpacing: '0.1em',
+              color: '#666',
               display: 'block',
               marginBottom: '1.5rem',
               textTransform: 'uppercase',
@@ -38,22 +39,20 @@ export default function About() {
           </span>
           <h2
             style={{
-              fontFamily: "'Syne', sans-serif",
-              fontWeight: 800,
+              fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
+              fontWeight: 700,
               fontSize: 'clamp(2rem, 4vw, 3.2rem)',
               lineHeight: 1.1,
-              color: '#fff',
+              color: '#111',
               margin: '0 0 1.5rem',
-              letterSpacing: '-0.02em',
+              letterSpacing: '-0.03em',
             }}
           >
             I engineer immersive{' '}
             <span
               style={{
                 fontStyle: 'italic',
-                background: 'linear-gradient(135deg, #5227FF, #FF9FFC)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
+                color: '#666',
               }}
             >
               experiences.
@@ -64,27 +63,27 @@ export default function About() {
           <p
             style={{
               fontFamily: "'Inter', sans-serif",
-              fontSize: '1rem',
-              lineHeight: 1.8,
-              color: 'rgba(200,210,230,0.7)',
+              fontSize: '1.05rem',
+              lineHeight: 1.7,
+              color: '#444',
               margin: '0 0 1.5rem',
             }}
           >
             I'm{' '}
-            <strong style={{ color: '#fff', fontWeight: 600 }}>Parardha Dhar</strong>, a creative
+            <strong style={{ color: '#111', fontWeight: 600 }}>Parardha Dhar</strong>, a creative
             technologist blending{' '}
-            <span style={{ color: '#d4ff00' }}>Unreal Engine artistry</span> with{' '}
-            <span style={{ color: '#d4ff00' }}>Machine Learning</span> and{' '}
-            <span style={{ color: '#d4ff00' }}>Full-Stack Engineering</span>. I build things that
+            <span style={{ color: '#111', fontWeight: 500 }}>Unreal Engine artistry</span> with{' '}
+            <span style={{ color: '#111', fontWeight: 500 }}>Machine Learning</span> and{' '}
+            <span style={{ color: '#111', fontWeight: 500 }}>Full-Stack Engineering</span>. I build things that
             sit at the intersection of computation and creativity — from real-time 3D worlds to
             intelligent web systems.
           </p>
           <p
             style={{
               fontFamily: "'Inter', sans-serif",
-              fontSize: '1rem',
-              lineHeight: 1.8,
-              color: 'rgba(200,210,230,0.5)',
+              fontSize: '1.05rem',
+              lineHeight: 1.7,
+              color: '#777',
             }}
           >
             Currently pursuing B.Tech (24BCG10003) while building projects that matter.
@@ -97,35 +96,35 @@ export default function About() {
               display: 'flex',
               flexWrap: 'wrap',
               gap: '0.6rem',
-              marginTop: '2rem',
+              marginTop: '2.5rem',
             }}
           >
             {skills.map(skill => (
               <span
                 key={skill}
                 style={{
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: '0.6rem',
-                  letterSpacing: '0.12em',
-                  padding: '8px 16px',
-                  border: '1px solid rgba(255,255,255,0.12)',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: '0.75rem',
+                  letterSpacing: '0.02em',
+                  padding: '10px 18px',
+                  border: '1px solid rgba(0,0,0,0.1)',
                   borderRadius: '100px',
-                  color: 'rgba(200,220,255,0.7)',
-                  background: 'rgba(255,255,255,0.03)',
+                  color: '#444',
+                  background: 'transparent',
                   transition: 'all 0.3s',
                   cursor: 'default',
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget as HTMLElement;
-                  el.style.borderColor = '#d4ff00';
-                  el.style.color = '#d4ff00';
-                  el.style.background = 'rgba(212,255,0,0.05)';
+                  el.style.borderColor = '#111';
+                  el.style.color = '#111';
+                  el.style.background = 'rgba(0,0,0,0.02)';
                 }}
                 onMouseLeave={e => {
                   const el = e.currentTarget as HTMLElement;
-                  el.style.borderColor = 'rgba(255,255,255,0.12)';
-                  el.style.color = 'rgba(200,220,255,0.7)';
-                  el.style.background = 'rgba(255,255,255,0.03)';
+                  el.style.borderColor = 'rgba(0,0,0,0.1)';
+                  el.style.color = '#444';
+                  el.style.background = 'transparent';
                 }}
               >
                 {skill}
@@ -140,18 +139,11 @@ export default function About() {
         <div
           style={{
             position: 'relative',
-            borderRadius: 24,
+            borderRadius: 0,
             overflow: 'hidden',
             aspectRatio: '3/4',
             maxHeight: 560,
-            background: 'rgba(255,255,255,0.03)',
-            border: '1px solid rgba(255,255,255,0.08)',
-          }}
-          onMouseEnter={e => {
-            (e.currentTarget as HTMLElement).style.border = '1px solid rgba(212,255,0,0.3)';
-          }}
-          onMouseLeave={e => {
-            (e.currentTarget as HTMLElement).style.border = '1px solid rgba(255,255,255,0.08)';
+            background: 'rgba(0,0,0,0.03)',
           }}
         >
           <img
@@ -161,21 +153,18 @@ export default function About() {
               width: '100%',
               height: '100%',
               objectFit: 'cover',
-              filter: 'contrast(1.2) saturate(0.6)',
-              transition: 'filter 0.8s ease',
+              filter: 'grayscale(100%) contrast(1.1)',
+              transition: 'filter 1s ease, transform 1.5s ease',
             }}
             onMouseEnter={e => {
-              (e.currentTarget as HTMLImageElement).style.filter = 'contrast(1.1) saturate(1)';
+              const el = e.currentTarget as HTMLImageElement;
+              el.style.filter = 'grayscale(0%) contrast(1.1)';
+              el.style.transform = 'scale(1.05)';
             }}
             onMouseLeave={e => {
-              (e.currentTarget as HTMLImageElement).style.filter = 'contrast(1.2) saturate(0.6)';
-            }}
-          />
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'linear-gradient(to top, #04000a 10%, transparent 50%)',
+              const el = e.currentTarget as HTMLImageElement;
+              el.style.filter = 'grayscale(100%) contrast(1.1)';
+              el.style.transform = 'scale(1)';
             }}
           />
           {/* Corner label */}
@@ -184,10 +173,12 @@ export default function About() {
               position: 'absolute',
               bottom: 24,
               left: 24,
-              fontFamily: "'Space Mono', monospace",
+              fontFamily: "'Inter', sans-serif",
               fontSize: '0.6rem',
-              color: 'rgba(200,220,255,0.4)',
-              letterSpacing: '0.2em',
+              fontWeight: 500,
+              color: '#fff',
+              letterSpacing: '0.1em',
+              mixBlendMode: 'difference',
             }}
           >
             UNREAL ENGINE 5 — ENVIRONMENT ART

@@ -12,7 +12,6 @@ interface Project {
   desc: string;
   longDesc: string;
   tags: string[];
-  color: string;
   size: 'large' | 'normal';
   href: string;
   imageBg?: string;
@@ -27,11 +26,10 @@ const projects: Project[] = [
     desc: "AI-powered women's safety intelligence dashboard",
     longDesc:
       "A full-stack safety intelligence platform combining real-time NCRB crime data, GIS mapping via Leaflet.js, an ML heatmap engine, and a cinematic visual interface. Built to provide women with actionable, location-aware safety insights across major Indian metropolitan areas.",
-    tags: ['Python', 'Leaflet.js', 'Machine Learning', 'GIS', 'Firebase', 'NCRB Data'],
-    color: '#08f7fe',
+    tags: ['Python', 'Leaflet.js', 'Machine Learning', 'GIS', 'Firebase'],
     size: 'large',
     href: '#',
-    imageBg: 'linear-gradient(135deg, rgba(8,247,254,0.12) 0%, rgba(82,39,255,0.08) 100%)',
+    imageBg: '#EEEEEE',
   },
   {
     num: '02',
@@ -41,11 +39,10 @@ const projects: Project[] = [
     desc: 'Photorealistic bioluminescent cave in Unreal Engine 5',
     longDesc:
       'A full cinematic cave environment rendered in UE5 with Lumen global illumination, bioluminescent flora via Niagara VFX, volumetric atmospheric fog, and ultra-detail geometry via Nanite. Every asset placed, lit, and styled by hand.',
-    tags: ['Unreal Engine 5', 'Nanite', 'Lumen', 'Niagara VFX', 'PCG', 'Megascans'],
-    color: '#d4ff00',
+    tags: ['UE5', 'Nanite', 'Lumen', 'Niagara VFX', 'PCG'],
     size: 'normal',
     href: '#',
-    imageBg: 'linear-gradient(135deg, rgba(212,255,0,0.10) 0%, rgba(8,247,254,0.06) 100%)',
+    imageBg: '#E9E9E9',
   },
   {
     num: '03',
@@ -55,11 +52,10 @@ const projects: Project[] = [
     desc: 'Dynamic ocean & coastal scene with ray-traced lighting',
     longDesc:
       'A photorealistic beach environment in UE5 featuring a dynamic ocean simulation, wave caustics, ray-traced reflections on wet sand, volumetric cloud systems, and a full day-night lighting cycle driven by a sky atmosphere component.',
-    tags: ['Unreal Engine 5', 'Dynamic Ocean', 'Lumen', 'Sky Atmosphere', 'Wave Simulation'],
-    color: '#5227FF',
+    tags: ['UE5', 'Dynamic Ocean', 'Lumen', 'Sky Atmosphere'],
     size: 'normal',
     href: '#',
-    imageBg: 'linear-gradient(135deg, rgba(82,39,255,0.12) 0%, rgba(212,255,0,0.06) 100%)',
+    imageBg: '#E4E4E4',
   },
   {
     num: '04',
@@ -69,11 +65,10 @@ const projects: Project[] = [
     desc: 'Multi-model AI assistant with vision on Telegram',
     longDesc:
       'A production-deployed Telegram bot powered by Google Gemini and Groq with a smart model fallback chain. Supports multimodal image analysis, conversation memory, Firebase logging, and local data storage — built to help students with coursework at any time.',
-    tags: ['Python', 'Gemini API', 'Groq', 'Firebase', 'Telegram Bot', 'Vision AI'],
-    color: '#FF9FFC',
+    tags: ['Python', 'Gemini API', 'Groq', 'Vision AI'],
     size: 'large',
     href: '#',
-    imageBg: 'linear-gradient(135deg, rgba(255,159,252,0.10) 0%, rgba(82,39,255,0.08) 100%)',
+    imageBg: '#DFDFDF',
   },
   {
     num: '05',
@@ -83,11 +78,10 @@ const projects: Project[] = [
     desc: 'Full mechanical vehicle rig in Blender with cinematic keyframes',
     longDesc:
       'A complete mechanical rigging project in Blender — IK/FK chain setup for wheels, physics-driven suspension using rigid body constraints, driver expressions coupling steering to wheel rotation, and a final cinematic animation with curve-path following and depth-of-field camera work.',
-    tags: ['Blender', 'Rigging', 'Physics Simulation', 'IK/FK', 'Animation', 'Cinematics'],
-    color: '#ff7b54',
+    tags: ['Blender', 'Rigging', 'Physics', 'Animation'],
     size: 'normal',
     href: '#',
-    imageBg: 'linear-gradient(135deg, rgba(255,123,84,0.12) 0%, rgba(255,159,252,0.06) 100%)',
+    imageBg: '#E9E9E9',
   },
   {
     num: '06',
@@ -97,25 +91,23 @@ const projects: Project[] = [
     desc: 'Custom OpenEnv environment for Meta Hackathon',
     longDesc:
       'A fully compliant Meta Hackathon OpenEnv submission featuring a real-world task simulation environment with typed models, deterministic graders, baseline inference, and a containerized Docker deployment. Accompanied by a dark-themed pitch deck.',
-    tags: ['Python', 'OpenEnv', 'Docker', 'AI Agents', 'Meta Llama'],
-    color: '#66d9e8',
+    tags: ['Python', 'OpenEnv', 'Docker', 'AI Agents'],
     size: 'normal',
     href: '#',
-    imageBg: 'linear-gradient(135deg, rgba(102,217,232,0.10) 0%, rgba(82,39,255,0.08) 100%)',
+    imageBg: '#EEEEEE',
   },
   {
     num: '07',
-    title: 'Blueprint Editor — Nexus Games',
+    title: 'Blueprint Editor',
     year: '2024',
     status: 'In Progress',
     desc: 'Multiplayer collaborative game design tool with AI assist',
     longDesc:
       'A browser-based multiplayer blueprint editor for the Nexus Games India platform. Features private room creation (3-person cap), real-time collaboration via WebSocket, AI logic template suggestions, offline saving, and a polished simulation panel.',
-    tags: ['React', 'WebSocket', 'AI Templates', 'Multiplayer', 'Firebase', 'TypeScript'],
-    color: '#a78bfa',
+    tags: ['React', 'WebSocket', 'AI Templates', 'Multiplayer'],
     size: 'normal',
     href: '#',
-    imageBg: 'linear-gradient(135deg, rgba(167,139,250,0.12) 0%, rgba(255,159,252,0.06) 100%)',
+    imageBg: '#E4E4E4',
   },
 ];
 
@@ -127,10 +119,10 @@ function ProjectCard({ p }: { p: Project }) {
     if (!el) return;
     const ctx = gsap.context(() => {
       gsap.from(el, {
-        y: 60,
+        y: 80,
         opacity: 0,
-        duration: 1.1,
-        ease: 'power4.out',
+        duration: 1.2,
+        ease: 'expo.out',
         scrollTrigger: {
           trigger: el,
           start: 'top 85%',
@@ -154,9 +146,9 @@ function ProjectCard({ p }: { p: Project }) {
           display: 'flex',
           flexDirection: p.size === 'large' ? 'row' : 'column',
           gap: p.size === 'large' ? 0 : 0,
-          background: 'rgba(255,255,255,0.03)',
-          border: '1px solid rgba(255,255,255,0.07)',
-          borderRadius: 24,
+          background: 'transparent',
+          border: '1px solid rgba(0,0,0,0.1)',
+          borderRadius: 0,
           overflow: 'hidden',
           textDecoration: 'none',
           transition: 'all 0.5s cubic-bezier(0.16,1,0.3,1)',
@@ -164,24 +156,24 @@ function ProjectCard({ p }: { p: Project }) {
         }}
         onMouseEnter={e => {
           const el = e.currentTarget as HTMLElement;
-          el.style.background = 'rgba(255,255,255,0.055)';
-          el.style.borderColor = `${p.color}35`;
-          el.style.transform = 'translateY(-8px)';
-          el.style.boxShadow = `0 32px 80px ${p.color}12`;
+          el.style.background = '#fff';
+          el.style.borderColor = 'rgba(0,0,0,0.3)';
+          el.style.transform = 'translateY(-4px)';
+          el.style.boxShadow = `0 20px 40px rgba(0,0,0,0.05)`;
         }}
         onMouseLeave={e => {
           const el = e.currentTarget as HTMLElement;
-          el.style.background = 'rgba(255,255,255,0.03)';
-          el.style.borderColor = 'rgba(255,255,255,0.07)';
+          el.style.background = 'transparent';
+          el.style.borderColor = 'rgba(0,0,0,0.1)';
           el.style.transform = 'none';
           el.style.boxShadow = 'none';
         }}
       >
-        {/* Gradient image area */}
+        {/* Abstract solid area (placeholder for image) */}
         <div
           style={{
             background: p.imageBg,
-            minHeight: p.size === 'large' ? 240 : 180,
+            minHeight: p.size === 'large' ? 300 : 220,
             flexBasis: p.size === 'large' ? '45%' : 'auto',
             flexShrink: 0,
             display: 'flex',
@@ -191,13 +183,13 @@ function ProjectCard({ p }: { p: Project }) {
             overflow: 'hidden',
           }}
         >
-          {/* Project number — large decorative */}
+          {/* Project number — large typographic */}
           <span
             style={{
-              fontFamily: "'Syne', sans-serif",
-              fontWeight: 800,
+              fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
+              fontWeight: 700,
               fontSize: p.size === 'large' ? '8rem' : '6rem',
-              color: `${p.color}15`,
+              color: 'rgba(0,0,0,0.03)',
               letterSpacing: '-0.06em',
               lineHeight: 1,
               userSelect: 'none',
@@ -219,13 +211,14 @@ function ProjectCard({ p }: { p: Project }) {
           >
             <span
               style={{
-                fontFamily: "'Space Mono', monospace",
-                fontSize: '0.52rem',
-                letterSpacing: '0.15em',
-                padding: '4px 10px',
-                borderRadius: 100,
-                border: `1px solid ${p.color}50`,
-                color: p.color,
+                fontFamily: "'Inter', sans-serif",
+                fontSize: '0.6rem',
+                fontWeight: 600,
+                letterSpacing: '0.1em',
+                padding: '6px 12px',
+                borderRadius: 0,
+                background: '#111',
+                color: '#fff',
                 textTransform: 'uppercase' as const,
               }}
             >
@@ -233,10 +226,11 @@ function ProjectCard({ p }: { p: Project }) {
             </span>
             <span
               style={{
-                fontFamily: "'Space Mono', monospace",
-                fontSize: '0.52rem',
+                fontFamily: "'Inter', sans-serif",
+                fontSize: '0.65rem',
+                fontWeight: 600,
                 letterSpacing: '0.1em',
-                color: 'rgba(200,220,255,0.3)',
+                color: '#666',
               }}
             >
               {p.year}
@@ -247,7 +241,7 @@ function ProjectCard({ p }: { p: Project }) {
         {/* Content */}
         <div
           style={{
-            padding: p.size === 'large' ? '40px 40px' : '28px 28px',
+            padding: p.size === 'large' ? '40px 40px' : '32px 32px',
             display: 'flex',
             flexDirection: 'column',
             flex: 1,
@@ -255,13 +249,14 @@ function ProjectCard({ p }: { p: Project }) {
         >
           <h3
             style={{
-              fontFamily: "'Syne', sans-serif",
+              fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
               fontWeight: 700,
-              fontSize: p.size === 'large' ? '1.8rem' : '1.35rem',
-              color: '#fff',
-              margin: '0 0 8px',
+              fontSize: p.size === 'large' ? '2.2rem' : '1.5rem',
+              color: '#111',
+              margin: '0 0 12px',
               transition: 'color 0.3s',
-              lineHeight: 1.2,
+              lineHeight: 1.1,
+              letterSpacing: '-0.02em',
             }}
           >
             {p.title}
@@ -270,9 +265,10 @@ function ProjectCard({ p }: { p: Project }) {
           <p
             style={{
               fontFamily: "'Inter', sans-serif",
-              fontSize: '0.8rem',
-              color: p.color,
-              marginBottom: 12,
+              fontSize: '0.9rem',
+              color: '#111',
+              fontWeight: 500,
+              marginBottom: 16,
               fontStyle: 'italic',
             }}
           >
@@ -282,28 +278,30 @@ function ProjectCard({ p }: { p: Project }) {
           <p
             style={{
               fontFamily: "'Inter', sans-serif",
-              fontSize: p.size === 'large' ? '0.9rem' : '0.82rem',
-              lineHeight: p.size === 'large' ? 1.8 : 1.75,
-              color: 'rgba(200,210,230,0.58)',
-              marginBottom: 20,
+              fontSize: p.size === 'large' ? '0.95rem' : '0.9rem',
+              lineHeight: 1.6,
+              color: '#555',
+              marginBottom: 24,
               flex: 1,
             }}
           >
             {p.longDesc}
           </p>
 
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: 20 }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: 24 }}>
             {p.tags.map(tag => (
               <span
                 key={tag}
                 style={{
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: '0.52rem',
-                  padding: '4px 10px',
-                  borderRadius: 6,
-                  border: `1px solid ${p.color}28`,
-                  color: p.color,
-                  letterSpacing: '0.08em',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: '0.65rem',
+                  padding: '6px 12px',
+                  borderRadius: 0,
+                  fontWeight: 500,
+                  border: `1px solid rgba(0,0,0,0.15)`,
+                  color: '#333',
+                  letterSpacing: '0.05em',
+                  background: '#f9f9f9',
                 }}
               >
                 {tag}
@@ -316,10 +314,11 @@ function ProjectCard({ p }: { p: Project }) {
               display: 'flex',
               alignItems: 'center',
               gap: 8,
-              fontFamily: "'Space Mono', monospace",
-              fontSize: '0.58rem',
-              color: p.color,
-              letterSpacing: '0.15em',
+              fontFamily: "'Inter', sans-serif",
+              fontSize: '0.70rem',
+              fontWeight: 600,
+              color: '#111',
+              letterSpacing: '0.1em',
               textTransform: 'uppercase' as const,
             }}
           >
@@ -339,14 +338,14 @@ function ProjectCard({ p }: { p: Project }) {
 // Marquee strip between sections
 function MarqueeStrip() {
   const words = [
-    'Unreal Engine 5 ✦',
-    'Machine Learning ✦',
-    'WebGL / Three.js ✦',
-    'Full-Stack Dev ✦',
-    '3D Animation ✦',
-    'AI Integration ✦',
-    'Python ✦',
-    'React / TypeScript ✦',
+    'Unreal Engine 5 •',
+    'Machine Learning •',
+    'WebGL / Three.js •',
+    'Full-Stack Dev •',
+    '3D Animation •',
+    'AI Integration •',
+    'Python •',
+    'React / TypeScript •',
   ];
   const doubled = [...words, ...words];
 
@@ -354,18 +353,16 @@ function MarqueeStrip() {
     <div
       style={{
         overflow: 'hidden',
-        padding: '40px 0',
-        borderTop: '1px solid rgba(255,255,255,0.05)',
-        borderBottom: '1px solid rgba(255,255,255,0.05)',
-        maskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
-        WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
+        padding: '60px 0',
+        borderTop: '1px solid rgba(0,0,0,0.1)',
+        borderBottom: '1px solid rgba(0,0,0,0.1)',
       }}
     >
       <div
         style={{
           display: 'flex',
-          gap: '3rem',
-          animation: 'marquee 30s linear infinite',
+          gap: '4rem',
+          animation: 'marquee 40s linear infinite',
           whiteSpace: 'nowrap',
         }}
       >
@@ -373,11 +370,11 @@ function MarqueeStrip() {
           <span
             key={i}
             style={{
-              fontFamily: "'Syne', sans-serif",
-              fontWeight: 800,
-              fontSize: 'clamp(1.5rem,3vw,2.5rem)',
-              letterSpacing: '-0.02em',
-              color: i % 4 === 1 ? 'rgba(212,255,0,0.18)' : 'rgba(255,255,255,0.06)',
+              fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
+              fontWeight: 700,
+              fontSize: 'clamp(2rem,4vw,3.5rem)',
+              letterSpacing: '-0.03em',
+              color: 'rgba(0,0,0,0.06)',
               textTransform: 'uppercase' as const,
               flexShrink: 0,
             }}
@@ -405,10 +402,11 @@ export default function Work() {
         <div style={{ marginBottom: 80 }}>
           <span
             style={{
-              fontFamily: "'Space Mono', monospace",
-              fontSize: '0.6rem',
-              letterSpacing: '0.3em',
-              color: '#d4ff00',
+              fontFamily: "'Inter', sans-serif",
+              fontSize: '0.75rem',
+              fontWeight: 500,
+              letterSpacing: '0.1em',
+              color: '#666',
               display: 'block',
               marginBottom: '1.5rem',
               textTransform: 'uppercase',
@@ -419,11 +417,11 @@ export default function Work() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 16 }}>
             <h2
               style={{
-                fontFamily: "'Syne', sans-serif",
-                fontWeight: 800,
-                fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
-                letterSpacing: '-0.03em',
-                color: '#fff',
+                fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
+                fontWeight: 700,
+                fontSize: 'clamp(3rem, 6vw, 5.5rem)',
+                letterSpacing: '-0.04em',
+                color: '#111',
                 margin: 0,
                 lineHeight: 1,
               }}
@@ -433,8 +431,8 @@ export default function Work() {
             <p
               style={{
                 fontFamily: "'Inter', sans-serif",
-                fontSize: '0.85rem',
-                color: 'rgba(200,220,255,0.35)',
+                fontSize: '0.95rem',
+                color: '#666',
                 maxWidth: 300,
                 lineHeight: 1.6,
               }}

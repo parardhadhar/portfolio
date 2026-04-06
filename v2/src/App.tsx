@@ -22,7 +22,7 @@ const Divider = () => (
       margin: '0 auto',
       padding: '0 40px',
       height: 1,
-      background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)',
+      background: 'linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent)',
     }}
   />
 );
@@ -35,8 +35,8 @@ function App() {
       gsap.from(div, {
         scaleX: 0,
         transformOrigin: 'left',
-        duration: 1.2,
-        ease: 'power3.out',
+        duration: 2.5,
+        ease: 'expo.inOut',
         scrollTrigger: { trigger: div, start: 'top 85%', once: true },
       });
     });
@@ -51,10 +51,9 @@ function App() {
       <CustomCursor />
       <div
         style={{
-          background: '#04000a',
+          background: '#f4f4f4',
           minHeight: '100vh',
           overflowX: 'hidden',
-          cursor: 'none',
         }}
       >
         <Navbar />
