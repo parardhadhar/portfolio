@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 const techCategories = [
   {
     label: 'Real-Time 3D',
-    color: '#d4ff00',
+    color: '#111',
     items: [
       { name: 'Unreal Engine 5', level: 92 },
       { name: 'Three.js / WebGL', level: 85 },
@@ -18,7 +18,7 @@ const techCategories = [
   },
   {
     label: 'Web & Frontend',
-    color: '#08f7fe',
+    color: '#333',
     items: [
       { name: 'React / Next.js', level: 90 },
       { name: 'TypeScript', level: 85 },
@@ -28,7 +28,7 @@ const techCategories = [
   },
   {
     label: 'AI & Machine Learning',
-    color: '#FF9FFC',
+    color: '#222',
     items: [
       { name: 'Python', level: 88 },
       { name: 'TensorFlow / PyTorch', level: 75 },
@@ -77,18 +77,19 @@ function SkillBar({ name, level, color, delay }: { name: string; level: number; 
           marginBottom: 8,
           fontFamily: "'Inter', sans-serif",
           fontSize: '0.8rem',
+          fontWeight: 500,
         }}
       >
-        <span style={{ color: 'rgba(200,220,255,0.8)' }}>{name}</span>
-        <span style={{ color: 'rgba(200,220,255,0.4)', fontFamily: "'Space Mono', monospace", fontSize: '0.65rem' }}>
+        <span style={{ color: '#111' }}>{name}</span>
+        <span style={{ color: '#666', fontFamily: "'Inter', sans-serif", fontSize: '0.75rem', fontWeight: 600 }}>
           {level}%
         </span>
       </div>
       <div
         style={{
-          height: 3,
-          background: 'rgba(255,255,255,0.06)',
-          borderRadius: 100,
+          height: 2,
+          background: 'rgba(0,0,0,0.1)',
+          borderRadius: 0,
           overflow: 'hidden',
         }}
       >
@@ -97,9 +98,8 @@ function SkillBar({ name, level, color, delay }: { name: string; level: number; 
           style={{
             height: '100%',
             width: 0,
-            background: `linear-gradient(90deg, ${color}99, ${color})`,
-            borderRadius: 100,
-            boxShadow: `0 0 12px ${color}60`,
+            background: color,
+            borderRadius: 0,
           }}
         />
       </div>
@@ -121,10 +121,11 @@ export default function TechStack() {
         <div style={{ marginBottom: 80 }}>
           <span
             style={{
-              fontFamily: "'Space Mono', monospace",
-              fontSize: '0.6rem',
-              letterSpacing: '0.3em',
-              color: '#d4ff00',
+              fontFamily: "'Inter', sans-serif",
+              fontSize: '0.75rem',
+              letterSpacing: '0.1em',
+              fontWeight: 500,
+              color: '#666',
               display: 'block',
               marginBottom: '1.5rem',
               textTransform: 'uppercase',
@@ -134,11 +135,11 @@ export default function TechStack() {
           </span>
           <h2
             style={{
-              fontFamily: "'Syne', sans-serif",
-              fontWeight: 800,
-              fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
-              letterSpacing: '-0.03em',
-              color: '#fff',
+              fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
+              fontWeight: 700,
+              fontSize: 'clamp(3rem, 6vw, 5.5rem)',
+              letterSpacing: '-0.04em',
+              color: '#111',
               margin: 0,
               lineHeight: 1,
             }}
@@ -161,20 +162,35 @@ export default function TechStack() {
           <ScrollReveal key={cat.label} delay={ci * 0.1} from="bottom">
             <div
               style={{
-                background: 'rgba(255,255,255,0.02)',
-                border: '1px solid rgba(255,255,255,0.07)',
-                borderRadius: 20,
-                padding: '32px 28px',
+                background: 'transparent',
+                border: '1px solid rgba(0,0,0,0.15)',
+                borderRadius: 0,
+                padding: '32px 32px',
+                transition: 'all 0.4s ease',
+              }}
+              onMouseEnter={e => {
+                const el = e.currentTarget as HTMLElement;
+                el.style.background = '#fff';
+                el.style.borderColor = 'rgba(0,0,0,0.3)';
+                el.style.transform = 'translateY(-4px)';
+                el.style.boxShadow = `0 20px 40px rgba(0,0,0,0.05)`;
+              }}
+              onMouseLeave={e => {
+                const el = e.currentTarget as HTMLElement;
+                el.style.background = 'transparent';
+                el.style.borderColor = 'rgba(0,0,0,0.15)';
+                el.style.transform = 'none';
+                el.style.boxShadow = 'none';
               }}
             >
               <h3
                 style={{
-                  fontFamily: "'Syne', sans-serif",
+                  fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
                   fontWeight: 700,
-                  fontSize: '1rem',
-                  color: cat.color,
+                  fontSize: '1.25rem',
+                  color: '#111',
                   marginBottom: 24,
-                  letterSpacing: '0.05em',
+                  letterSpacing: '-0.02em',
                 }}
               >
                 {cat.label}
@@ -197,10 +213,11 @@ export default function TechStack() {
       <ScrollReveal>
         <p
           style={{
-            fontFamily: "'Space Mono', monospace",
-            fontSize: '0.6rem',
-            letterSpacing: '0.25em',
-            color: 'rgba(200,220,255,0.35)',
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '0.70rem',
+            letterSpacing: '0.05em',
+            fontWeight: 500,
+            color: '#666',
             textTransform: 'uppercase',
             marginBottom: 20,
           }}
@@ -213,24 +230,25 @@ export default function TechStack() {
               key={tool}
               style={{
                 fontFamily: "'Inter', sans-serif",
-                fontSize: '0.75rem',
+                fontSize: '0.85rem',
+                fontWeight: 500,
                 padding: '8px 18px',
-                borderRadius: 100,
-                border: '1px solid rgba(255,255,255,0.1)',
-                color: 'rgba(200,220,255,0.55)',
+                borderRadius: 0,
+                border: '1px solid rgba(0,0,0,0.15)',
+                color: '#444',
                 transition: 'all 0.3s',
                 cursor: 'default',
               }}
               onMouseEnter={e => {
                 const el = e.currentTarget as HTMLElement;
-                el.style.borderColor = 'rgba(212,255,0,0.4)';
-                el.style.color = '#d4ff00';
-                el.style.background = 'rgba(212,255,0,0.04)';
+                el.style.borderColor = '#111';
+                el.style.color = '#fff';
+                el.style.background = '#111';
               }}
               onMouseLeave={e => {
                 const el = e.currentTarget as HTMLElement;
-                el.style.borderColor = 'rgba(255,255,255,0.1)';
-                el.style.color = 'rgba(200,220,255,0.55)';
+                el.style.borderColor = 'rgba(0,0,0,0.15)';
+                el.style.color = '#444';
                 el.style.background = 'transparent';
               }}
             >
