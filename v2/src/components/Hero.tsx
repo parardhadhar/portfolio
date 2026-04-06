@@ -11,10 +11,6 @@ export default function Hero() {
   const introOverlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Initial setups for safe transforms
-    gsap.set([textBehind.current, textFront.current], { xPercent: -50, yPercent: -50 });
-    gsap.set(imageRef.current, { xPercent: -50 });
-
     const tl = gsap.timeline();
 
     // Initial cinematic loading reveal
@@ -77,6 +73,7 @@ export default function Hero() {
     letterSpacing: '-0.06em',
     top: '40%',
     left: '50%',
+    transform: 'translate(-50%, -50%)',
     margin: 0,
     whiteSpace: 'nowrap',
     pointerEvents: 'none',
@@ -136,8 +133,8 @@ export default function Hero() {
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 2,
-            width: 'clamp(300px, 60vw, 850px)',
-            height: '90%', 
+            width: 'clamp(300px, 45vw, 750px)', // Slimmed down so it definitely doesn't touch the text
+            height: '85%', // Safely sized
             display: 'flex',
             alignItems: 'flex-end',
             justifyContent: 'center',
@@ -228,41 +225,29 @@ export default function Hero() {
           ))}
         </div>
 
-        {/* Role / Description - Bottom Right tightly styled */}
+        {/* Role / Description - Bottom Right (Restored original style) */}
         <div
           ref={infoRef}
           style={{
             position: 'absolute',
             bottom: '40px',
             right: '40px',
-            textAlign: 'right', // Align right
+            textAlign: 'left',
             zIndex: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '8px',
           }}
         >
-          <div style={{ width: '40px', height: '1px', background: 'var(--text-main)', margin: '0 0 8px auto' }} />
           <h2 style={{
-            fontFamily: "'Inter', sans-serif",
-            fontWeight: 400,
-            fontSize: '1rem',
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
+            fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
+            fontWeight: 500,
+            fontSize: 'clamp(1.5rem, 3.5vw, 3.5rem)',
+            lineHeight: 1.05,
+            letterSpacing: '-0.04em',
             color: 'var(--text-main)',
             margin: 0,
           }}>
-            Creative Explorer
+            Creative Explorer<br />
+            Full Stack Dev
           </h2>
-          <span style={{
-            fontFamily: "'Inter', sans-serif",
-            fontWeight: 300,
-            fontSize: '0.85rem',
-            color: 'var(--text-muted)',
-            letterSpacing: '0.05em',
-          }}>
-            Full Stack Developer & Designer
-          </span>
         </div>
       </section>
     </>

@@ -9,7 +9,6 @@ const experiences = [
     description:
       'Architecting real-time 3D environments in Unreal Engine 5, building intelligent web applications with React and Python ML backends, and creating cinematic visual experiences.',
     tags: ['Unreal Engine 5', 'React', 'Python', 'Three.js', 'GSAP'],
-    color: '#d4ff00',
   },
   {
     role: 'B.Tech — Computer Science',
@@ -19,7 +18,6 @@ const experiences = [
     description:
       'Pursuing Bachelor of Technology in Computer Science (Reg. 24BCG10003). Specializing in machine learning, computer graphics, and full-stack development alongside hands-on project work.',
     tags: ['Data Structures', 'Machine Learning', 'Computer Graphics', 'DBMS'],
-    color: '#5227FF',
   },
   {
     role: 'Game Developer & 3D Artist',
@@ -29,7 +27,6 @@ const experiences = [
     description:
       'Developed photorealistic game environments with ray-traced lighting, Nanite geometry, and Lumen global illumination. Rigged and animated vehicles in Blender with physics-based suspension.',
     tags: ['Blender', 'Rigging', 'Nanite', 'Lumen', 'PCG'],
-    color: '#08f7fe',
   },
 ];
 
@@ -48,10 +45,11 @@ export default function WorkExperience() {
         <div style={{ marginBottom: 80 }}>
           <span
             style={{
-              fontFamily: "'Space Mono', monospace",
-              fontSize: '0.6rem',
-              letterSpacing: '0.3em',
-              color: '#d4ff00',
+              fontFamily: "'Inter', sans-serif",
+              fontSize: '0.75rem',
+              letterSpacing: '0.1em',
+              fontWeight: 500,
+              color: 'var(--text-muted)',
               display: 'block',
               marginBottom: '1.5rem',
               textTransform: 'uppercase',
@@ -61,11 +59,11 @@ export default function WorkExperience() {
           </span>
           <h2
             style={{
-              fontFamily: "'Syne', sans-serif",
-              fontWeight: 800,
-              fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
-              letterSpacing: '-0.03em',
-              color: 'var(--bg-color)',
+              fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
+              fontWeight: 700,
+              fontSize: 'clamp(3rem, 6vw, 5.5rem)',
+              letterSpacing: '-0.04em',
+              color: 'var(--text-main)',
               margin: 0,
               lineHeight: 1,
             }}
@@ -85,7 +83,8 @@ export default function WorkExperience() {
             top: 0,
             bottom: 0,
             width: 1,
-            background: 'linear-gradient(to bottom, #d4ff00, rgba(255,255,255,0.05), transparent)',
+            background: 'var(--text-main)',
+            opacity: 0.2,
           }}
         />
 
@@ -99,41 +98,37 @@ export default function WorkExperience() {
                   paddingBottom: 64,
                 }}
               >
-                {/* Dot */}
+                {/* Square Marker */}
                 <div
                   style={{
                     position: 'absolute',
-                    left: -5,
+                    left: -4,
                     top: 6,
-                    width: 11,
-                    height: 11,
-                    borderRadius: '50%',
-                    background: exp.color,
-                    boxShadow: `0 0 20px ${exp.color}80`,
+                    width: 9,
+                    height: 9,
+                    background: 'var(--text-main)',
                     zIndex: 2,
                   }}
                 />
 
-                {/* Card */}
+                {/* Brutalist Card */}
                 <div
                   style={{
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    borderRadius: 20,
+                    background: 'transparent',
+                    border: '1px solid var(--border-color)',
                     padding: '32px 36px',
-                    transition: 'all 0.4s ease',
+                    transition: 'all 0.15s ease', // Snap transition for brutalist feel
+                    position: 'relative',
                   }}
                   onMouseEnter={e => {
                     const el = e.currentTarget as HTMLElement;
-                    el.style.background = 'rgba(255,255,255,0.06)';
-                    el.style.borderColor = `${exp.color}40`;
-                    el.style.transform = 'translateX(8px)';
+                    el.style.transform = 'translate(-6px, -6px)';
+                    el.style.boxShadow = '6px 6px 0 var(--text-main)';
                   }}
                   onMouseLeave={e => {
                     const el = e.currentTarget as HTMLElement;
-                    el.style.background = 'rgba(255,255,255,0.03)';
-                    el.style.borderColor = 'rgba(255,255,255,0.08)';
-                    el.style.transform = 'none';
+                    el.style.transform = 'translate(0, 0)';
+                    el.style.boxShadow = '0px 0px 0 var(--text-main)';
                   }}
                 >
                   <div
@@ -148,11 +143,12 @@ export default function WorkExperience() {
                     <div>
                       <h3
                         style={{
-                          fontFamily: "'Syne', sans-serif",
+                          fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
                           fontWeight: 700,
                           fontSize: '1.25rem',
-                          color: 'var(--bg-color)',
+                          color: 'var(--text-main)',
                           margin: '0 0 4px',
+                          letterSpacing: '-0.02em',
                         }}
                       >
                         {exp.role}
@@ -160,8 +156,9 @@ export default function WorkExperience() {
                       <div
                         style={{
                           fontFamily: "'Inter', sans-serif",
-                          fontSize: '0.8rem',
-                          color: exp.color,
+                          fontSize: '0.85rem',
+                          color: 'var(--text-muted)',
+                          fontWeight: 500,
                         }}
                       >
                         {exp.company}
@@ -170,23 +167,24 @@ export default function WorkExperience() {
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
                       <span
                         style={{
-                          fontFamily: "'Space Mono', monospace",
-                          fontSize: '0.65rem',
-                          color: 'rgba(200,220,255,0.45)',
-                          letterSpacing: '0.1em',
+                          fontFamily: "'Inter', sans-serif",
+                          fontSize: '0.70rem',
+                          fontWeight: 600,
+                          color: 'var(--text-muted)',
+                          letterSpacing: '0.05em',
                         }}
                       >
                         {exp.period}
                       </span>
                       <span
                         style={{
-                          fontFamily: "'Space Mono', monospace",
-                          fontSize: '0.55rem',
-                          padding: '3px 10px',
-                          borderRadius: '100px',
-                          border: `1px solid ${exp.color}50`,
-                          color: exp.color,
-                          letterSpacing: '0.1em',
+                          fontFamily: "'Inter', sans-serif",
+                          fontSize: '0.65rem',
+                          padding: '4px 10px',
+                          background: 'var(--text-main)',
+                          color: 'var(--bg-color)',
+                          fontWeight: 600,
+                          letterSpacing: '0.05em',
                           textTransform: 'uppercase',
                         }}
                       >
@@ -199,8 +197,8 @@ export default function WorkExperience() {
                     style={{
                       fontFamily: "'Inter', sans-serif",
                       fontSize: '0.9rem',
-                      lineHeight: 1.8,
-                      color: 'rgba(200,210,230,0.65)',
+                      lineHeight: 1.7,
+                      color: 'var(--text-muted)',
                       margin: '0 0 20px',
                     }}
                   >
@@ -212,13 +210,13 @@ export default function WorkExperience() {
                       <span
                         key={tag}
                         style={{
-                          fontFamily: "'Space Mono', monospace",
-                          fontSize: '0.55rem',
-                          letterSpacing: '0.1em',
-                          padding: '4px 12px',
-                          borderRadius: 6,
-                          background: 'rgba(255,255,255,0.05)',
-                          color: 'rgba(200,220,255,0.5)',
+                          fontFamily: "'Inter', sans-serif",
+                          fontSize: '0.65rem',
+                          padding: '6px 12px',
+                          border: '1px solid var(--border-color)',
+                          color: 'var(--text-muted)',
+                          fontWeight: 500,
+                          letterSpacing: '0.05em',
                         }}
                       >
                         {tag}
