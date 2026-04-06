@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 const techCategories = [
   {
     label: 'Real-Time 3D',
-    color: '#111',
+    color: 'var(--text-main)',
     items: [
       { name: 'Unreal Engine 5', level: 92 },
       { name: 'Three.js / WebGL', level: 85 },
@@ -80,15 +80,15 @@ function SkillBar({ name, level, color, delay }: { name: string; level: number; 
           fontWeight: 500,
         }}
       >
-        <span style={{ color: '#111' }}>{name}</span>
-        <span style={{ color: '#666', fontFamily: "'Inter', sans-serif", fontSize: '0.75rem', fontWeight: 600 }}>
+        <span style={{ color: 'var(--text-main)' }}>{name}</span>
+        <span style={{ color: 'var(--text-muted)', fontFamily: "'Inter', sans-serif", fontSize: '0.75rem', fontWeight: 600 }}>
           {level}%
         </span>
       </div>
       <div
         style={{
           height: 2,
-          background: 'rgba(0,0,0,0.1)',
+          background: 'var(--border-color)',
           borderRadius: 0,
           overflow: 'hidden',
         }}
@@ -125,7 +125,7 @@ export default function TechStack() {
               fontSize: '0.75rem',
               letterSpacing: '0.1em',
               fontWeight: 500,
-              color: '#666',
+              color: 'var(--text-muted)',
               display: 'block',
               marginBottom: '1.5rem',
               textTransform: 'uppercase',
@@ -139,7 +139,7 @@ export default function TechStack() {
               fontWeight: 700,
               fontSize: 'clamp(3rem, 6vw, 5.5rem)',
               letterSpacing: '-0.04em',
-              color: '#111',
+              color: 'var(--text-main)',
               margin: 0,
               lineHeight: 1,
             }}
@@ -170,7 +170,7 @@ export default function TechStack() {
               }}
               onMouseEnter={e => {
                 const el = e.currentTarget as HTMLElement;
-                el.style.background = '#fff';
+                el.style.background = 'var(--bg-color)';
                 el.style.borderColor = 'rgba(0,0,0,0.3)';
                 el.style.transform = 'translateY(-4px)';
                 el.style.boxShadow = `0 20px 40px rgba(0,0,0,0.05)`;
@@ -178,7 +178,7 @@ export default function TechStack() {
               onMouseLeave={e => {
                 const el = e.currentTarget as HTMLElement;
                 el.style.background = 'transparent';
-                el.style.borderColor = 'rgba(0,0,0,0.15)';
+                el.style.borderColor = 'var(--border-color)';
                 el.style.transform = 'none';
                 el.style.boxShadow = 'none';
               }}
@@ -188,7 +188,7 @@ export default function TechStack() {
                   fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
                   fontWeight: 700,
                   fontSize: '1.25rem',
-                  color: '#111',
+                  color: 'var(--text-main)',
                   marginBottom: 24,
                   letterSpacing: '-0.02em',
                 }}
@@ -217,7 +217,7 @@ export default function TechStack() {
             fontSize: '0.70rem',
             letterSpacing: '0.05em',
             fontWeight: 500,
-            color: '#666',
+            color: 'var(--text-muted)',
             textTransform: 'uppercase',
             marginBottom: 20,
           }}
@@ -235,20 +235,20 @@ export default function TechStack() {
                 padding: '8px 18px',
                 borderRadius: 0,
                 border: '1px solid rgba(0,0,0,0.15)',
-                color: '#444',
+                color: 'var(--text-muted)',
                 transition: 'all 0.3s',
                 cursor: 'default',
               }}
               onMouseEnter={e => {
                 const el = e.currentTarget as HTMLElement;
-                el.style.borderColor = '#111';
-                el.style.color = '#fff';
-                el.style.background = '#111';
+                el.style.borderColor = 'var(--text-main)';
+                el.style.color = 'var(--bg-color)';
+                el.style.background = 'var(--text-main)';
               }}
               onMouseLeave={e => {
                 const el = e.currentTarget as HTMLElement;
-                el.style.borderColor = 'rgba(0,0,0,0.15)';
-                el.style.color = '#444';
+                el.style.borderColor = 'var(--border-color)';
+                el.style.color = 'var(--text-muted)';
                 el.style.background = 'transparent';
               }}
             >

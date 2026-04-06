@@ -156,7 +156,7 @@ function ProjectCard({ p }: { p: Project }) {
         }}
         onMouseEnter={e => {
           const el = e.currentTarget as HTMLElement;
-          el.style.background = '#fff';
+          el.style.background = 'var(--bg-color)';
           el.style.borderColor = 'rgba(0,0,0,0.3)';
           el.style.transform = 'translateY(-4px)';
           el.style.boxShadow = `0 20px 40px rgba(0,0,0,0.05)`;
@@ -164,7 +164,7 @@ function ProjectCard({ p }: { p: Project }) {
         onMouseLeave={e => {
           const el = e.currentTarget as HTMLElement;
           el.style.background = 'transparent';
-          el.style.borderColor = 'rgba(0,0,0,0.1)';
+          el.style.borderColor = 'var(--border-color)';
           el.style.transform = 'none';
           el.style.boxShadow = 'none';
         }}
@@ -217,8 +217,8 @@ function ProjectCard({ p }: { p: Project }) {
                 letterSpacing: '0.1em',
                 padding: '6px 12px',
                 borderRadius: 0,
-                background: '#111',
-                color: '#fff',
+                background: 'var(--text-main)',
+                color: 'var(--bg-color)',
                 textTransform: 'uppercase' as const,
               }}
             >
@@ -230,7 +230,7 @@ function ProjectCard({ p }: { p: Project }) {
                 fontSize: '0.65rem',
                 fontWeight: 600,
                 letterSpacing: '0.1em',
-                color: '#666',
+                color: 'var(--text-muted)',
               }}
             >
               {p.year}
@@ -252,7 +252,7 @@ function ProjectCard({ p }: { p: Project }) {
               fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
               fontWeight: 700,
               fontSize: p.size === 'large' ? '2.2rem' : '1.5rem',
-              color: '#111',
+              color: 'var(--text-main)',
               margin: '0 0 12px',
               transition: 'color 0.3s',
               lineHeight: 1.1,
@@ -266,7 +266,7 @@ function ProjectCard({ p }: { p: Project }) {
             style={{
               fontFamily: "'Inter', sans-serif",
               fontSize: '0.9rem',
-              color: '#111',
+              color: 'var(--text-main)',
               fontWeight: 500,
               marginBottom: 16,
               fontStyle: 'italic',
@@ -280,7 +280,7 @@ function ProjectCard({ p }: { p: Project }) {
               fontFamily: "'Inter', sans-serif",
               fontSize: p.size === 'large' ? '0.95rem' : '0.9rem',
               lineHeight: 1.6,
-              color: '#555',
+              color: 'var(--text-muted)',
               marginBottom: 24,
               flex: 1,
             }}
@@ -317,7 +317,7 @@ function ProjectCard({ p }: { p: Project }) {
               fontFamily: "'Inter', sans-serif",
               fontSize: '0.70rem',
               fontWeight: 600,
-              color: '#111',
+              color: 'var(--text-main)',
               letterSpacing: '0.1em',
               textTransform: 'uppercase' as const,
             }}
@@ -406,7 +406,7 @@ export default function Work() {
               fontSize: '0.75rem',
               fontWeight: 500,
               letterSpacing: '0.1em',
-              color: '#666',
+              color: 'var(--text-muted)',
               display: 'block',
               marginBottom: '1.5rem',
               textTransform: 'uppercase',
@@ -421,7 +421,7 @@ export default function Work() {
                 fontWeight: 700,
                 fontSize: 'clamp(3rem, 6vw, 5.5rem)',
                 letterSpacing: '-0.04em',
-                color: '#111',
+                color: 'var(--text-main)',
                 margin: 0,
                 lineHeight: 1,
               }}
@@ -432,7 +432,7 @@ export default function Work() {
               style={{
                 fontFamily: "'Inter', sans-serif",
                 fontSize: '0.95rem',
-                color: '#666',
+                color: 'var(--text-muted)',
                 maxWidth: 300,
                 lineHeight: 1.6,
               }}

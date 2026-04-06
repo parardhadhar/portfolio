@@ -54,7 +54,7 @@ export default function Navbar() {
         background: scrolled ? 'rgba(244, 244, 244, 0.9)' : 'transparent',
         backdropFilter: scrolled ? 'blur(10px)' : 'none',
         borderBottom: scrolled ? '1px solid rgba(0,0,0,0.05)' : '1px solid transparent',
-        color: '#111',
+        color: 'var(--text-main)',
       }}
     >
       <div className="nav-item" style={{ flex: 1 }}>
@@ -65,7 +65,7 @@ export default function Navbar() {
             fontWeight: 500,
             fontSize: '0.85rem',
             letterSpacing: '-0.02em',
-            color: '#111',
+            color: 'var(--text-main)',
             textDecoration: 'none',
           }}
         >
@@ -84,7 +84,7 @@ export default function Navbar() {
               style={{
                 fontSize: '0.85rem',
                 letterSpacing: '-0.02em',
-                color: active === id ? '#111' : '#666',
+                color: active === id ? 'var(--text-main)' : 'var(--text-muted)',
                 textDecoration: 'none',
                 transition: 'color 0.3s',
                 fontFamily: "'Inter', sans-serif",
@@ -92,11 +92,11 @@ export default function Navbar() {
               }}
               onMouseEnter={e => {
                 if (active !== id)
-                  (e.currentTarget as HTMLElement).style.color = '#111';
+                  (e.currentTarget as HTMLElement).style.color = 'var(--text-main)';
               }}
               onMouseLeave={e => {
                 if (active !== id)
-                  (e.currentTarget as HTMLElement).style.color = '#666';
+                  (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)';
               }}
             >
               {link}
@@ -113,7 +113,7 @@ export default function Navbar() {
           style={{
             fontSize: '0.85rem',
             letterSpacing: '-0.02em',
-            color: '#111',
+            color: 'var(--text-main)',
             textDecoration: 'none',
             fontFamily: "'Inter', sans-serif",
             fontWeight: 500,

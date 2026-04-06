@@ -14,7 +14,7 @@ export default function Hero() {
 
   useEffect(() => {
     const tl = gsap.timeline();
-    
+
     // Initial cinematic loading reveal
     tl.to(introOverlayRef.current, {
       yPercent: -100,
@@ -22,26 +22,26 @@ export default function Hero() {
       ease: 'power4.inOut',
       delay: 0.5,
     })
-    .from([textLeftBehind.current, textRightBehind.current, textLeftFront.current, textRightFront.current], {
-      y: 150,
-      opacity: 0,
-      duration: 1.5,
-      stagger: 0.1,
-      ease: 'expo.out',
-    }, '-=0.5')
-    .from(imageRef.current, {
-      scale: 0.95,
-      y: 100,
-      opacity: 0,
-      duration: 1.8,
-      ease: 'expo.out',
-    }, '-=1.2')
-    .from([socialRef.current, infoRef.current], {
-      opacity: 0,
-      y: 20,
-      duration: 1,
-      ease: 'power2.out',
-    }, '-=1');
+      .from([textLeftBehind.current, textRightBehind.current, textLeftFront.current, textRightFront.current], {
+        y: 150,
+        opacity: 0,
+        duration: 1.5,
+        stagger: 0.1,
+        ease: 'expo.out',
+      }, '-=0.5')
+      .from(imageRef.current, {
+        scale: 0.95,
+        y: 100,
+        opacity: 0,
+        duration: 1.8,
+        ease: 'expo.out',
+      }, '-=1.2')
+      .from([socialRef.current, infoRef.current], {
+        opacity: 0,
+        y: 20,
+        duration: 1,
+        ease: 'power2.out',
+      }, '-=1');
 
     // Parallax effect on mouse move
     const handleMouseMove = (e: MouseEvent) => {
@@ -75,7 +75,7 @@ export default function Hero() {
   return (
     <>
       {/* Intro Black Overlay */}
-      <div 
+      <div
         ref={introOverlayRef}
         style={{
           position: 'fixed',
@@ -86,7 +86,7 @@ export default function Hero() {
           alignItems: 'center',
           justifyContent: 'center',
           fontFamily: "'Inter', sans-serif",
-          color: '#fff',
+          color: 'var(--bg-color)',
           fontSize: '1rem',
           letterSpacing: '0.2em',
           textTransform: 'uppercase',
@@ -102,7 +102,7 @@ export default function Hero() {
           position: 'relative',
           height: '100vh',
           width: '100%',
-          background: '#f4f4f4',
+          background: 'var(--bg-color)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -112,13 +112,13 @@ export default function Hero() {
         {/* TEXT BEHIND IMAGE */}
         <h1
           ref={textLeftBehind}
-          style={{ ...textStyle, color: '#111', left: '20%', transform: 'translate(-50%, -50%)', zIndex: 1 }}
+          style={{ ...textStyle, color: 'var(--text-main)', left: '20%', transform: 'translate(-50%, -50%)', zIndex: 1 }}
         >
           Parardha
         </h1>
         <h1
           ref={textRightBehind}
-          style={{ ...textStyle, color: '#111', left: '80%', transform: 'translate(-50%, -50%)', zIndex: 1 }}
+          style={{ ...textStyle, color: 'var(--text-main)', left: '80%', transform: 'translate(-50%, -50%)', zIndex: 1 }}
         >
           Dhar
         </h1>
@@ -139,9 +139,9 @@ export default function Hero() {
             justifyContent: 'center',
           }}
         >
-          <img 
-            src="/photo.png" 
-            alt="Parardha Dhar" 
+          <img
+            src="/photo.png"
+            alt="Parardha Dhar"
             style={{
               width: '100%',
               height: '100%',
@@ -159,26 +159,26 @@ export default function Hero() {
         {/* TEXT IN FRONT OF IMAGE (STROKED) */}
         <h1
           ref={textLeftFront}
-          style={{ 
-            ...textStyle, 
-            color: 'transparent', 
+          style={{
+            ...textStyle,
+            color: 'transparent',
             WebkitTextStroke: '2px #111',
-            left: '20%', 
-            transform: 'translate(-50%, -50%)', 
-            zIndex: 3 
+            left: '20%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 3
           }}
         >
           Parardha
         </h1>
         <h1
           ref={textRightFront}
-          style={{ 
-            ...textStyle, 
-            color: 'transparent', 
+          style={{
+            ...textStyle,
+            color: 'transparent',
             WebkitTextStroke: '2px #111',
-            left: '80%', 
-            transform: 'translate(-50%, -50%)', 
-            zIndex: 3 
+            left: '80%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 3
           }}
         >
           Dhar
@@ -209,7 +209,7 @@ export default function Hero() {
                 fontFamily: "'Inter', sans-serif",
                 fontSize: '1rem',
                 fontWeight: 700,
-                color: '#111',
+                color: 'var(--text-main)',
                 textDecoration: 'none',
                 width: '24px',
                 height: '24px',
@@ -221,12 +221,12 @@ export default function Hero() {
                 transition: 'all 0.2s',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#111';
-                e.currentTarget.style.color = '#fff';
+                e.currentTarget.style.background = 'var(--text-main)';
+                e.currentTarget.style.color = 'var(--bg-color)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'transparent';
-                e.currentTarget.style.color = '#111';
+                e.currentTarget.style.color = 'var(--text-main)';
               }}
             >
               {social.label}
@@ -251,10 +251,10 @@ export default function Hero() {
             fontSize: 'clamp(1.5rem, 3.5vw, 3.5rem)',
             lineHeight: 1.05,
             letterSpacing: '-0.04em',
-            color: '#111',
+            color: 'var(--text-main)',
             margin: 0,
           }}>
-            Creative Explorer<br/>
+            Creative Explorer<br />
             Full Stack Dev
           </h2>
         </div>

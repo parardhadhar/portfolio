@@ -51,7 +51,7 @@ function App() {
       <CustomCursor />
       <div
         style={{
-          background: '#f4f4f4',
+          background: 'var(--bg-color)',
           minHeight: '100vh',
           overflowX: 'hidden',
         }}

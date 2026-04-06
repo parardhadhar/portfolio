@@ -29,7 +29,7 @@ export default function About() {
               fontWeight: 500,
               fontSize: '0.75rem',
               letterSpacing: '0.1em',
-              color: '#666',
+              color: 'var(--text-muted)',
               display: 'block',
               marginBottom: '1.5rem',
               textTransform: 'uppercase',
@@ -43,7 +43,7 @@ export default function About() {
               fontWeight: 700,
               fontSize: 'clamp(2rem, 4vw, 3.2rem)',
               lineHeight: 1.1,
-              color: '#111',
+              color: 'var(--text-main)',
               margin: '0 0 1.5rem',
               letterSpacing: '-0.03em',
             }}
@@ -52,7 +52,7 @@ export default function About() {
             <span
               style={{
                 fontStyle: 'italic',
-                color: '#666',
+                color: 'var(--text-muted)',
               }}
             >
               experiences.
@@ -65,16 +65,16 @@ export default function About() {
               fontFamily: "'Inter', sans-serif",
               fontSize: '1.05rem',
               lineHeight: 1.7,
-              color: '#444',
+              color: 'var(--text-muted)',
               margin: '0 0 1.5rem',
             }}
           >
             I'm{' '}
-            <strong style={{ color: '#111', fontWeight: 600 }}>Parardha Dhar</strong>, a creative
+            <strong style={{ color: 'var(--text-main)', fontWeight: 600 }}>Parardha Dhar</strong>, a creative
             technologist blending{' '}
-            <span style={{ color: '#111', fontWeight: 500 }}>Unreal Engine artistry</span> with{' '}
-            <span style={{ color: '#111', fontWeight: 500 }}>Machine Learning</span> and{' '}
-            <span style={{ color: '#111', fontWeight: 500 }}>Full-Stack Engineering</span>. I build things that
+            <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>Unreal Engine artistry</span> with{' '}
+            <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>Machine Learning</span> and{' '}
+            <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>Full-Stack Engineering</span>. I build things that
             sit at the intersection of computation and creativity — from real-time 3D worlds to
             intelligent web systems.
           </p>
@@ -109,21 +109,21 @@ export default function About() {
                   padding: '10px 18px',
                   border: '1px solid rgba(0,0,0,0.1)',
                   borderRadius: '100px',
-                  color: '#444',
+                  color: 'var(--text-muted)',
                   background: 'transparent',
                   transition: 'all 0.3s',
                   cursor: 'default',
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget as HTMLElement;
-                  el.style.borderColor = '#111';
-                  el.style.color = '#111';
+                  el.style.borderColor = 'var(--text-main)';
+                  el.style.color = 'var(--text-main)';
                   el.style.background = 'rgba(0,0,0,0.02)';
                 }}
                 onMouseLeave={e => {
                   const el = e.currentTarget as HTMLElement;
-                  el.style.borderColor = 'rgba(0,0,0,0.1)';
-                  el.style.color = '#444';
+                  el.style.borderColor = 'var(--border-color)';
+                  el.style.color = 'var(--text-muted)';
                   el.style.background = 'transparent';
                 }}
               >
@@ -176,7 +176,7 @@ export default function About() {
               fontFamily: "'Inter', sans-serif",
               fontSize: '0.6rem',
               fontWeight: 500,
-              color: '#fff',
+              color: 'var(--bg-color)',
               letterSpacing: '0.1em',
               mixBlendMode: 'difference',
             }}

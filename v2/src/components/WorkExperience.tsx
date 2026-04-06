@@ -65,7 +65,7 @@ export default function WorkExperience() {
               fontWeight: 800,
               fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
               letterSpacing: '-0.03em',
-              color: '#fff',
+              color: 'var(--bg-color)',
               margin: 0,
               lineHeight: 1,
             }}
@@ -151,7 +151,7 @@ export default function WorkExperience() {
                           fontFamily: "'Syne', sans-serif",
                           fontWeight: 700,
                           fontSize: '1.25rem',
-                          color: '#fff',
+                          color: 'var(--bg-color)',
                           margin: '0 0 4px',
                         }}
                       >

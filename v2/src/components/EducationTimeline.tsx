@@ -175,8 +175,8 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
           letterSpacing: '0.1em',
           padding: '4px 10px',
           fontWeight: 600,
-          background: '#111',
-          color: '#fff',
+          background: 'var(--text-main)',
+          color: 'var(--bg-color)',
           textTransform: 'uppercase' as const,
         }}
       >
@@ -210,7 +210,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
             }}
             onMouseEnter={e => {
               const el = e.currentTarget as HTMLElement;
-              el.style.background = '#fff';
+              el.style.background = 'var(--bg-color)';
               el.style.borderColor = 'rgba(0,0,0,0.3)';
               el.style.transform = 'translateX(-6px)';
               el.style.boxShadow = `0 20px 40px rgba(0,0,0,0.05)`;
@@ -218,7 +218,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
             onMouseLeave={e => {
               const el = e.currentTarget as HTMLElement;
               el.style.background = 'transparent';
-              el.style.borderColor = 'rgba(0,0,0,0.15)';
+              el.style.borderColor = 'var(--border-color)';
               el.style.transform = 'none';
               el.style.boxShadow = 'none';
             }}
@@ -232,7 +232,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
                 left: 0,
                 right: 0,
                 height: 2,
-                background: '#111',
+                background: 'var(--text-main)',
               }}
             />
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
@@ -242,7 +242,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
                   fontFamily: "'Inter', sans-serif",
                   fontSize: '0.70rem',
                   fontWeight: 600,
-                  color: '#666',
+                  color: 'var(--text-muted)',
                   letterSpacing: '0.05em',
                 }}
               >
@@ -254,7 +254,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
                 fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
                 fontWeight: 700,
                 fontSize: '1.25rem',
-                color: '#111',
+                color: 'var(--text-main)',
                 margin: '12px 0 4px',
                 lineHeight: 1.2,
                 letterSpacing: '-0.02em',
@@ -267,7 +267,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
                 fontFamily: "'Inter', sans-serif",
                 fontSize: '0.85rem',
                 fontWeight: 500,
-                color: '#444',
+                color: 'var(--text-muted)',
                 marginBottom: 12,
                 fontStyle: 'italic',
               }}
@@ -279,7 +279,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
                 fontFamily: "'Inter', sans-serif",
                 fontSize: '0.9rem',
                 lineHeight: 1.7,
-                color: '#555',
+                color: 'var(--text-muted)',
                 marginBottom: item.details ? 20 : 0,
               }}
             >
@@ -347,7 +347,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
             width: 14,
             height: 14,
             borderRadius: 0,
-            background: '#111',
+            background: 'var(--text-main)',
             border: '2px solid #fff',
             boxShadow: '0 0 0 1px #111',
             flexShrink: 0,
@@ -370,7 +370,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
             }}
             onMouseEnter={e => {
               const el = e.currentTarget as HTMLElement;
-              el.style.background = '#fff';
+              el.style.background = 'var(--bg-color)';
               el.style.borderColor = 'rgba(0,0,0,0.3)';
               el.style.transform = 'translateX(6px)';
               el.style.boxShadow = `0 20px 40px rgba(0,0,0,0.05)`;
@@ -378,7 +378,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
             onMouseLeave={e => {
               const el = e.currentTarget as HTMLElement;
               el.style.background = 'transparent';
-              el.style.borderColor = 'rgba(0,0,0,0.15)';
+              el.style.borderColor = 'var(--border-color)';
               el.style.transform = 'none';
               el.style.boxShadow = 'none';
             }}
@@ -390,7 +390,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
                 right: 0,
                 left: 0,
                 height: 2,
-                background: '#111',
+                background: 'var(--text-main)',
               }}
             />
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
@@ -400,7 +400,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
                   fontFamily: "'Inter', sans-serif",
                   fontSize: '0.70rem',
                   fontWeight: 600,
-                  color: '#666',
+                  color: 'var(--text-muted)',
                   letterSpacing: '0.05em',
                 }}
               >
@@ -412,7 +412,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
                 fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
                 fontWeight: 700,
                 fontSize: '1.25rem',
-                color: '#111',
+                color: 'var(--text-main)',
                 margin: '12px 0 4px',
                 lineHeight: 1.2,
                 letterSpacing: '-0.02em',
@@ -425,7 +425,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
                 fontFamily: "'Inter', sans-serif",
                 fontSize: '0.85rem',
                 fontWeight: 500,
-                color: '#444',
+                color: 'var(--text-muted)',
                 marginBottom: 12,
                 fontStyle: 'italic',
               }}
@@ -437,7 +437,7 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
                 fontFamily: "'Inter', sans-serif",
                 fontSize: '0.9rem',
                 lineHeight: 1.7,
-                color: '#555',
+                color: 'var(--text-muted)',
                 marginBottom: item.details ? 20 : 0,
               }}
             >
@@ -533,7 +533,7 @@ export default function EducationTimeline() {
             fontSize: '0.75rem',
             letterSpacing: '0.1em',
             fontWeight: 500,
-            color: '#666',
+            color: 'var(--text-muted)',
             display: 'block',
             marginBottom: '1.5rem',
             textTransform: 'uppercase',
@@ -547,7 +547,7 @@ export default function EducationTimeline() {
             fontWeight: 700,
             fontSize: 'clamp(3rem, 6vw, 5.5rem)',
             letterSpacing: '-0.04em',
-            color: '#111',
+            color: 'var(--text-main)',
             margin: '0 0 1rem',
             lineHeight: 1,
           }}
@@ -556,7 +556,7 @@ export default function EducationTimeline() {
           <span
             style={{
               fontStyle: 'italic',
-              color: '#666',
+              color: 'var(--text-muted)',
             }}
           >
             Milestones
@@ -566,7 +566,7 @@ export default function EducationTimeline() {
           style={{
             fontFamily: "'Inter', sans-serif",
             fontSize: '1.05rem',
-            color: '#444',
+            color: 'var(--text-muted)',
             maxWidth: 460,
             margin: '0 auto',
           }}
@@ -586,7 +586,7 @@ export default function EducationTimeline() {
             top: 0,
             bottom: 0,
             width: 1,
-            background: 'rgba(0,0,0,0.1)',
+            background: 'var(--border-color)',
             transform: 'translateX(-50%)',
           }}
         />

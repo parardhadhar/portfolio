@@ -41,7 +41,7 @@ export default function Contact() {
               fontSize: '0.75rem',
               letterSpacing: '0.1em',
               fontWeight: 500,
-              color: '#666',
+              color: 'var(--text-muted)',
               display: 'block',
               marginBottom: '1.5rem',
               textTransform: 'uppercase',
@@ -55,7 +55,7 @@ export default function Contact() {
               fontWeight: 700,
               fontSize: 'clamp(2.5rem, 6vw, 5rem)',
               letterSpacing: '-0.04em',
-              color: '#111',
+              color: 'var(--text-main)',
               margin: '0 0 1rem',
               lineHeight: 1,
             }}
@@ -64,7 +64,7 @@ export default function Contact() {
             <span
               style={{
                 fontStyle: 'italic',
-                color: '#666',
+                color: 'var(--text-muted)',
               }}
             >
               interesting
@@ -75,7 +75,7 @@ export default function Contact() {
             style={{
               fontFamily: "'Inter', sans-serif",
               fontSize: '1.05rem',
-              color: '#444',
+              color: 'var(--text-muted)',
               maxWidth: 500,
               margin: '0 auto',
               lineHeight: 1.7,
@@ -112,7 +112,7 @@ export default function Contact() {
                     fontFamily: "'Inter', sans-serif",
                     fontSize: '0.70rem',
                     letterSpacing: '0.05em',
-                    color: '#666',
+                    color: 'var(--text-muted)',
                     display: 'block',
                     marginBottom: 8,
                     textTransform: 'uppercase',
@@ -132,15 +132,15 @@ export default function Contact() {
                     border: '1px solid rgba(0,0,0,0.1)',
                     borderRadius: 0,
                     padding: '14px 16px',
-                    color: '#111',
+                    color: 'var(--text-main)',
                     fontFamily: "'Inter', sans-serif",
                     fontSize: '0.85rem',
                     outline: 'none',
                     transition: 'border-color 0.3s',
                     boxSizing: 'border-box',
                   }}
-                  onFocus={e => ((e.target as HTMLInputElement).style.borderColor = '#111')}
-                  onBlur={e => ((e.target as HTMLInputElement).style.borderColor = 'rgba(0,0,0,0.1)')}
+                  onFocus={e => ((e.target as HTMLInputElement).style.borderColor = 'var(--text-main)')}
+                  onBlur={e => ((e.target as HTMLInputElement).style.borderColor = 'var(--border-color)')}
                 />
               </div>
             ))}
@@ -151,7 +151,7 @@ export default function Contact() {
                   fontFamily: "'Inter', sans-serif",
                   fontSize: '0.70rem',
                   letterSpacing: '0.05em',
-                  color: '#666',
+                  color: 'var(--text-muted)',
                   display: 'block',
                   marginBottom: 8,
                   textTransform: 'uppercase',
@@ -171,7 +171,7 @@ export default function Contact() {
                   border: '1px solid rgba(0,0,0,0.1)',
                   borderRadius: 0,
                   padding: '14px 16px',
-                  color: '#111',
+                  color: 'var(--text-main)',
                   fontFamily: "'Inter', sans-serif",
                   fontSize: '0.85rem',
                   outline: 'none',
@@ -179,8 +179,8 @@ export default function Contact() {
                   resize: 'vertical',
                   boxSizing: 'border-box',
                 }}
-                onFocus={e => ((e.target as HTMLTextAreaElement).style.borderColor = '#111')}
-                onBlur={e => ((e.target as HTMLTextAreaElement).style.borderColor = 'rgba(0,0,0,0.1)')}
+                onFocus={e => ((e.target as HTMLTextAreaElement).style.borderColor = 'var(--text-main)')}
+                onBlur={e => ((e.target as HTMLTextAreaElement).style.borderColor = 'var(--border-color)')}
               />
             </div>
             <button
@@ -191,8 +191,8 @@ export default function Contact() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: 8,
-                background: sent ? '#EFEFEF' : '#111',
-                color: sent ? '#111' : '#fff',
+                background: sent ? '#EFEFEF' : 'var(--text-main)',
+                color: sent ? 'var(--text-main)' : 'var(--bg-color)',
                 border: sent ? '1px solid #CCC' : '1px solid #111',
                 borderRadius: 0,
                 padding: '16px 32px',
@@ -212,8 +212,8 @@ export default function Contact() {
               }}
               onMouseLeave={e => {
                 if (!sent) {
-                  (e.currentTarget as HTMLElement).style.background = '#111';
-                  (e.currentTarget as HTMLElement).style.borderColor = '#111';
+                  (e.currentTarget as HTMLElement).style.background = 'var(--text-main)';
+                  (e.currentTarget as HTMLElement).style.borderColor = 'var(--text-main)';
                 }
               }}
             >
@@ -233,7 +233,7 @@ export default function Contact() {
                   fontSize: '0.70rem',
                   letterSpacing: '0.05em',
                   fontWeight: 500,
-                  color: '#666',
+                  color: 'var(--text-muted)',
                   textTransform: 'uppercase',
                   marginBottom: 12,
                 }}
@@ -246,7 +246,7 @@ export default function Contact() {
                   fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
                   fontWeight: 600,
                   fontSize: '1.2rem',
-                  color: '#111',
+                  color: 'var(--text-main)',
                   textDecoration: 'none',
                   borderBottom: '1px solid rgba(0,0,0,0.2)',
                   transition: 'opacity 0.3s',
@@ -266,7 +266,7 @@ export default function Contact() {
                   fontSize: '0.70rem',
                   letterSpacing: '0.05em',
                   fontWeight: 500,
-                  color: '#666',
+                  color: 'var(--text-muted)',
                   textTransform: 'uppercase',
                   marginBottom: 16,
                 }}
@@ -282,7 +282,7 @@ export default function Contact() {
                       display: 'flex',
                       alignItems: 'center',
                       gap: 12,
-                      color: '#444',
+                      color: 'var(--text-muted)',
                       textDecoration: 'none',
                       fontFamily: "'Inter', sans-serif",
                       fontSize: '0.95rem',
@@ -291,12 +291,12 @@ export default function Contact() {
                     }}
                     onMouseEnter={e => {
                       const el = e.currentTarget as HTMLElement;
-                      el.style.color = '#111';
+                      el.style.color = 'var(--text-main)';
                       el.style.transform = 'translateX(4px)';
                     }}
                     onMouseLeave={e => {
                       const el = e.currentTarget as HTMLElement;
-                      el.style.color = '#444';
+                      el.style.color = 'var(--text-muted)';
                       el.style.transform = 'translateX(0)';
                     }}
                   >
@@ -323,7 +323,7 @@ export default function Contact() {
                   fontFamily: "'Inter', sans-serif",
                   fontWeight: 500,
                   fontSize: '0.85rem',
-                  color: '#111',
+                  color: 'var(--text-main)',
                   background: 'transparent',
                   textDecoration: 'none',
                   transition: 'all 0.3s',
@@ -331,15 +331,15 @@ export default function Contact() {
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget as HTMLElement;
-                  el.style.background = '#111';
-                  el.style.color = '#fff';
-                  el.style.borderColor = '#111';
+                  el.style.background = 'var(--text-main)';
+                  el.style.color = 'var(--bg-color)';
+                  el.style.borderColor = 'var(--text-main)';
                 }}
                 onMouseLeave={e => {
                   const el = e.currentTarget as HTMLElement;
                   el.style.background = 'transparent';
-                  el.style.color = '#111';
-                  el.style.borderColor = 'rgba(0,0,0,0.1)';
+                  el.style.color = 'var(--text-main)';
+                  el.style.borderColor = 'var(--border-color)';
                 }}
               >
                 ↓ Download CV
