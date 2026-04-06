@@ -6,9 +6,15 @@ const navLinks = ['About', 'Work', 'Education', 'Tech', 'Contact'];
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState('');
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 60);
+      const totalScroll = document.documentElement.scrollTop;
+      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      setProgress(windowHeight > 0 ? (totalScroll / windowHeight) * 100 : 0);
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
 
     // Animate in
@@ -51,12 +57,25 @@ export default function Navbar() {
         justifyContent: 'space-between',
         padding: '24px 40px',
         transition: 'background 0.4s ease, border-color 0.4s ease',
-        background: scrolled ? 'rgba(244, 244, 244, 0.9)' : 'transparent',
+        background: scrolled ? 'var(--nav-bg)' : 'transparent',
         backdropFilter: scrolled ? 'blur(10px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(0,0,0,0.05)' : '1px solid transparent',
+        borderBottom: scrolled ? '1px solid var(--border-light)' : '1px solid transparent',
         color: 'var(--text-main)',
       }}
     >
+      {/* Scroll Progress Bar */}
+      <div 
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          height: '2px',
+          width: `${progress}%`,
+          background: 'var(--text-main)',
+          transition: 'width 0.1s ease',
+          zIndex: 100,
+        }}
+      />
       <div className="nav-item" style={{ flex: 1 }}>
         <a
           href="#hero"

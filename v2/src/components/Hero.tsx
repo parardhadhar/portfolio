@@ -3,16 +3,18 @@ import gsap from 'gsap';
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const textLeftBehind = useRef<HTMLHeadingElement>(null);
-  const textRightBehind = useRef<HTMLHeadingElement>(null);
-  const textLeftFront = useRef<HTMLHeadingElement>(null);
-  const textRightFront = useRef<HTMLHeadingElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
+  const textBehind = useRef<HTMLHeadingElement>(null);
+  const textFront = useRef<HTMLHeadingElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
   const socialRef = useRef<HTMLDivElement>(null);
   const introOverlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Initial setups for safe transforms
+    gsap.set([textBehind.current, textFront.current], { xPercent: -50, yPercent: -50 });
+    gsap.set(imageRef.current, { xPercent: -50 });
+
     const tl = gsap.timeline();
 
     // Initial cinematic loading reveal
@@ -22,11 +24,10 @@ export default function Hero() {
       ease: 'power4.inOut',
       delay: 0.5,
     })
-      .from([textLeftBehind.current, textRightBehind.current, textLeftFront.current, textRightFront.current], {
+      .from([textBehind.current, textFront.current], {
         y: 150,
         opacity: 0,
         duration: 1.5,
-        stagger: 0.1,
         ease: 'expo.out',
       }, '-=0.5')
       .from(imageRef.current, {
@@ -43,16 +44,24 @@ export default function Hero() {
         ease: 'power2.out',
       }, '-=1');
 
+    // Subtle floating breathing effect on the image
+    gsap.to(imageRef.current, {
+      y: '+=15',
+      duration: 3,
+      ease: 'sine.inOut',
+      yoyo: true,
+      repeat: -1
+    });
+
     // Parallax effect on mouse move
     const handleMouseMove = (e: MouseEvent) => {
       if (!containerRef.current) return;
-      const { clientX, clientY } = e;
+      const { clientX } = e;
       const xPos = (clientX / window.innerWidth - 0.5) * 10;
-      const yPos = (clientY / window.innerHeight - 0.5) * 10;
 
-      gsap.to(imageRef.current, { x: xPos * 1.5, y: yPos * 1.5, duration: 1, ease: 'power2.out' });
-      gsap.to([textLeftBehind.current, textLeftFront.current], { x: xPos * -1.5, duration: 1, ease: 'power2.out' });
-      gsap.to([textRightBehind.current, textRightFront.current], { x: xPos * -2, duration: 1, ease: 'power2.out' });
+      // Mouse parallax overlays with breathing animation safely
+      gsap.to(imageRef.current, { x: xPos * 1.5, rotate: xPos * 0.1, duration: 1, ease: 'power2.out' });
+      gsap.to([textBehind.current, textFront.current], { x: xPos * -2, duration: 1, ease: 'power2.out' });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -61,12 +70,13 @@ export default function Hero() {
 
   const textStyle: React.CSSProperties = {
     position: 'absolute',
-    fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
-    fontWeight: 600,
-    fontSize: 'clamp(3rem, 14vw, 18rem)', // Adjusted so it fits beautifully
-    lineHeight: 0.8,
-    letterSpacing: '-0.04em',
+    fontFamily: "'Inter', sans-serif",
+    fontWeight: 300, // Minimalistic elegant weight
+    fontSize: 'clamp(5rem, 15vw, 20rem)', 
+    lineHeight: 0.85,
+    letterSpacing: '-0.06em',
     top: '40%',
+    left: '50%',
     margin: 0,
     whiteSpace: 'nowrap',
     pointerEvents: 'none',
@@ -107,39 +117,35 @@ export default function Hero() {
           alignItems: 'center',
           justifyContent: 'center',
           overflow: 'hidden',
+          transition: 'background 1.5s ease',
         }}
       >
         {/* TEXT BEHIND IMAGE */}
         <h1
-          ref={textLeftBehind}
-          style={{ ...textStyle, color: 'var(--text-main)', left: '25%', transform: 'translate(-50%, -50%)', zIndex: 1 }}
+          ref={textBehind}
+          style={{ ...textStyle, color: 'var(--text-main)', zIndex: 1 }}
         >
-          Parardha
-        </h1>
-        <h1
-          ref={textRightBehind}
-          style={{ ...textStyle, color: 'var(--text-main)', left: '75%', transform: 'translate(-50%, -50%)', zIndex: 1 }}
-        >
-          Dhar
+          Parardha Dhar
         </h1>
 
         {/* CENTRAL IMAGE WITH TRANSPARENT BG */}
         <div
-          ref={imageRef}
           style={{
             position: 'absolute',
-            bottom: '0px', // Anchor to exact bottom
+            bottom: '0px', 
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 2,
             width: 'clamp(300px, 60vw, 850px)',
-            height: '90%', // Let the image take up 90% of the screen height securely
+            height: '90%', 
             display: 'flex',
             alignItems: 'flex-end',
             justifyContent: 'center',
+            pointerEvents: 'none', // Allow clicks to pass through
           }}
         >
           <img
+            ref={imageRef}
             src="/photo.png"
             alt="Parardha Dhar"
             style={{
@@ -158,30 +164,15 @@ export default function Hero() {
 
         {/* TEXT IN FRONT OF IMAGE (STROKED) */}
         <h1
-          ref={textLeftFront}
+          ref={textFront}
           style={{
             ...textStyle,
             color: 'transparent',
             WebkitTextStroke: '2px var(--text-main)',
-            left: '25%',
-            transform: 'translate(-50%, -50%)',
             zIndex: 3
           }}
         >
-          Parardha
-        </h1>
-        <h1
-          ref={textRightFront}
-          style={{
-            ...textStyle,
-            color: 'transparent',
-            WebkitTextStroke: '2px var(--text-main)',
-            left: '75%',
-            transform: 'translate(-50%, -50%)',
-            zIndex: 3
-          }}
-        >
-          Dhar
+          Parardha Dhar
         </h1>
 
         {/* Social Links - Bottom Left */}
@@ -211,22 +202,25 @@ export default function Hero() {
                 fontWeight: 700,
                 color: 'var(--text-main)',
                 textDecoration: 'none',
-                width: '24px',
-                height: '24px',
+                width: '36px',
+                height: '36px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                border: '1.5px solid #111',
-                borderRadius: '4px',
-                transition: 'all 0.2s',
+                border: '1px solid var(--border-color)',
+                borderRadius: '50%', // Circle icons are sleeker
+                transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                background: 'transparent',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = 'var(--text-main)';
                 e.currentTarget.style.color = 'var(--bg-color)';
+                e.currentTarget.style.transform = 'scale(1.1)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'transparent';
                 e.currentTarget.style.color = 'var(--text-main)';
+                e.currentTarget.style.transform = 'scale(1)';
               }}
             >
               {social.label}
@@ -234,29 +228,41 @@ export default function Hero() {
           ))}
         </div>
 
-        {/* Role / Description - Bottom Right */}
+        {/* Role / Description - Bottom Right tightly styled */}
         <div
           ref={infoRef}
           style={{
             position: 'absolute',
             bottom: '40px',
             right: '40px',
-            textAlign: 'left',
+            textAlign: 'right', // Align right
             zIndex: 4,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px',
           }}
         >
+          <div style={{ width: '40px', height: '1px', background: 'var(--text-main)', margin: '0 0 8px auto' }} />
           <h2 style={{
-            fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
-            fontWeight: 500,
-            fontSize: 'clamp(1.5rem, 3.5vw, 3.5rem)',
-            lineHeight: 1.05,
-            letterSpacing: '-0.04em',
+            fontFamily: "'Inter', sans-serif",
+            fontWeight: 400,
+            fontSize: '1rem',
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
             color: 'var(--text-main)',
             margin: 0,
           }}>
-            Creative Explorer<br />
-            Full Stack Dev
+            Creative Explorer
           </h2>
+          <span style={{
+            fontFamily: "'Inter', sans-serif",
+            fontWeight: 300,
+            fontSize: '0.85rem',
+            color: 'var(--text-muted)',
+            letterSpacing: '0.05em',
+          }}>
+            Full Stack Developer & Designer
+          </span>
         </div>
       </section>
     </>

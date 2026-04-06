@@ -18,7 +18,7 @@ const techCategories = [
   },
   {
     label: 'Web & Frontend',
-    color: '#333',
+    color: 'var(--text-main)',
     items: [
       { name: 'React / Next.js', level: 90 },
       { name: 'TypeScript', level: 85 },
@@ -28,7 +28,7 @@ const techCategories = [
   },
   {
     label: 'AI & Machine Learning',
-    color: '#222',
+    color: 'var(--text-main)',
     items: [
       { name: 'Python', level: 88 },
       { name: 'TensorFlow / PyTorch', level: 75 },
@@ -163,24 +163,42 @@ export default function TechStack() {
             <div
               style={{
                 background: 'transparent',
-                border: '1px solid rgba(0,0,0,0.15)',
+                border: '1px solid var(--border-light)',
                 borderRadius: 0,
                 padding: '32px 32px',
-                transition: 'all 0.4s ease',
+                transition: 'all 0.5s cubic-bezier(0.16,1,0.3,1)',
               }}
               onMouseEnter={e => {
                 const el = e.currentTarget as HTMLElement;
-                el.style.background = 'var(--bg-color)';
-                el.style.borderColor = 'rgba(0,0,0,0.3)';
-                el.style.transform = 'translateY(-4px)';
-                el.style.boxShadow = `0 20px 40px rgba(0,0,0,0.05)`;
+                el.style.background = 'var(--text-main)';
+                el.style.borderColor = 'var(--text-main)';
+                el.style.transform = 'translateY(-8px) scale(1.02)';
+                
+                // Inverse text colors on hover magically
+                const headers = el.querySelectorAll('h3, span');
+                headers.forEach(h => (h as HTMLElement).style.setProperty('color', 'var(--bg-color)', 'important'));
+                const bars = el.querySelectorAll('div > div > div');
+                bars.forEach(b => {
+                  if((b as HTMLElement).style.background !== 'transparent') {
+                    (b as HTMLElement).style.background = 'var(--bg-color)';
+                  }
+                });
               }}
               onMouseLeave={e => {
                 const el = e.currentTarget as HTMLElement;
                 el.style.background = 'transparent';
-                el.style.borderColor = 'var(--border-color)';
+                el.style.borderColor = 'var(--border-light)';
                 el.style.transform = 'none';
-                el.style.boxShadow = 'none';
+                
+                // Return text colors back
+                const headers = el.querySelectorAll('h3, span');
+                headers.forEach(h => (h as HTMLElement).style.removeProperty('color'));
+                const bars = el.querySelectorAll('div > div > div');
+                bars.forEach(b => {
+                  if((b as HTMLElement).style.background !== 'transparent') {
+                     (b as HTMLElement).style.background = 'var(--text-main)';
+                  }
+                });
               }}
             >
               <h3
