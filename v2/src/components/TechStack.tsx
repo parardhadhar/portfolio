@@ -80,8 +80,8 @@ function SkillBar({ name, level, delay }: { name: string; level: number; delay: 
           fontWeight: 500,
         }}
       >
-        <span style={{ color: 'inherit' }}>{name}</span>
-        <span style={{ color: 'inherit', fontFamily: "'Inter', sans-serif", fontSize: '0.75rem', fontWeight: 600, opacity: 0.7 }}>
+        <span>{name}</span>
+        <span style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.75rem', fontWeight: 600, opacity: 0.7 }}>
           {level}%
         </span>
       </div>
@@ -168,7 +168,6 @@ export default function TechStack() {
                   fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
                   fontWeight: 700,
                   fontSize: '1.25rem',
-                  color: 'inherit',
                   marginBottom: 24,
                   letterSpacing: '-0.02em',
                 }}

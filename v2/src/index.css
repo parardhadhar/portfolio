@@ -237,7 +237,8 @@ body::before {
 
 .tech-card:hover h3,
 .tech-card:hover span,
-.tech-card:hover p {
+.tech-card:hover p,
+.tech-card:hover div {
   color: var(--bg-color) !important;
 }
 
