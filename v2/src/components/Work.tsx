@@ -29,7 +29,7 @@ const projects: Project[] = [
     tags: ['Next.js', 'Supabase', 'Firebase', 'Vercel', 'REST APIs', 'CI/CD'],
     size: 'large',
     href: 'https://vrgc.vercel.app',
-    imageBg: '/rgc_hub_dashboard_1775488145030.png',
+    imageBg: 'https://iili.io/B7UxoJ4.png',
   },
   {
     num: '02',
@@ -42,7 +42,7 @@ const projects: Project[] = [
     tags: ['Python', 'OpenCV', 'MediaPipe', 'TensorFlow', 'gTTS'],
     size: 'normal',
     href: '#',
-    imageBg: '/isl_recognition_ai_1775488116907.png',
+    imageBg: 'https://iili.io/B7gKcIn.png',
   },
   {
     num: '03',
@@ -55,7 +55,7 @@ const projects: Project[] = [
     tags: ['Python', 'scikit-learn', 'Flask', 'Docker', 'Cybersecurity'],
     size: 'normal',
     href: 'https://github.com/parardhadhar/phishguard',
-    imageBg: '/phishguard_dashboard_1775488175094.png',
+    imageBg: 'https://iili.io/B7Uj8la.png',
   },
   {
     num: '04',
@@ -68,7 +68,7 @@ const projects: Project[] = [
     tags: ['Python', 'LangChain', 'HuggingFace', 'FAISS', 'RAG'],
     size: 'large',
     href: 'https://huggingface.co/spaces/parardhadhar/Parardha-Insight-Engine',
-    imageBg: '/insight_engine_rag_1775488234973.png',
+    imageBg: 'https://iili.io/B7glXix.png',
   },
   {
     num: '05',
@@ -81,7 +81,7 @@ const projects: Project[] = [
     tags: ['Python', 'TensorFlow', 'Flask', 'REST API', 'Smart Farming'],
     size: 'normal',
     href: 'https://github.com/parardhadhar/Krishi-Sahayak',
-    imageBg: '/krishi_sahayak_dashboard_1775488206109.png',
+    imageBg: 'https://iili.io/B7ggyUN.png',
   },
   {
     num: '06',
