@@ -308,7 +308,7 @@ export default function Contact() {
             {/* CV download */}
             <div style={{ marginTop: '20px' }}>
               <a
-                href="/Parardha_Dhar_CV_0.pdf"
+                href="/Parardha_Dhar_CV_Updated_2.0.pdf"
                 target="_blank"
                 rel="noreferrer"
                 style={{
