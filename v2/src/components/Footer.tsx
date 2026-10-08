@@ -17,7 +17,7 @@ export default function Footer() {
         style={{
           fontFamily: "'Space Mono', monospace",
           fontSize: '0.6rem',
-          color: 'rgba(200,220,255,0.25)',
+          color: 'var(--text-muted)',
           letterSpacing: '0.12em',
         }}
       >
@@ -28,7 +28,7 @@ export default function Footer() {
         style={{
           fontFamily: "'Space Mono', monospace",
           fontSize: '0.6rem',
-          color: 'rgba(200,220,255,0.25)',
+          color: 'var(--text-muted)',
           letterSpacing: '0.12em',
           display: 'flex',
           gap: 32,
@@ -37,14 +37,14 @@ export default function Footer() {
         {['Email', 'LinkedIn', 'GitHub'].map(link => (
           <a
             key={link}
-            href="#"
+            href={link === 'Email' ? 'mailto:parardhadhar@gmail.com' : link === 'LinkedIn' ? 'https://linkedin.com/in/parardhadhar' : 'https://github.com/parardhadhar'}
             style={{
               color: 'inherit',
               textDecoration: 'none',
               transition: 'color 0.3s',
             }}
-            onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = '#d4ff00')}
-            onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = 'rgba(200,220,255,0.25)')}
+            onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = 'var(--text-main)')}
+            onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = 'var(--text-muted)')}
           >
             {link}
           </a>

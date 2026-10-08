@@ -66,7 +66,8 @@ function TimelineCard({ item, index }: { item: TimelineItem; index: number }) {
 
     const isLeft = index % 2 === 0;
 
-    const ctx = gsap.context(() => {
+    const ctx = gsap.matchMedia();
+    ctx.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', () => {
       gsap.from(card, {
         x: isLeft ? -80 : 80,
         opacity: 0,
@@ -212,7 +213,8 @@ export default function EducationTimeline() {
   useEffect(() => {
     const line = lineRef.current;
     if (!line) return;
-    const ctx = gsap.context(() => {
+    const ctx = gsap.matchMedia();
+    ctx.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', () => {
       gsap.from(line, {
         scaleY: 0,
         transformOrigin: 'top center',

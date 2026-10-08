@@ -48,7 +48,8 @@ function SkillBar({ name, level, delay }: { name: string; level: number; delay: 
   useEffect(() => {
     const el = barRef.current;
     if (!el) return;
-    const ctx = gsap.context(() => {
+    const ctx = gsap.matchMedia();
+    ctx.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', () => {
       gsap.fromTo(
         el,
         { width: '0%' },
@@ -98,7 +99,7 @@ function SkillBar({ name, level, delay }: { name: string; level: number; delay: 
           className="skill-bar-inner"
           style={{
             height: '100%',
-            width: 0,
+            width: `${level}%`,
             borderRadius: 0,
           }}
         />

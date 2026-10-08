@@ -30,7 +30,8 @@ export default function ScrollReveal({
     if (from === 'left') fromVars.x = -60;
     if (from === 'right') fromVars.x = 60;
 
-    const ctx = gsap.context(() => {
+    const ctx = gsap.matchMedia();
+    ctx.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', () => {
       gsap.from(el, {
         ...fromVars,
         ease: 'power3.out',

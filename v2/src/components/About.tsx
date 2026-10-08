@@ -17,7 +17,7 @@ export default function About() {
         margin: '0 auto',
         padding: '140px 40px',
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
         gap: '60px',
         alignItems: 'center',
       }}
@@ -145,6 +145,7 @@ export default function About() {
           }}
         >
           <img
+            loading="lazy"
             src="/hero_bg.png"
             alt="About — Unreal Environment"
             style={{

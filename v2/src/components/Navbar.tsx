@@ -1,219 +1,68 @@
-import { useEffect, useState } from 'react';
-import gsap from 'gsap';
+import { useEffect, useRef, useState } from 'react';
+import { Menu, X, Sun, Moon, ArrowUpRight } from 'lucide-react';
 
 const navLinks = ['About', 'Work', 'Education', 'Tech', 'Contact'];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState('');
-  const [progress, setProgress] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    try { return localStorage.getItem('portfolio-theme') === 'dark'; } catch { return false; }
+  });
+  const menuRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 60);
-      const totalScroll = document.documentElement.scrollTop;
-      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      setProgress(windowHeight > 0 ? (totalScroll / windowHeight) * 100 : 0);
-      
-      // Sync dark mode state with body class for the toggle UI
-      setIsDark(document.body.classList.contains('dark-theme'));
+    document.body.classList.toggle('dark-theme', isDark);
+    try { localStorage.setItem('portfolio-theme', isDark ? 'dark' : 'light'); } catch { /* Storage may be disabled. */ }
+  }, [isDark]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    menuRef.current?.querySelector<HTMLAnchorElement>('a')?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMenuOpen(false);
+        toggleRef.current?.focus();
+      }
+      if (event.key === 'Tab') {
+        const links = Array.from(menuRef.current?.querySelectorAll<HTMLAnchorElement>('a') ?? []);
+        const controls = [toggleRef.current, ...links].filter((el): el is HTMLButtonElement | HTMLAnchorElement => el !== null);
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      }
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    // Animate in
-    gsap.from('.nav-item', {
-      y: -20,
-      opacity: 0,
-      stagger: 0.1,
-      duration: 1.2,
-      ease: 'power3.out',
-      delay: 0.2,
-    });
-
-    // Active section tracking
-    const sections = document.querySelectorAll('section[id]');
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) setActive(e.target.id);
-        });
-      },
-      { threshold: 0.4 }
-    );
-    sections.forEach(s => observer.observe(s));
-
+    const media = window.matchMedia('(min-width: 901px)');
+    const onResize = () => { if (media.matches) setMenuOpen(false); };
+    document.addEventListener('keydown', onKey);
+    media.addEventListener('change', onResize);
     return () => {
-      window.removeEventListener('scroll', onScroll);
-      observer.disconnect();
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', onKey);
+      media.removeEventListener('change', onResize);
     };
-  }, []);
+  }, [menuOpen]);
 
-  const toggleTheme = () => {
-    const body = document.body;
-    if (body.classList.contains('dark-theme')) {
-      body.classList.remove('dark-theme');
-      setIsDark(false);
-    } else {
-      body.classList.add('dark-theme');
-      setIsDark(true);
-    }
-  };
-
+  const closeMenu = () => { setMenuOpen(false); toggleRef.current?.focus(); };
   return (
-    <>
-      <nav
-        style={{
-          position: 'fixed',
-          top: 0,
-          width: '100%',
-          zIndex: 100,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: scrolled ? '12px 40px' : '20px 40px', // Slightly more compact when scrolled
-          transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-          background: scrolled ? 'var(--nav-bg)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(20px)' : 'none',
-          borderBottom: scrolled ? '1px solid var(--border-light)' : '1px solid transparent',
-          color: 'var(--text-main)',
-        }}
-      >
-        {/* Scroll Progress Bar */}
-        <div 
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            height: '1px',
-            width: `${progress}%`,
-            background: 'var(--text-main)',
-            transition: 'width 0.1s linear',
-            zIndex: 101,
-            opacity: scrolled ? 1 : 0, // Show only when scrolling
-          }}
-        />
-
-        {/* Logo */}
-        <div className="nav-item" style={{ flex: 1 }}>
-          <a
-            href="#hero"
-            style={{
-              fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
-              fontWeight: 900,
-              fontSize: '1rem',
-              letterSpacing: '-0.04em',
-              color: 'var(--text-main)',
-              textDecoration: 'none',
-              textTransform: 'uppercase'
-            }}
-          >
-            Parardha Dhar
-          </a>
-        </div>
-
-        {/* Desktop Links */}
-        <div className="nav-center" style={{ flex: 2, display: 'flex', justifyContent: 'center', gap: '3rem' }}>
-          {navLinks.map(link => {
-            const id = link.toLowerCase();
-            return (
-              <a
-                key={link}
-                className="nav-item"
-                href={`#${id}`}
-                style={{
-                  fontSize: '0.75rem',
-                  letterSpacing: '0.05em',
-                  fontWeight: 600,
-                  color: active === id ? 'var(--text-main)' : 'var(--text-muted)',
-                  textDecoration: 'none',
-                  textTransform: 'uppercase',
-                  transition: 'color 0.3s',
-                  fontFamily: "'Inter', sans-serif",
-                  position: 'relative',
-                }}
-              >
-                {link}
-              </a>
-            );
-          })}
-        </div>
-
-        {/* Actions (Toggle + Resume + Burger) */}
-        <div className="nav-item" style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '20px' }}>
-          
-          <button 
-            onClick={toggleTheme}
-            className="theme-toggle"
-            aria-label="Toggle Theme"
-            style={{ background: 'transparent', border: '1px solid var(--border-color)', color: 'var(--text-main)' }}
-          >
-            {isDark ? '☼' : '☾'}
-          </button>
-
-          <a
-            href="https://linkedin.com/in/parardhadhar"
-            target="_blank"
-            rel="noreferrer"
-            className="desktop-only"
-            style={{
-              fontSize: '0.75rem',
-              fontWeight: 600,
-              color: 'var(--text-main)',
-              textDecoration: 'none',
-              fontFamily: "'Inter', sans-serif",
-              textTransform: 'uppercase',
-              border: '1px solid var(--border-color)',
-              padding: '8px 16px',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseEnter={e => {
-              (e.currentTarget as HTMLElement).style.background = 'var(--text-main)';
-              (e.currentTarget as HTMLElement).style.color = 'var(--bg-color)';
-            }}
-            onMouseLeave={e => {
-               (e.currentTarget as HTMLElement).style.background = 'transparent';
-               (e.currentTarget as HTMLElement).style.color = 'var(--text-main)';
-            }}
-          >
-            CV
-          </a>
-
-          <div 
-            className={`burger ${menuOpen ? 'active' : ''}`} 
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
+    <header className="site-header">
+      <nav className="site-nav" aria-label="Main navigation">
+        <a className="wordmark" href="#hero" onClick={closeMenu}>PARARDHA DHAR<span>.</span></a>
+        <div className="desktop-nav">{navLinks.map(link => <a key={link} href={`#${link.toLowerCase()}`}>{link}</a>)}</div>
+        <div className="nav-actions">
+          <button className="icon-button" onClick={() => setIsDark(!isDark)} aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}>{isDark ? <Sun size={19} /> : <Moon size={19} />}</button>
+          <a className="resume-link" href="/Parardha_Dhar_CV_0.pdf" target="_blank" rel="noreferrer">Resume <ArrowUpRight size={16} /></a>
+          <button ref={toggleRef} className="icon-button menu-toggle" aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={22} /> : <Menu size={22} />}</button>
         </div>
       </nav>
-
-      {/* Mobile Nav Overlay */}
-      <div className={`mobile-nav-overlay ${menuOpen ? 'active' : ''}`}>
-        {navLinks.map((link, i) => (
-          <a 
-            key={link}
-            href={`#${link.toLowerCase()}`}
-            className="mobile-link"
-            onClick={() => setMenuOpen(false)}
-            style={{ transitionDelay: `${i * 0.1}s` }}
-          >
-            {link}
-          </a>
-        ))}
-        <a 
-          href="https://linkedin.com/in/parardhadhar" 
-          className="mobile-link" 
-          target="_blank"
-          rel="noreferrer"
-          style={{ fontSize: '1.5rem', color: 'var(--text-muted)', transitionDelay: '0.5s' }}
-        >
-          Resume
-        </a>
+      <div id="mobile-navigation" className="mobile-menu" ref={menuRef} hidden={!menuOpen}>
+        <p className="eyebrow">EXPLORE</p>
+        {navLinks.map((link, index) => <a key={link} href={`#${link.toLowerCase()}`} onClick={closeMenu}><span>0{index + 1}</span>{link}<ArrowUpRight size={22} /></a>)}
+        <a href="/Parardha_Dhar_CV_0.pdf" target="_blank" rel="noreferrer" onClick={closeMenu}><span>↗</span>Resume<ArrowUpRight size={22} /></a>
       </div>
-    </>
+    </header>
   );
 }

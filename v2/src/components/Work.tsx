@@ -41,7 +41,7 @@ const projects: Project[] = [
       'Developed a real-time AI pipeline converting sign language webcam input into text and speech. Implemented MediaPipe hand-landmark detection with a custom-trained TensorFlow classifier, optimized for mobile hardware with sub-100ms latency.',
     tags: ['Python', 'OpenCV', 'MediaPipe', 'TensorFlow', 'gTTS'],
     size: 'normal',
-    href: '#',
+    href: 'mailto:parardhadhar@gmail.com',
     imageBg: 'https://iili.io/B7gKcIn.png',
   },
   {
@@ -93,7 +93,7 @@ const projects: Project[] = [
       'A photorealistic environment project leveraging UE5 Lumen and Nanite for high-fidelity lighting and geometry. Features volumetric atmospheric effects and a custom lighting rig to create a cinematic, narrative-driven space.',
     tags: ['UE5', 'Lumen', 'Nanite', 'Environment Art', 'VFX'],
     size: 'normal',
-    href: '#',
+    href: 'mailto:parardhadhar@gmail.com',
     imageBg: '/projects/cave/hero.png',
   },
 ];
@@ -104,7 +104,8 @@ function ProjectCard({ p }: { p: Project }) {
   useEffect(() => {
     const el = cardRef.current;
     if (!el) return;
-    const ctx = gsap.context(() => {
+    const ctx = gsap.matchMedia();
+    ctx.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', () => {
       gsap.from(el, {
         y: 80,
         opacity: 0,
@@ -129,6 +130,7 @@ function ProjectCard({ p }: { p: Project }) {
       }}
     >
       <a
+        className="project-link"
         href={p.href}
         style={{
           display: 'flex',
@@ -159,7 +161,7 @@ function ProjectCard({ p }: { p: Project }) {
         }}
       >
         {/* Project Image Asset */}
-        <div
+        <div className="project-image"
           style={{
             background: '#000',
             minHeight: p.size === 'large' ? 400 : 300,
@@ -170,6 +172,8 @@ function ProjectCard({ p }: { p: Project }) {
           }}
         >
           <img 
+            loading="lazy"
+            decoding="async"
             src={p.imageBg} 
             alt={p.title}
             style={{
@@ -323,7 +327,7 @@ function ProjectCard({ p }: { p: Project }) {
               textTransform: 'uppercase' as const,
             }}
           >
-            View Project
+            {p.href.startsWith('mailto:') ? 'Ask about this project' : 'View Project'}
             <span
               style={{ transition: 'transform 0.3s' }}
             >
@@ -354,7 +358,7 @@ function MarqueeStrip() {
     <div
       style={{
         overflow: 'hidden',
-        padding: '60px 0',
+        padding: '32px 0',
         borderTop: '1px solid rgba(0,0,0,0.1)',
         borderBottom: '1px solid rgba(0,0,0,0.1)',
       }}
@@ -375,7 +379,7 @@ function MarqueeStrip() {
               fontWeight: 700,
               fontSize: 'clamp(2rem,4vw,3.5rem)',
               letterSpacing: '-0.03em',
-              color: 'rgba(0,0,0,0.06)',
+              color: 'var(--text-muted)',
               textTransform: 'uppercase' as const,
               flexShrink: 0,
             }}
@@ -438,7 +442,7 @@ export default function Work() {
                 lineHeight: 1.6,
               }}
             >
-              7 projects spanning 3D environments, AI systems, and full-stack products.
+              6 projects spanning 3D environments, AI systems, and full-stack products.
             </p>
           </div>
         </div>

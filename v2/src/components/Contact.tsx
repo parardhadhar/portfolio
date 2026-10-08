@@ -1,27 +1,22 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import ScrollReveal from './ScrollReveal';
 import { Send, Mail } from 'lucide-react';
 
 const socials = [
   { icon: <Mail size={18} />, label: 'Email', href: 'mailto:parardhadhar@gmail.com' },
-  { icon: <span style={{ fontSize: 18 }}>in</span>, label: 'LinkedIn', href: '#' },
-  { icon: <span style={{ fontSize: 18, fontFamily: 'monospace' }}>gh</span>, label: 'GitHub', href: '#' },
+  { icon: <span style={{ fontSize: 18 }}>in</span>, label: 'LinkedIn', href: 'https://linkedin.com/in/parardhadhar' },
+  { icon: <span style={{ fontSize: 18, fontFamily: 'monospace' }}>gh</span>, label: 'GitHub', href: 'https://github.com/parardhadhar' },
 ];
 
 export default function Contact() {
-  const [sending, setSending] = useState(false);
-  const [sent, setSent] = useState(false);
-  const formRef = useRef<HTMLFormElement>(null);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSending(true);
-    setTimeout(() => {
-      setSending(false);
-      setSent(true);
-      formRef.current?.reset();
-      setTimeout(() => setSent(false), 4000);
-    }, 1500);
+  const [draftOpened, setDraftOpened] = useState(false);
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const subject = encodeURIComponent(`Portfolio enquiry from ${data.get('name')}`);
+    const body = encodeURIComponent(`${data.get('message')}\n\nFrom: ${data.get('name')}\nEmail: ${data.get('email')}`);
+    window.location.href = `mailto:parardhadhar@gmail.com?subject=${subject}&body=${body}`;
+    setDraftOpened(true);
   };
 
   return (
@@ -89,7 +84,7 @@ export default function Contact() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
           gap: 60,
           alignItems: 'start',
         }}
@@ -97,7 +92,6 @@ export default function Contact() {
         {/* Contact form */}
         <ScrollReveal from="left">
           <form
-            ref={formRef}
             onSubmit={handleSubmit}
             style={{ display: 'flex', flexDirection: 'column', gap: 16 }}
           >
@@ -123,13 +117,14 @@ export default function Contact() {
                 </label>
                 <input
                   id={field.id}
+                  name={field.id}
                   type={field.type}
                   placeholder={field.placeholder}
                   required
                   style={{
                     width: '100%',
                     background: 'transparent',
-                    border: '1px solid rgba(0,0,0,0.1)',
+                    border: '1px solid var(--border-color)',
                     borderRadius: 0,
                     padding: '14px 16px',
                     color: 'var(--text-main)',
@@ -162,13 +157,14 @@ export default function Contact() {
               </label>
               <textarea
                 id="message"
+                name="message"
                 placeholder="Tell me about your project..."
                 required
                 rows={5}
                 style={{
                   width: '100%',
                   background: 'transparent',
-                  border: '1px solid rgba(0,0,0,0.1)',
+                  border: '1px solid var(--border-color)',
                   borderRadius: 0,
                   padding: '14px 16px',
                   color: 'var(--text-main)',
@@ -185,40 +181,42 @@ export default function Contact() {
             </div>
             <button
               type="submit"
-              disabled={sending || sent}
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: 8,
-                background: sent ? '#EFEFEF' : 'var(--text-main)',
-                color: sent ? 'var(--text-main)' : 'var(--bg-color)',
-                border: sent ? '1px solid #CCC' : '1px solid #111',
+                background: 'var(--text-main)',
+                color: 'var(--bg-color)',
+                border: '1px solid var(--border-color)',
                 borderRadius: 0,
                 padding: '16px 32px',
                 fontFamily: "'Helvetica Neue', 'Inter', sans-serif",
                 fontWeight: 600,
                 fontSize: '0.85rem',
-                cursor: sending ? 'wait' : 'pointer',
+                cursor: 'pointer',
                 transition: 'all 0.3s',
                 letterSpacing: '0.02em',
                 marginTop: '8px',
               }}
               onMouseEnter={e => {
-                if (!sent) {
+                if (e.currentTarget) {
                   (e.currentTarget as HTMLElement).style.background = '#333';
                   (e.currentTarget as HTMLElement).style.borderColor = '#333';
                 }
               }}
               onMouseLeave={e => {
-                if (!sent) {
+                if (e.currentTarget) {
                   (e.currentTarget as HTMLElement).style.background = 'var(--text-main)';
                   (e.currentTarget as HTMLElement).style.borderColor = 'var(--text-main)';
                 }
               }}
             >
-              {sent ? '✓ Message Sent!' : sending ? 'Sending...' : <><Send size={15} /> Send Message</>}
+              <Send size={15} /> Open email draft
             </button>
+            <p role="status" style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+              {draftOpened ? 'Your email app was requested. Send the draft there to complete your enquiry. If it did not open, email me directly at parardhadhar@gmail.com.' : 'Opens your email app with a draft. You review and send it there.'}
+            </p>
           </form>
         </ScrollReveal>
 
@@ -317,7 +315,7 @@ export default function Contact() {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: 8,
-                  border: '1px solid rgba(0,0,0,0.1)',
+                  border: '1px solid var(--border-color)',
                   padding: '14px 28px',
                   borderRadius: 0,
                   fontFamily: "'Inter', sans-serif",
