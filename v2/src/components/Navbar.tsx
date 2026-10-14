@@ -54,14 +54,14 @@ export default function Navbar() {
         <div className="desktop-nav">{navLinks.map(link => <a key={link} href={`#${link.toLowerCase()}`}>{link}</a>)}</div>
         <div className="nav-actions">
           <button className="icon-button" onClick={() => setIsDark(!isDark)} aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}>{isDark ? <Sun size={19} /> : <Moon size={19} />}</button>
-          <a className="resume-link" href="/Parardha_Dhar_CV_Updated_2.0.pdf" target="_blank" rel="noreferrer">Resume <ArrowUpRight size={16} /></a>
+          <a className="resume-link" href="/Parardha_Dhar_SDE_Resume.pdf" target="_blank" rel="noreferrer">Resume <ArrowUpRight size={16} /></a>
           <button ref={toggleRef} className="icon-button menu-toggle" aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={22} /> : <Menu size={22} />}</button>
         </div>
       </nav>
       <div id="mobile-navigation" className="mobile-menu" ref={menuRef} hidden={!menuOpen}>
         <p className="eyebrow">EXPLORE</p>
         {navLinks.map((link, index) => <a key={link} href={`#${link.toLowerCase()}`} onClick={closeMenu}><span>0{index + 1}</span>{link}<ArrowUpRight size={22} /></a>)}
-        <a href="/Parardha_Dhar_CV_Updated_2.0.pdf" target="_blank" rel="noreferrer" onClick={closeMenu}><span>↗</span>Resume<ArrowUpRight size={22} /></a>
+        <a href="/Parardha_Dhar_SDE_Resume.pdf" target="_blank" rel="noreferrer" onClick={closeMenu}><span>↗</span>Resume<ArrowUpRight size={22} /></a>
       </div>
     </header>
   );
