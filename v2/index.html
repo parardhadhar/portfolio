@@ -12,7 +12,18 @@
     <meta property="og:image" content="https://parardha.vercel.app/field-valley.webp" />
     <meta property="og:type" content="website" />
     <meta name="theme-color" content="#151917" />
-    <link rel="preload" as="image" href="/field-valley.webp" />
+    <script>
+      (() => {
+        let theme = 'night';
+        try { if (localStorage.getItem('field-theme') === 'day') theme = 'day'; } catch {}
+        document.documentElement.dataset.fieldTheme = theme;
+        const mobile = matchMedia('(max-width:600px)').matches ? '-mobile' : '';
+        const preload = document.createElement('link');
+        preload.rel = 'preload'; preload.as = 'image'; preload.fetchPriority = 'high';
+        preload.href = '/media/valley-' + theme + mobile + '-v1.webp';
+        document.head.append(preload);
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

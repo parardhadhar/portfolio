@@ -14,8 +14,8 @@
 @keyframes word-load{to{opacity:1;filter:blur(0);transform:none}}
 .secret-sky{position:fixed;inset:0;z-index:80;pointer-events:none;display:grid;place-content:center;background:#14221bc9;backdrop-filter:blur(10px);text-align:center;color:#f4e8c9;animation:fadeup .5s}.secret-sky span{font-size:65px;animation:sprite-float 2s infinite}.secret-sky strong{font:italic 35px Georgia,serif;max-width:600px;padding:25px}.secret-sky small{font-size:12px;letter-spacing:.12em}
 @media(prefers-reduced-motion:reduce){.story-word{opacity:1;filter:none;transform:none}.in-view .story-word{animation:none}}
-.valley-art{background-image:url('/field-personal-night.png');filter:none!important}
-:root[data-field-theme=day] .valley-art{background-image:url('/field-personal-day.png')}
+.valley-art{background-image:url('/media/valley-night-v1.webp');filter:none!important}
+:root[data-field-theme=day] .valley-art{background-image:url('/media/valley-day-v1.webp')}
 .valley-art:after{display:none}.valley-shade{background:linear-gradient(0deg,var(--paper),transparent 28%),linear-gradient(90deg,#0b161f70,transparent 70%)}
 :root[data-field-theme=day] .valley-shade{background:linear-gradient(0deg,var(--paper),transparent 22%),linear-gradient(90deg,#192b365e,transparent 75%)}
 .campus{left:14%;top:64%}.research{right:10%;top:41%}.workshop{left:49%;top:77%}.hometown{left:44%;top:46%}.maker{right:13%;top:84%}.paper-banner{left:55%;top:11%}.valley-radio{display:none!important}
@@ -35,3 +35,5 @@
 @media(max-width:640px){.fn-scroll{display:none}.maker{display:none}.local-sprite svg{width:25px;height:25px}.hometown{top:52%}.workshop{left:33%;top:79%}}
 @media(prefers-reduced-motion:reduce){.local-sprite svg{animation:none}}
 .journal-reset{display:block;border:0;border-bottom:1px solid var(--line);padding:6px 0;margin:18px auto 0;background:none;color:var(--muted)!important;font-size:10px!important}
+
+@media(max-width:600px){.valley-art{background-image:url("/media/valley-night-mobile-v1.webp")}:root[data-field-theme=day] .valley-art{background-image:url("/media/valley-day-mobile-v1.webp")}}

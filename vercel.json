@@ -1,5 +1,16 @@
 {
   "buildCommand": "cd v2 && npm install && npm run build",
   "outputDirectory": "v2/dist",
-  "installCommand": "echo skip"
+  "installCommand": "echo skip",
+  "headers": [
+    {
+      "source": "/media/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
 }
