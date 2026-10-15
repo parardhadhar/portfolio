@@ -1,0 +1,29 @@
+/* Tiled, code-drawn paper edges stay crisp without large texture downloads. */
+.field-notes .fn-story,.field-notes .club-memories,.field-notes .process-section,.field-notes .visitor-wall{
+ --chapter-paper:#26231e;--chapter-edge:#26231e;
+ background-color:var(--chapter-paper);
+ background-image:radial-gradient(#d9c7a010 .65px,transparent .8px),linear-gradient(115deg,#ffffff03,transparent 35%,#00000008);
+ background-size:5px 5px,100% 100%;
+ margin-top:20px;margin-bottom:20px;isolation:isolate;overflow:visible;
+}
+.field-notes .club-memories{--chapter-paper:#29221f;--chapter-edge:#29221f}
+.field-notes .process-section{--chapter-paper:#202722;--chapter-edge:#202722;background-image:linear-gradient(#b4bea807 1px,transparent 1px);background-size:100% 29px}
+.field-notes .visitor-wall{--chapter-paper:#282322;--chapter-edge:#282322}
+:root[data-field-theme=day] .field-notes .fn-story{--chapter-paper:#eae0c9;--chapter-edge:#eae0c9}
+:root[data-field-theme=day] .field-notes .club-memories{--chapter-paper:#e8d9c6;--chapter-edge:#e8d9c6}
+:root[data-field-theme=day] .field-notes .process-section{--chapter-paper:#e4e6d6;--chapter-edge:#e4e6d6}
+:root[data-field-theme=day] .field-notes .visitor-wall{--chapter-paper:#eee1d5;--chapter-edge:#eee1d5}
+.field-notes .fn-story:before,.field-notes .club-memories:before,.field-notes .process-section:before,.field-notes .visitor-wall:before{
+ content:'';position:absolute;left:0;right:0;top:-19px;height:21px;background:var(--chapter-edge);z-index:-1;
+ clip-path:polygon(0 65%,1% 42%,2% 66%,3% 32%,4% 61%,5% 49%,6% 78%,7% 41%,8% 60%,9% 27%,10% 58%,12% 45%,14% 73%,16% 35%,18% 58%,20% 48%,22% 74%,24% 43%,26% 63%,28% 33%,30% 67%,32% 48%,34% 75%,36% 42%,38% 62%,40% 26%,42% 57%,44% 44%,46% 72%,48% 34%,50% 60%,52% 46%,54% 74%,56% 38%,58% 65%,60% 31%,62% 56%,64% 45%,66% 75%,68% 37%,70% 61%,72% 47%,74% 77%,76% 34%,78% 63%,80% 30%,82% 58%,84% 43%,86% 73%,88% 35%,90% 62%,92% 48%,94% 76%,96% 35%,98% 60%,100% 43%,100% 100%,0 100%);
+}
+.field-notes .club-memories:after,.field-notes .process-section:after,.field-notes .visitor-wall:after{
+ content:'';position:absolute;bottom:0;right:0;width:65px;height:65px;pointer-events:none;
+ background:linear-gradient(135deg,transparent 50%,#00000017 51%,#ffffff12 68%,transparent 69%);
+ transform-origin:bottom right;transform:scale(clamp(.2,var(--read,1),1));
+}
+.paper-enter{animation:paper-unfold 850ms cubic-bezier(.16,1,.3,1) both}
+.field-notes .paper-enter .section-kicker{animation:paper-stamp .8s ease both}
+@keyframes paper-unfold{from{opacity:.5;translate:0 22px;rotate:.35deg}to{opacity:1;translate:0 0;rotate:0deg}}
+@keyframes paper-stamp{from{opacity:0;letter-spacing:.3em;translate:0 8px}to{opacity:1;letter-spacing:.18em;translate:0 0}}
+@media(prefers-reduced-motion:reduce){.paper-enter,.field-notes .paper-enter .section-kicker{animation:none!important}}

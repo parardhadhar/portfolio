@@ -1,0 +1,81 @@
+/* Give the process a full-width composition instead of a nested scrolling panel. */
+:root[data-field-theme=day] .field-notes .fn-dock a{color:#35422f}
+:root[data-field-theme=day] .field-notes .fn-dock a.active{background:#dce0d0;color:#263622}
+:root[data-field-theme=day] .field-notes .mission-toggle{background:#f2ecd9;color:#34442e;border-color:#c8cbb4}
+.github-import{padding:15px;background:color-mix(in srgb,var(--green) 8%,var(--panel));border:1px solid var(--line);border-radius:14px;margin-bottom:22px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end}.github-import label{margin:0!important}.github-import>button{padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--yellow);color:#263024;font-size:12px}.github-import>p{grid-column:1/-1;font-size:11px;color:var(--muted)}.note-avatar{overflow:hidden}.note-avatar img{width:100%;height:100%;object-fit:cover}
+.field-notes .fn-hero{overflow:clip}
+.field-notes .valley-art{inset:0;background-position:center;transform:scale(1.04);will-change:auto;mask-image:linear-gradient(#000 0%,#000 84%,transparent 100%)}
+.field-notes .valley-shade{background:linear-gradient(90deg,#07121f45,transparent 65%),linear-gradient(0deg,var(--paper),transparent 20%);pointer-events:none}
+:root[data-field-theme=day] .field-notes .valley-shade{background:linear-gradient(90deg,#142a3b25,transparent 65%),linear-gradient(0deg,var(--paper),transparent 20%)}
+.draggable-note{translate:var(--drag-x,0px) var(--drag-y,0px)!important;cursor:grab;touch-action:none;user-select:none;position:relative;transition:box-shadow .2s;will-change:auto}
+.draggable-note[data-dragging=true]{cursor:grabbing;z-index:12;box-shadow:0 20px 35px #0004;animation-play-state:paused!important}
+.draggable-note:focus-visible{outline:2px dashed var(--yellow);outline-offset:8px}
+.story-notes{overflow:visible!important}.story-notes:after{content:'grab a thought & move it ↔';position:absolute;bottom:-35px;left:0;right:0;font:italic 12px Georgia,serif;color:var(--muted)}
+.pixel-tech-icon{display:block;width:54px;height:54px;image-rendering:pixelated;filter:drop-shadow(3px 4px 0 #0003)}
+.tool-key>span{display:grid;place-items:center;background:#182421;border:2px solid #516054;border-radius:8px;width:76px;height:76px;box-shadow:inset 3px 3px #ffffff0c,3px 3px #0003}
+.field-notes .tool-key{transition:transform .2s,box-shadow .2s}.field-notes .tool-key:hover{transform:translateY(-7px) rotate(-2deg)}
+.banner-flight{position:absolute;top:9%;left:53%;width:420px;display:flex;align-items:center;z-index:3;pointer-events:none;animation:banner-tow 20s ease-in-out infinite;transform-origin:center;will-change:transform}
+.towed-banner{flex:none;display:block;padding:11px 20px;width:240px;background:#f2e6b8;color:#4a4937;font:italic 14px Georgia,serif;clip-path:polygon(0 0,100% 0,96% 50%,100% 100%,0 100%,4% 50%);animation:banner-ripple 3s ease-in-out infinite}
+.banner-plane{width:125px;flex:none;filter:drop-shadow(0 6px 5px #0002)}.tow-rope{width:55px;flex:none}.plane-propeller{transform-box:fill-box;transform-origin:center;animation:propeller-spin .12s linear infinite}
+.club-memories>p{max-width:700px;font-size:16px;color:var(--muted);line-height:1.8;margin-top:22px}.club-photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:35px;margin-top:45px}.club-photo-grid figure{background:#e9e5d8;padding:12px 12px 20px;rotate:-2deg;box-shadow:0 15px 30px #0002;transition:rotate .3s}.club-photo-grid figure:nth-child(2){rotate:2deg}.club-photo-grid figure:hover{rotate:0deg}.club-photo-grid img{width:100%;aspect-ratio:4/3;object-fit:cover}.club-photo-grid figcaption{font:italic 16px Georgia,serif;color:#343d32;text-align:center;margin-top:18px}
+.field-notes .motion-word{filter:none!important;animation:none!important}.field-notes h2 .motion-word{animation:headline-tide 6s ease-in-out infinite!important;animation-delay:calc(var(--word-threshold)*-9s)!important}.field-notes h2 .scribble .motion-word{animation:headline-tide 6s ease-in-out infinite,text-current 7s linear infinite!important}
+.field-notes .motion-offscreen *,.field-notes .motion-offscreen:after,.field-notes .motion-offscreen:before{animation-play-state:paused!important}
+.field-notes .fn-lattice i{animation:none}.field-notes .lattice-scan{animation-duration:8s}.field-notes .scenery{will-change:auto}.field-notes .fn-dock{backdrop-filter:none;background:color-mix(in srgb,var(--panel) 95%,transparent)}
+@keyframes banner-tow{0%,100%{transform:translate3d(-25px,0,0) rotate(-3deg)}50%{transform:translate3d(60px,15px,0) rotate(1deg)}}
+@keyframes banner-ripple{0%,100%{transform:perspective(400px) rotateY(-7deg) skewY(-2deg)}50%{transform:perspective(400px) rotateY(5deg) skewY(2deg)}}
+@keyframes propeller-spin{to{transform:rotateX(360deg)}}
+@media(max-width:600px){.banner-flight{left:36%;top:10%;width:240px;scale:.62;transform-origin:left}.club-photo-grid{grid-template-columns:1fr;gap:28px;margin-top:30px}.club-photo-grid figcaption{font-size:14px}.pixel-tech-icon{width:31px;height:31px}.tool-key>span{width:44px;height:44px;border-radius:5px}.club-memories>p{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.banner-flight,.towed-banner,.plane-propeller,.field-notes h2 .motion-word,.field-notes h2 .scribble .motion-word{animation:none!important}}
+.field-notes .fn-section{padding-top:90px;padding-bottom:90px}
+.field-notes .fn-story{padding-top:95px;padding-bottom:100px}
+.field-notes .process-section{display:block;overflow:clip}
+.field-notes:has(.process-section:not(.motion-offscreen)) .companion-station{opacity:0;pointer-events:none}
+.field-notes .fn-about{padding-bottom:45px}.field-notes .process-section{padding-top:50px}
+.field-notes .process-intro{position:relative;display:flow-root;max-width:none;margin-bottom:30px;padding-right:180px;min-height:180px}
+.field-notes .process-intro h2{font-size:clamp(34px,4.1vw,60px);margin:20px 0 24px;max-width:980px}
+.field-notes .process-character{position:absolute;right:0;bottom:0;float:none;width:160px;margin:0}
+.field-notes .process-viewport{clear:both;display:block;width:100%;overflow:visible;padding:0}
+.field-notes .process-path{min-width:0;width:100%;height:340px;grid-template-columns:repeat(7,minmax(0,1fr));gap:18px}
+.field-notes .process-path>svg{inset:90px 0 auto;height:140px}
+.field-notes .process-step{padding-top:8px}
+.field-notes .process-step:nth-child(2n){padding-top:160px}
+.field-notes .process-step strong{font-size:clamp(12px,1vw,15px);line-height:1.35}
+.field-notes .process-step p{font-size:clamp(10px,.86vw,13px);line-height:1.65}
+.field-notes .process-step>i{width:22px;height:22px;margin:16px auto;animation:process-dot 3s ease-in-out infinite}
+.field-notes .process-step:nth-child(2n)>i{animation-delay:-1.5s}
+.field-notes .motion-seam{height:72px;margin-top:0}
+.field-notes .process-section+.motion-seam{margin-top:-35px}
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+::view-transition-old(root){z-index:1}
+::view-transition-new(root){z-index:2}
+.theme-curtain{position:fixed;inset:0;z-index:500;pointer-events:none;background:radial-gradient(ellipse at 65% 20%,#a6cbdc,#efe1ae 65%,#c3d3b2);animation:sky-iris 1.25s cubic-bezier(.22,.8,.2,1) both;will-change:clip-path,opacity}
+.theme-curtain[data-target=night]{background:radial-gradient(ellipse at 65% 20%,#28396b,#111c35 65%,#121f24)}
+.theme-celestial{position:absolute;inset:0;display:grid;place-items:center;color:#f6d893;animation:celestial-arrive 1.25s ease both}
+.theme-celestial>svg{grid-area:1/1;width:95px;height:95px;stroke-width:1;filter:drop-shadow(0 0 30px #e9cc8266)}
+.theme-celestial>.lucide-moon{display:none}
+.theme-curtain[data-target=night] .theme-celestial>.lucide-sun{display:none}
+.theme-curtain[data-target=night] .theme-celestial>.lucide-moon{display:block}
+.theme-celestial>i{position:absolute;left:35%;top:35%;width:5px;height:5px;border-radius:50%;background:#ffedba;box-shadow:0 0 15px #ffe8ac;animation:theme-stardust 1.25s ease both}
+.theme-celestial>i:nth-of-type(2){left:65%;top:55%;animation-delay:.07s}.theme-celestial>i:nth-of-type(3){left:55%;top:25%;animation-delay:.12s}
+@keyframes sky-iris{0%{clip-path:circle(0 at var(--theme-x) var(--theme-y));opacity:1}48%,62%{clip-path:circle(var(--theme-radius) at var(--theme-x) var(--theme-y));opacity:1}100%{clip-path:circle(var(--theme-radius) at var(--theme-x) var(--theme-y));opacity:0}}
+@keyframes celestial-arrive{0%{opacity:0;transform:translateY(30px) rotate(-25deg) scale(.6)}35%,65%{opacity:1;transform:translateY(0) rotate(0) scale(1)}100%{opacity:0;transform:translateY(-35px) rotate(20deg) scale(1.15)}}
+@keyframes theme-stardust{from{opacity:0;scale:0;translate:0 20px}50%{opacity:1;scale:1.4}to{opacity:0;translate:0 -35px;scale:.2}}
+.field-notes,.field-notes .fn-section,.field-notes .fn-dock,.field-notes .map-story-card{transition:background-color .8s,color .6s,border-color .6s}
+.field-notes .fn-round svg{transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.field-notes .fn-round:active svg{transform:rotate(180deg) scale(.75)}
+.field-notes h2 .motion-word{animation:headline-tide 5s ease-in-out infinite;animation-delay:calc(var(--word-threshold)*-9s)}
+.field-notes h2 .scribble .motion-word{animation:headline-tide 5s ease-in-out infinite,text-current 5s linear infinite}
+.field-notes .rich-word{display:inline-block;animation:rich-arrive .65s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(var(--word,0)*.028s)}
+.field-notes .text-detail{animation:detail-orbit 4s ease-in-out infinite}
+.field-notes .detail-atom{animation:constellation-spin 12s linear infinite}
+.field-notes .detail-rocket{animation:rocket-hover 3s ease-in-out infinite}
+.field-notes .scribble:before{transition:scale .3s;animation:marker-breathe 5s ease-in-out infinite!important}
+@keyframes headline-tide{0%,45%,100%{translate:0 0;rotate:0deg}65%{translate:0 -5px;rotate:-.4deg}82%{translate:0 2px;rotate:.3deg}}
+@keyframes rich-arrive{from{opacity:0;filter:blur(4px);transform:translateY(18px) rotateX(35deg)}to{opacity:1;filter:none;transform:none}}
+@keyframes detail-orbit{0%,100%{translate:0 0;rotate:-8deg;scale:1}50%{translate:0 -5px;rotate:9deg;scale:1.08}}
+@keyframes rocket-hover{0%,100%{translate:0 0;rotate:-10deg}50%{translate:3px -6px;rotate:8deg}}
+@keyframes process-dot{50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--dot) 15%,transparent);scale:1.15}}
+@media(max-width:850px){.field-notes .process-intro{padding-right:125px}.field-notes .process-character{width:120px}.field-notes .process-path{height:auto;grid-template-columns:1fr 1fr;gap:25px 35px;padding:18px 0}.field-notes .process-path>svg{display:none}.field-notes .process-step,.field-notes .process-step:nth-child(2n){padding:16px 14px 18px 40px;text-align:left;border-left:1px solid var(--line)}.field-notes .process-step>i{position:absolute;left:-11px;top:20px;margin:0}.field-notes .process-step>.text-detail{margin-bottom:10px}.field-notes .process-step strong{font-size:15px}.field-notes .process-step p{font-size:12px}}
+@media(max-width:600px){.field-notes .fn-section{padding-top:64px;padding-bottom:64px}.field-notes .fn-story{padding-top:70px;padding-bottom:70px}.field-notes .process-intro{padding-right:0;min-height:0;margin-bottom:18px}.field-notes .process-intro h2{font-size:35px;max-width:100%;margin-bottom:18px}.field-notes .process-intro p{padding-right:80px}.field-notes .process-character{width:80px;right:-5px;bottom:-10px}.field-notes .process-path{grid-template-columns:1fr;gap:0;padding-left:12px}.field-notes .process-step,.field-notes .process-step:nth-child(2n){padding:10px 12px 25px 44px}.field-notes .process-step>.text-detail{position:absolute;left:13px;top:12px;font-size:16px}.field-notes .process-step>i{width:16px;height:16px;left:-8px;top:15px;border-width:3px}.field-notes .process-step p{margin-top:4px}.field-notes .motion-seam{height:55px}.field-notes h2 .motion-word{animation-duration:6s}}
+@media(prefers-reduced-motion:reduce){.field-notes h2 .motion-word,.field-notes h2 .scribble .motion-word,.field-notes .rich-word,.field-notes .text-detail,.field-notes .process-step>i{animation:none!important}.field-notes .rich-word{opacity:1;transform:none;filter:none}.field-notes,.field-notes .fn-section,.field-notes .fn-dock,.field-notes .map-story-card{transition:none}}
+
