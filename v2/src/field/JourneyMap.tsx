@@ -23,17 +23,17 @@ const streets=Array.from({length:320},(_,i)=>({x:160+(i%20)*135,y:120+Math.floor
 const streetBlocks=streets.map((b,i)=><rect key={i} {...b} width={b.w} height={b.h} rx="5"/>);
 
 export default function JourneyMap(){
- const section=useRef<HTMLElement>(null);const [progress,setProgress]=useState(0);const [zoom,setZoom]=useState(.8);const [overview,setOverview]=useState(false);
- const frame=useRef(0);
+ const section=useRef<HTMLElement>(null);const [progress,setProgress]=useState(0);const [zoom,setZoom]=useState(1.15);const [overview,setOverview]=useState(false);
+ const lastScroll=useRef(0);
  useEffect(()=>{
-  const update=()=>{cancelAnimationFrame(frame.current);frame.current=requestAnimationFrame(()=>{const el=section.current;if(!el)return;const top=el.getBoundingClientRect().top;setProgress(Math.max(0,Math.min(1,-top/(el.offsetHeight-innerHeight))));});};
+  const update=()=>{const el=section.current;if(!el)return;const top=el.getBoundingClientRect().top;const next=Math.max(0,Math.min(1,-top/Math.max(1,el.offsetHeight-innerHeight)));if(next>0&&next<1&&Math.abs(scrollY-lastScroll.current)>2)setOverview(false);lastScroll.current=scrollY;setProgress(previous=>Math.abs(previous-next)>.0001?next:previous);};
   update();window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);
-  return()=>{cancelAnimationFrame(frame.current);window.removeEventListener('scroll',update);window.removeEventListener('resize',update);};
+  return()=>{window.removeEventListener('scroll',update);window.removeEventListener('resize',update);};
  },[]);
  const position=progress*(stops.length-1),index=Math.min(stops.length-1,Math.round(position));
  const {x,y}=heartPoint(progress*.94),ahead=heartPoint(progress*.94+.001);
  // Introduce the complete heart, then smoothly move into navigation as scrolling begins.
- const reveal=Math.min(1,progress/.12),follow=overview?0:reveal*reveal*(3-2*reveal);
+ const reveal=Math.min(1,progress/.08),follow=overview?0:reveal*reveal*(3-2*reveal);
  const cameraZoom=.3+(zoom-.3)*follow;
  const cameraX=1400+(x-1400)*follow,cameraY=1400+(y-1400)*follow;
  const stop=stops[index],angle=Math.atan2(ahead.y-y,ahead.x-x)*180/Math.PI+90;
@@ -41,7 +41,7 @@ export default function JourneyMap(){
  return <section id="journey" ref={section} data-section className="journey-scroll" aria-label="Scroll through my journey map">
   <div className="journey-sticky"><div className="journey-map-surface" aria-hidden="true">
    <svg className="journey-map-svg" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice"><defs><pattern id="minor-roads" width="135" height="180" patternUnits="userSpaceOnUse"><path d="M0 0H135V180H0Z" fill="none" className="minor-street" strokeWidth="9"/></pattern><radialGradient id="park"><stop stopColor="#435f43"/><stop offset="1" stopColor="#2e4637"/></radialGradient></defs>
-    <g transform={`translate(930 440) scale(${cameraZoom}) translate(${-cameraX} ${-cameraY})`} className="map-camera">
+    <g transform={`translate(930 440) scale(${cameraZoom}) translate(${-cameraX} ${-cameraY})`} className="map-camera" data-camera-zoom={cameraZoom.toFixed(3)}>
      <rect x="-1200" y="-1000" width="6000" height="6000" className="map-base"/>
      <g className="map-blocks">{streetBlocks}</g>
      <rect x="0" y="0" width="3400" height="3400" fill="url(#minor-roads)"/>
@@ -59,7 +59,7 @@ export default function JourneyMap(){
    <div className="map-vignette"/><div className="journey-map-title"><span>↝ THE JOURNEY</span><p>Scroll to travel <InlineDetail kind="compass"/></p></div>
    <article className="map-story-card" style={{'--stop-color':stop.color} as CSSProperties} key={index}><header><span className="map-story-icon">{stop.icon}</span><div><strong>{stop.name}</strong><small>{stop.date}</small></div><b>0{index+1} / 05</b></header><div className="map-story-body"><h2><RichText text={stop.title} animated/></h2><p><RichText text={stop.text}/></p><small className="map-story-tags">{stop.label}</small><div className="map-gallery"><span>POSTCARDS ALONG THE WAY</span><div>{stop.photos.map((photo,i)=><img key={photo} src={`/${photo}`} alt={`${stop.name} — personal photograph ${i+1}`} loading="lazy" decoding="async"/>)}</div></div><a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(stop.query)}`} target="_blank" rel="noreferrer"><MapPin size={13}/> Open this place in Google Maps ↗</a></div></article>
    <div className="map-compass" aria-hidden="true"><span>N</span><Navigation size={25}/><span>S</span></div>
-   <div className="map-controls"><button aria-label={overview?'Follow the journey pointer':'Show the heart-shaped map'} onClick={()=>{setOverview(!overview);setZoom(.8);}}>{overview?<Navigation size={19}/>:<Heart size={19}/>}</button><button aria-label="Recenter journey map" onClick={()=>{setOverview(false);setZoom(.8);}}><Crosshair size={19}/></button><button aria-label="Zoom in on journey" onClick={()=>setZoom(z=>Math.min(1.6,z+.15))}><Plus size={19}/></button><button aria-label="Zoom out of journey" onClick={()=>setZoom(z=>Math.max(.2,z-.15))}><Minus size={19}/></button></div>
+   <div className="map-controls"><button aria-label={overview?'Follow the journey pointer':'Show the heart-shaped map'} onClick={()=>{setOverview(!overview);setZoom(1.15);}}>{overview?<Navigation size={19}/>:<Heart size={19}/>}</button><button aria-label="Recenter journey map" onClick={()=>{setOverview(false);setZoom(1.15);}}><Crosshair size={19}/></button><button aria-label="Zoom in on journey" onClick={()=>setZoom(z=>Math.min(1.6,z+.15))}><Plus size={19}/></button><button aria-label="Zoom out of journey" onClick={()=>setZoom(z=>Math.max(.2,z-.15))}><Minus size={19}/></button></div>
    <div className="map-traveller"><CharacterSprite pose="walk"/></div>
    <nav className="map-progress" aria-label="Journey stops"><button onClick={()=>go(index-1)} disabled={index===0} aria-label="Previous journey stop"><ArrowLeft size={15}/></button><div className="map-progress-dots">{stops.map((s,i)=><button key={s.name} aria-label={`Travel to ${s.name}`} aria-current={i===index?'step':undefined} onClick={()=>go(i)} style={{'--stop-color':s.color} as CSSProperties}/>)}</div><span>{stop.date} · {stop.city}</span><button onClick={()=>go(index+1)} disabled={index===stops.length-1} aria-label="Next journey stop"><ArrowRight size={15}/></button></nav>
    <span className="map-caption">An illustrated map of my journey · locations open in Google Maps</span>

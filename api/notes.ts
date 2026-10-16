@@ -42,7 +42,7 @@ export function createNotesHandler(options:Options={}){
    const key=createHash('sha256').update(client).digest('hex').slice(0,24),now=Date.now(),windowMs=options.rateWindow??60000;
    if(remoteUrl&&remoteToken&&windowMs>0){const allowed=await redis(['SET',`portfolio:note-rate:${key}`,'1','NX','EX',Math.ceil(windowMs/1000)]);if(!allowed){send(429,{error:'Thanks for stopping by. Give the next note a minute.'});return;}}
    else if(windowMs>0){if(now-(rates.get(key)||0)<windowMs){send(429,{error:'Thanks for stopping by. Give the next note a minute.'});return;}rates.set(key,now);if(rates.size>1000)for(const[k,time]of rates)if(now-time>windowMs)rates.delete(k);}
-   const avatar=typeof input.avatar==='string'&&['explorer','dreamer','maker','reader','astronaut','cat'].includes(input.avatar)?input.avatar:'explorer';
+   const avatar=typeof input.avatar==='string'&&(/^(avatar-[a-f0-9]{12}|explorer|dreamer|maker|reader|astronaut|cat)$/.test(input.avatar))?input.avatar:`avatar-${randomUUID().replaceAll('-','').slice(0,12)}`;
    const note:VisitorNote={id:randomUUID(),name,role,message,avatar,color:colors.includes(String(input.color))?String(input.color):'butter',createdAt:new Date().toISOString(),...(github?{github}:{})};
    await save(note);send(201,{note});
   }catch(error){send(503,{error:error instanceof Error&&error.message.startsWith('The public')?error.message:'The wall is taking a short break. Your note wasn’t posted. Please try again.'});}
