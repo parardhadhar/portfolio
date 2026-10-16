@@ -14,8 +14,8 @@ test('visitor notes persist on the server and are shared across requests',async(
  const post=body=>fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
  try{
   assert.deepEqual((await(await fetch(url)).json()).notes,[]);
-  const response=await post({name:'Visitor',role:'Maker',message:'A real note from a visitor.',color:'mint',github:'octocat'});
-  assert.equal(response.status,201);const saved=(await response.json()).note;assert.equal(saved.github,'octocat');
+  const response=await post({name:'Visitor',role:'Maker',message:'A real note from a visitor.',color:'mint',github:'octocat',avatar:'astronaut'});
+  assert.equal(response.status,201);const saved=(await response.json()).note;assert.equal(saved.github,'octocat');assert.equal(saved.avatar,'astronaut');
   const otherBrowser=await(await fetch(url)).json();assert.equal(otherBrowser.notes[0].id,saved.id);
   assert.equal(JSON.parse(await readFile(file,'utf8'))[0].message,'A real note from a visitor.');
   // A fresh handler reads the same persistent store after a server restart.
