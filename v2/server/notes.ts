@@ -10,7 +10,7 @@ const colors=['butter','mint','lilac','sky','peach'];
 export function createNotesHandler(options:Options={}){
  const file=options.storagePath||resolve(process.cwd(),'.local/visitor-notes.json');
  const rates=new Map<string,number>();let queue:Promise<unknown>=Promise.resolve();
- const remoteUrl=process.env.UPSTASH_REDIS_REST_URL,remoteToken=process.env.UPSTASH_REDIS_REST_TOKEN;
+ const remoteUrl=process.env.UPSTASH_REDIS_REST_URL||process.env.KV_REST_API_URL,remoteToken=process.env.UPSTASH_REDIS_REST_TOKEN||process.env.KV_REST_API_TOKEN;
  const redis=async(command:(string|number)[])=>{const response=await fetch(remoteUrl!,{method:'POST',headers:{Authorization:`Bearer ${remoteToken}`,'Content-Type':'application/json'},body:JSON.stringify(command)});if(!response.ok)throw Error('Note storage is unavailable.');const data=await response.json() as {result:unknown;error?:string};if(data.error)throw Error('Note storage is unavailable.');return data.result;};
  const load=async():Promise<VisitorNote[]>=>{
   if(remoteUrl&&remoteToken){const result=await redis(['LRANGE','portfolio:visitor-notes',0,199]) as string[];return result.map(n=>JSON.parse(n) as VisitorNote);}
